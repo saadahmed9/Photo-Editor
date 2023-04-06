@@ -4,7 +4,8 @@ import cv2
 from PIL import Image
 
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor('C:\cse611\photo_editing_api\media\models\shape_predictor_68_face_landmarks.dat')
+#predictor = dlib.shape_predictor('C:\cse611\photo_editing_api\media\models\shape_predictor_68_face_landmarks.dat')
+predictor = dlib.shape_predictor(R"E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\models\shape_predictor_68_face_landmarks.dat")
 
 def spects_detector(image):
     img = dlib.load_rgb_image(image)
