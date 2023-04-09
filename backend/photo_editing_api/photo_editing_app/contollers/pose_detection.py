@@ -2,8 +2,8 @@ import cv2 as cv
 import numpy as np
 import os
 
-face_cascade = cv.CascadeClassifier('C:\cse611\photo_editing_api\media\datasets\haarcascade_frontalface_default.xml')
-eye_cascade = cv.CascadeClassifier("C:\cse611\photo_editing_api\media\datasets\haarcascade_eye.xml")
+face_cascade = cv.CascadeClassifier(r'E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\datasets\haarcascade_frontalface_default.xml')
+eye_cascade = cv.CascadeClassifier(r"E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\datasets\haarcascade_eye.xml")
 
 def pose_detector(image):
     frame = cv.imread(image)

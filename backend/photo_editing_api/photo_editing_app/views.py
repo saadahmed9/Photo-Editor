@@ -54,6 +54,154 @@ data = json.load(f)
 f1 = open('media/datasets/countrywise_specs.txt')
 lines = f1.readline()
 
+def initial_checks(request):
+    try:
+        # create_application_folder_if_not_exit()
+        verify_upload_file_passed(request)
+        verify_function_passed(request)
+        if request.method == 'POST' and request.FILES['myfile']:
+            function_name = request.POST['function']
+            myfile = request.FILES['myfile']
+            myfile.name = myfile.name.replace(" ", "")
+            img_dir = "\\".join(BASE_DIR.split("\\"))
+            image_url = img_dir+r"\media\uploads\\"+myfile.name
+            output_url = img_dir+r"\media\output\\"+myfile.name
+            f = open(image_url,"wb")
+            for chunk in request.FILES['myfile'].chunks():
+                f.write(chunk)
+            f.close()
+            api_root = reverse_lazy('upload',request = request)
+            api_root = api_root[:-7]
+            if is_image(myfile.name):
+                verify_functionality_passed(request)
+                function_obj = get_count_by_function_name(function_name)
+                count_val = FunctionActivitySerializer(function_obj).data['function_count']
+                temp_val = count_val + 1
+                update_count(function_obj, function_name, temp_val)
+            else:
+                raise SuspiciousOperation("only image files are accepted as input")
+    #ABC call a function for below as below
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+    return image_url, output_url, api_root, myfile
+
+@api_view(('POST',))
+@csrf_exempt
+def passport_photo_size(request):
+    return_dict = {}
+    try:
+        image_url, output_url, api_root, myfile = initial_checks(request)
+        verify_country_passed(request)
+        full_str = ""
+        img = passport_photo_face(image_url,output_url)
+        full_str = full_str+img
+        return_dict["face detection"] = full_str
+        if 'No' not in return_dict["face detection"]:
+            country = request.POST['country']
+            face_pos = pose_detector(image_url)
+            return_dict["pose detector"] = face_pos
+            if country in data:
+                image_input_size = data[country]
+                image_input_size = image_input_size.split(',')
+                image_resize(image_url, output_url, width=image_input_size[0], height=image_input_size[1])
+                color_bg_and_add_border(output_url, output_url, (255,255,255))
+                if country in lines:
+                    text = spects_detector(image_url)
+                    if "with" in text:
+                        return_dict["Spects_detector"] = "For this country photo with specs is not allowed"
+                    return_dict['output_url'] = api_root + r"static/" + myfile.name
+        #ABC call another function for the below till statistics
+        return_dict['error'] = False
+        return_dict['message'] = "Successfully Processed "
+        return_dict['status'] = 200
+        return_dict["Statistics"] = get_stats()
+
+    #ABC for the below implement another method for exceptions
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+    return Response(return_dict)
+
+@api_view(('POST',))
+@csrf_exempt
+def resize(request):
+    return_dict = {}
+    try:
+        print("Resize functionality called")
+        image_url, output_url, api_root, myfile = initial_checks(request)
+        verify_resize_passed(request)
+        image_input_size = request.POST['resize']
+        image_input_size = image_input_size.split(',')
+        image_resize(image_url,output_url,width=image_input_size[0],height=image_input_size[1])
+        return_dict['output_url'] = api_root + r"static/" + myfile.name
+        #ABC call another function for the below till statistics
+        return_dict['error'] = False
+        return_dict['message'] = "Successfully Processed "
+        return_dict['status'] = 200
+        return_dict["Statistics"] = get_stats()
+
+    #ABC for the below implement another method for exceptions
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+    return Response(return_dict)
+
+@api_view(('POST',))
+@csrf_exempt
+def format_change(request):
+    return_dict = {}
+    try:
+        image_url, output_url, api_root, myfile = initial_checks(request)
+        verify_format_change_passed(request)
+        required_format = request.POST['format_change']
+        image = cv2.imread(image_url)
+        file_name = os.path.splitext(output_url)
+        cv2.imwrite(file_name[0]+"."+required_format, image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+        part1,part2 = myfile.name.split('.')
+        print("Format change functionality passed")
+        return_dict['output_url'] = api_root+r"static/"+part1+"."+required_format
+        return_dict['error'] = False
+        return_dict['message'] = "Successfully Processed "
+        return_dict['status'] = 200
+        return_dict["Statistics"] = get_stats()
+
+    #ABC for the below implement another method for exceptions
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+    return Response(return_dict)
+
+@api_view(('POST',))
+@csrf_exempt
+def background_change(request):
+    return_dict = {}
+    try:
+        image_url, output_url, api_root, myfile = initial_checks(request)
+
+        verify_colour_passed(request)
+        colour_option = request.POST['background_change']
+        hexa_code = get_color_code(colour_option)
+        colour_code = ImageColor.getcolor(hexa_code, "RGB")
+        color_bg_and_add_border(image_url,output_url,colour_code)
+        return_dict['output_url'] = api_root+r"static/"+ myfile.name
+
+        return_dict['error'] = False
+        return_dict['message'] = "Successfully Processed "
+        return_dict['status'] = 200
+        return_dict["Statistics"] = get_stats()
+
+    #ABC for the below implement another method for exceptions
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+    return Response(return_dict)
+
 @api_view(('POST',))
 @csrf_exempt
 def upload(request):
