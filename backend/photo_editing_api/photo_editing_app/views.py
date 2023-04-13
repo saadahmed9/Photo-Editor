@@ -16,6 +16,8 @@ from photo_editing_app.serializers import FunctionActivitySerializer
 from photo_editing_app.contollers.pose_detection import pose_detector
 from photo_editing_app.contollers.verify_params_controller import verify_resize_passed,verify_upload_file_passed,verify_function_passed,verify_functionality_passed,verify_format_change_passed,verify_colour_passed,verify_country_passed
 from PIL import ImageColor
+from django.http import HttpResponse
+import base64
 # Create your views here.
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -55,6 +57,7 @@ f1 = open('media/datasets/countrywise_specs.txt')
 lines = f1.readline()
 
 def initial_checks(request):
+    return_dict = {}
     try:
         # create_application_folder_if_not_exit()
         verify_upload_file_passed(request)
@@ -111,7 +114,11 @@ def passport_photo_size(request):
                     text = spects_detector(image_url)
                     if "with" in text:
                         return_dict["Spects_detector"] = "For this country photo with specs is not allowed"
-                    return_dict['output_url'] = api_root + r"static/" + myfile.name
+                return_dict['output_url'] = api_root + r"static/" + myfile.name
+                with open(output_url, 'rb') as f:
+                    image_data = f.read()
+                image_base64 = base64.b64encode(image_data).decode('utf-8')
+                return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"
         #ABC call another function for the below till statistics
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
@@ -136,6 +143,10 @@ def resize(request):
         image_input_size = request.POST['resize']
         image_input_size = image_input_size.split(',')
         image_resize(image_url,output_url,width=image_input_size[0],height=image_input_size[1])
+        with open(output_url, 'rb') as f:
+            image_data = f.read()
+        image_base64 = base64.b64encode(image_data).decode('utf-8')
+        return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"    
         return_dict['output_url'] = api_root + r"static/" + myfile.name
         #ABC call another function for the below till statistics
         return_dict['error'] = False
@@ -164,6 +175,10 @@ def format_change(request):
         part1,part2 = myfile.name.split('.')
         print("Format change functionality passed")
         return_dict['output_url'] = api_root+r"static/"+part1+"."+required_format
+        with open(output_url, 'rb') as f:
+            image_data = f.read()
+        image_base64 = base64.b64encode(image_data).decode('utf-8')
+        return_dict['imageUrl']=f"data:image/{required_format};base64,{image_base64}"   
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
@@ -185,11 +200,14 @@ def background_change(request):
 
         verify_colour_passed(request)
         colour_option = request.POST['background_change']
-        hexa_code = get_color_code(colour_option)
+        hexa_code = colour_option
         colour_code = ImageColor.getcolor(hexa_code, "RGB")
         color_bg_and_add_border(image_url,output_url,colour_code)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
-
+        with open(output_url, 'rb') as f:
+            image_data = f.read()
+        image_base64 = base64.b64encode(image_data).decode('utf-8')
+        return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"   
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
