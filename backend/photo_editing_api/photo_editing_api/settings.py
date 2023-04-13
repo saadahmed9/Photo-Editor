@@ -25,8 +25,6 @@ SECRET_KEY = 'ma&z-#(5z0_&530oxh6u!0ovz5v4p&9&vbabhzq+0o19l@ie1v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -37,13 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
     'photo_editing_app',
-    'django_cron',
-    'rest_framework'
+    'django_cron'
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
+     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,7 +53,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'photo_editing_api.urls'
-
+CRON_CLASSES = {
+    'photo_editing_app.contollers.cron1.MyCronJob'
+}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -90,8 +92,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -109,7 +110,26 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+CORS_ORIGINAL_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+ALLOWED_HOSTS = ['127.0.0.1']
+CORS_ALLOWED_ORIGINS = ['http://192.168.1.80:3000','http://192.168.1.62:3000','http://192.168.56.1:3000','http://192.168.56.1:3000' ]
 
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://192.168.1.80:3000',
+    'http://192.168.1.62:3000',
+    'http://192.168.56.1:3000'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'http://192.168.1.80',
+    'http://192.168.1.62',
+    'http://192.168.56.1'
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
