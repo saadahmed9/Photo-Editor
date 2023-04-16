@@ -114,17 +114,7 @@ def initial_checks_multi_files(request):
                 for chunk in file.chunks():
                     f.write(chunk)
                 f.close()
-            #myfile = request.FILES['myfile']
-            #myfile.name = myfile.name.replace(" ", "")
-            #image_url = img_dir+r"\media\uploads\\"+myfile.name
-            #output_url = img_dir+r"\media\output\\"+myfile.name
-            #output_url = img_dir + r"\media\output\\" + myfile_name_list[0]
-            print("File name is", myfile_name_list[0])
-            output_url = img_dir + r"\media\output\\" + "output.pdf"
-            # f = open(image_url,"wb")
-            # for chunk in request.FILES['myfile'].chunks():
-            #     f.write(chunk)
-            # f.close()
+            output_url = img_dir + r"\media\output\\" + myfile_list[0].name.split('.')[0] + ".pdf"
 
             api_root = reverse_lazy('upload',request = request)
             print("Just before calling the function")
@@ -310,12 +300,12 @@ def pdf_maker(request):
         #convert_images_to_pdf(image_url_list, output_url)
         convert_images_to_pdf(image_url_list, output_url)
         print("Image conversion is done")
-        #return_dict['output_url'] = api_root+r"static/"+ myfile_list[0].name
-        return_dict['output_url'] = api_root + r"static/" + "output.pdf"
+        return_dict['output_url'] = api_root+r"static/"+ myfile_list[0].name.split('.')[0] + ".pdf"
+        #return_dict['output_url'] = api_root + r"static/" + "output.pdf"
         with open(output_url, 'rb') as f:
             image_data = f.read()
         image_base64 = base64.b64encode(image_data).decode('utf-8')
-        #return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"
+        return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
