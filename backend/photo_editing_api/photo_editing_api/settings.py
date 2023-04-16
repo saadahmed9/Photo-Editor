@@ -14,7 +14,8 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+MODEL_DIR = "\\".join(BASE_DIR.split("\\")) + r"\media\models\\"
+DATASET_DIR = "\\".join(BASE_DIR.split("\\")) + r"\media\datasets\\"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -42,8 +43,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-        'corsheaders.middleware.CorsMiddleware',
-     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

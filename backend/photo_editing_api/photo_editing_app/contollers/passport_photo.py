@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import dlib
+from photo_editing_api.settings import MODEL_DIR
 
 def drawPoints(image, faceLandmarks, startpoint, endpoint, isClosed=False):
   points = []
@@ -30,8 +31,7 @@ def writeFaceLandmarksToLocalFile(faceLandmarks, fileName):
       f.write("%s %s\n" %(int(p.x),int(p.y)))
   f.close()
 
-#Model_PATH = "C:\cse611\photo_editing_api\media\models\shape_predictor_68_face_landmarks.dat"
-Model_PATH = R"E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\models\shape_predictor_68_face_landmarks.dat"
+Model_PATH = MODEL_DIR + "shape_predictor_68_face_landmarks.dat"
 frontalFaceDetector = dlib.get_frontal_face_detector()
 faceLandmarkDetector = dlib.shape_predictor(Model_PATH)
 

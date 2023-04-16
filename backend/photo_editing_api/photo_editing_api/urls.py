@@ -25,4 +25,6 @@ urlpatterns = [
     path('format_change/', views.format_change, name='format_change'),
     path('background_change/', views.background_change, name='background_change'),
     path('passport_photo_size/', views.passport_photo_size, name='passport_photo_size'),
+    path('noise_removal/', views.noise_removal, name='noise_removal'),
+    path('pdf_maker/', views.pdf_maker, name='pdf_maker'),
 ]
