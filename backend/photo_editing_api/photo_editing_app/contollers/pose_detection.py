@@ -3,8 +3,8 @@ import numpy as np
 import os
 from photo_editing_api.settings import DATASET_DIR
 
-face_cascade = cv.CascadeClassifier(DATASET_DIR + "haarcascade_frontalface_default.xml")
-eye_cascade = cv.CascadeClassifier(DATASET_DIR + "haarcascade_eye.xml")
+face_cascade = cv.CascadeClassifier("media/datasets/haarcascade_frontalface_default.xml")
+eye_cascade = cv.CascadeClassifier( "media/datasets/haarcascade_eye.xml")
 
 def pose_detector(image):
     frame = cv.imread(image)

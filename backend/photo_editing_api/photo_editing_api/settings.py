@@ -88,8 +88,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'photo_editing_db',
         'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'PASSWORD':'Arjunusa@140482',
+        # 'HOST': '127.0.0.1',
+        'HOST':'photo_editor_Service',
         'PORT': '5432',
     }
 }
@@ -113,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 CORS_ORIGINAL_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 CORS_ALLOWED_ORIGINS = ['http://192.168.1.80:3000','http://192.168.1.62:3000','http://192.168.56.1:3000','http://192.168.56.1:3000' ]
 
 CORS_ORIGIN_WHITELIST = [
@@ -149,5 +150,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'media\\')
+STATIC_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [os.path.join(STATIC_ROOT, "output"),]

@@ -6,6 +6,7 @@ class RemoveFiles():
 
     def remove_img(self):
         path1 = r"C:\cse611\photo_editing_api\media\output\\"
+        path1 = "media/output/"
         files1 = os.listdir(path1)
         for file in files1:
             image_path = path1+file
@@ -17,6 +18,7 @@ class RemoveFiles():
                 os.remove(image_path)
 
         path1 = r"C:\cse611\photo_editing_api\media\uploads\\"
+        path1 = "media/uploads"
         files1 = os.listdir(path1)
         for file in files1:
             image_path = path1 + file

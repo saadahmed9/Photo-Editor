@@ -31,7 +31,8 @@ def writeFaceLandmarksToLocalFile(faceLandmarks, fileName):
       f.write("%s %s\n" %(int(p.x),int(p.y)))
   f.close()
 
-Model_PATH = MODEL_DIR + "shape_predictor_68_face_landmarks.dat"
+# Model_PATH = MODEL_DIR + "shape_predictor_68_face_landmarks.dat"
+Model_PATH = "media/models/shape_predictor_68_face_landmarks.dat"
 frontalFaceDetector = dlib.get_frontal_face_detector()
 faceLandmarkDetector = dlib.shape_predictor(Model_PATH)
 

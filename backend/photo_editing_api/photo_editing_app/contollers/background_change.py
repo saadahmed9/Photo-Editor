@@ -7,7 +7,8 @@ from photo_editing_api.settings import MODEL_DIR
 def color_bg_and_add_border(input_image_path, output_image_path, bg_color, border_color=(0,0,0), border_thickness=2):
     # file_path,name = os.path.split(input_image_path)
     change_bg = alter_bg()
-    model_path = MODEL_DIR + "deeplabv3_xception_tf_dim_ordering_tf_kernels.h5"
+    # model_path = MODEL_DIR + "deeplabv3_xception_tf_dim_ordering_tf_kernels.h5"
+    model_path = "media/models/deeplabv3_xception_tf_dim_ordering_tf_kernels.h5"
     change_bg.load_pascalvoc_model(model_path)
     change_bg.color_bg(input_image_path, colors=bg_color, output_image_name=output_image_path)
     output_image = cv2.imread(output_image_path)

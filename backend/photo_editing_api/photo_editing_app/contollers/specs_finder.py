@@ -5,7 +5,7 @@ from PIL import Image
 from photo_editing_api.settings import MODEL_DIR
 
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(MODEL_DIR + "shape_predictor_68_face_landmarks.dat")
+predictor = dlib.shape_predictor("media/models/shape_predictor_68_face_landmarks.dat")
 
 def spects_detector(image):
     img = dlib.load_rgb_image(image)
