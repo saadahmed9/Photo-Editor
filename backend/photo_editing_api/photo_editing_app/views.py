@@ -158,8 +158,11 @@ def passport_photo_size(request):
                 color_bg_and_add_border(output_url, output_url, (255,255,255))
                 if country in lines:
                     text = spects_detector(image_url)
-                    if "with" in text:
+                    print(text)
+                    if "without" not in text:
                         return_dict["Spects_detector"] = "For this country photo with specs is not allowed"
+                    else:
+                        return_dict["Spects_detector"] = "Spects not detected"
                 return_dict['output_url'] = api_root + r"static/" + myfile.name
                 with open(output_url, 'rb') as f:
                     image_data = f.read()
