@@ -59,7 +59,7 @@
 								{
 									"key": "myfile",
 									"type": "file",
-									"src": "/C:/Users/rakes/Downloads/testimage1.png"
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/face-12.png"
 								},
 								{
 									"key": "function",
@@ -69,6 +69,11 @@
 								{
 									"key": "country",
 									"value": "France",
+									"type": "text"
+								},
+								{
+									"key": "background_req",
+									"value": "yes",
 									"type": "text"
 								}
 							]
