@@ -1,0 +1,524 @@
+{
+	"info": {
+		"_postman_id": "7a12bb80-e80f-4fdc-b2eb-00554552d100",
+		"name": "Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6595154",
+		"_collection_link": "https://warped-equinox-54232.postman.co/workspace/New-Team-Workspace~35c9cc55-32a6-4d53-ac9f-6db38d917f76/collection/6595154-7a12bb80-e80f-4fdc-b2eb-00554552d100?action=share&creator=6595154&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Photo_editor_apis",
+			"item": [
+				{
+					"name": "passport_photo_size",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('face detection');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('pose detector');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('Spects_detector');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
+									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
+									"  console.log(pm.response)\r",
+									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/C:/Users/rakes/Downloads/testimage1.png"
+								},
+								{
+									"key": "function",
+									"value": "passport_photo_size",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "France",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/passport_photo_size/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"passport_photo_size",
+								""
+							],
+							"query": [
+								{
+									"key": "myfile",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "function",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "background_change",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
+									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
+									"  console.log(pm.response)\r",
+									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/noise_removal_img.jpeg"
+								},
+								{
+									"key": "function",
+									"value": "background_change",
+									"type": "text"
+								},
+								{
+									"key": "background_change",
+									"value": "white",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/background_change/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"background_change",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Format_change",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
+									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
+									"  console.log(pm.response)\r",
+									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/testimage1.png"
+								},
+								{
+									"key": "function",
+									"value": "format_change",
+									"type": "text"
+								},
+								{
+									"key": "format_change",
+									"value": "jpg",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/format_change/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"format_change",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resize",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
+									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
+									"  console.log(pm.response)\r",
+									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/WhatsApp Image 2023-04-12 at 7.02.19 PM.jpeg"
+								},
+								{
+									"key": "function",
+									"value": "resize",
+									"type": "text"
+								},
+								{
+									"key": "resize",
+									"value": "170,170",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/resize/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"resize",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Noise Removal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
+									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
+									"  console.log(pm.response)\r",
+									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/noise_removal_img.jpeg"
+								},
+								{
+									"key": "function",
+									"value": "noise_removal",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/noise_removal/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"noise_removal",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pdf maker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
+									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
+									"  console.log(pm.response)\r",
+									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									"pm.test(\"PDF maker average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 200;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The PDF maker endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": [
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/testimage1.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/WhatsApp Image 2023-04-12 at 7.02.19 PM.jpeg"
+									]
+								},
+								{
+									"key": "function",
+									"value": "pdf_maker",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/pdf_maker/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"pdf_maker",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
