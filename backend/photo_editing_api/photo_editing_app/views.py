@@ -20,9 +20,15 @@ from photo_editing_app.contollers.verify_params_controller import verify_resize_
 from PIL import ImageColor
 from django.http import HttpResponse
 import base64
+import logging
 # Create your views here.
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+logging.basicConfig(format= '[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
 
 def create_application_folder_if_not_exit():
     if not os.path.exists("/".join(BASE_DIR.split("/")) + "/media/"):
@@ -62,6 +68,7 @@ def initial_checks(request):
     return_dict = {}
     try:
         # create_application_folder_if_not_exit()
+        logger.info("Initial checks being performed")
         verify_upload_file_passed(request)
         verify_function_passed(request)
         if request.method == 'POST' and request.FILES['myfile']:
@@ -155,7 +162,10 @@ def passport_photo_size(request):
                 image_input_size = data[country]
                 image_input_size = image_input_size.split(',')
                 image_resize(image_url, output_url, width=image_input_size[0], height=image_input_size[1])
-                color_bg_and_add_border(output_url, output_url, (255,255,255))
+                logger.info("change background and border only if required")
+                bg_change_flag = request.data.get("background_req", False)
+                if((not bg_change_flag) or (bg_change_flag and (request.POST['background_req'] == "yes"))):
+                    color_bg_and_add_border(output_url, output_url, (255, 255, 255))
                 if country in lines:
                     text = spects_detector(image_url)
                     print(text)
@@ -186,7 +196,7 @@ def passport_photo_size(request):
 def resize(request):
     return_dict = {}
     try:
-        print("Resize functionality called")
+        logger.info("Resize functionality")
         image_url, output_url, api_root, myfile = initial_checks(request)
         verify_resize_passed(request)
         image_input_size = request.POST['resize']
