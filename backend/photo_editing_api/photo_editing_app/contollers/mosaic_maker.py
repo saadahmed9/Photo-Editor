@@ -7,6 +7,11 @@ import math
 from scipy import spatial
 import random
 import cv2
+import logging
+
+logging.basicConfig(format= '[%(asctime)s] %(message)s')
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 def load_image(source : str) -> np.ndarray:
     ''' Opens an image from specified source and returns a numpy array with image rgb data
@@ -59,13 +64,12 @@ def mosaicmaker(input_path,output_path):
     #import list of images as an array
     images = []
 
+    logger.info("extracting images using glob")
     for file in glob.glob(r'E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\Mosaic-input\*'):
         im = load_tile_image(file)
         images.append(im)
 
-
-
-
+    logger.info("retrieved images")
     #definig size for mosaic image
     mosaic_size = (40, 40)  ## Defines size of each mosiac image
     images = [resize_image(Image.fromarray(i), mosaic_size) for i in images]
@@ -97,6 +101,7 @@ def mosaicmaker(input_path,output_path):
     canvas = Image.new('RGB', (mosaic_size[0] * target_res[0], mosaic_size[1] * target_res[1]))
     print()
 
+    logger.info("Building mosaic image")
     for i in range(target_res[0]):
         for j in range(target_res[1]):
             arr = images[image_idx[j, i]]
@@ -104,8 +109,9 @@ def mosaicmaker(input_path,output_path):
             im = Image.fromarray(arr)
             canvas.paste(im, (x, y))
 
+    logger.info("Printing image")
     #canvas
-    print("Printing canvas", canvas)
     #canvas.save(r"E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\output\testing.png")
     canvas.save(output_path)
+    logger.info("post operation")
     #cv2.imwrite(r"E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\output\testing.png", canvas)
