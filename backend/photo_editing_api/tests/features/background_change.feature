@@ -1,5 +1,5 @@
-Feature: Photo resize operation
-  Scenario: Input photo needs to be resized based on user input
-    Given Resize API is up and running
-    When User clicks on photo resize operation
-    Then verify that resize operation is working
+Feature: Background change operation
+  Scenario: Input photo's background needs to be updated based on user input
+    Given Background change API is up and running
+    When User clicks on background change operation
+    Then verify that background change operation is working
