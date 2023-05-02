@@ -10,6 +10,7 @@ from photo_editing_app.contollers.resize_operation import image_resize
 from photo_editing_app.contollers.specs_finder import spects_detector
 from photo_editing_app.contollers.noise_removal import noiseremoval
 from photo_editing_app.contollers.pdf_maker import convert_images_to_pdf
+from photo_editing_app.contollers.mosaic_maker import mosaicmaker
 from matplotlib import colors
 from photo_editing_app.contollers.background_change import color_bg_and_add_border
 from rest_framework.reverse import reverse_lazy
@@ -315,6 +316,31 @@ def pdf_maker(request):
         print("Image conversion is done")
         return_dict['output_url'] = api_root+r"static/"+ myfile_list[0].name.split('.')[0] + ".pdf"
         #return_dict['output_url'] = api_root + r"static/" + "output.pdf"
+        with open(output_url, 'rb') as f:
+            image_data = f.read()
+        image_base64 = base64.b64encode(image_data).decode('utf-8')
+        return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"
+        return_dict['error'] = False
+        return_dict['message'] = "Successfully Processed "
+        return_dict['status'] = 200
+        return_dict["Statistics"] = get_stats()
+
+    #ABC for the below implement another method for exceptions
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+    return Response(return_dict)
+
+@api_view(('POST',))
+@csrf_exempt
+def mosaic_maker(request):
+    return_dict = {}
+    try:
+        image_url, output_url, api_root, myfile = initial_checks(request)
+
+        mosaicmaker(image_url, output_url)
+        return_dict['output_url'] = api_root+r"static/"+ myfile.name
         with open(output_url, 'rb') as f:
             image_data = f.read()
         image_base64 = base64.b64encode(image_data).decode('utf-8')
