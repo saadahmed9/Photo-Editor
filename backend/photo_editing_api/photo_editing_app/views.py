@@ -144,6 +144,28 @@ def initial_checks_multi_files(request):
         return_dict['status'] = 400
     return image_url_list, output_url, api_root, myfile_list
 
+def get_mosaic_files_list(request):
+    # create_application_folder_if_not_exit()
+    count = 0
+    if request.method == 'POST':
+        function_name = request.POST['function']
+        myfile_list = []
+        myfile_name_list = []
+        image_url_list = []
+        img_dir = "\\".join(BASE_DIR.split("\\"))
+        for file in request.FILES.getlist('myfile_folder'):
+            count = count + 1
+            myfile_list.append(file)
+            myfile_name_list.append(file.name.replace(" ", ""))
+            full_path = img_dir + r"\media\Mosaic-input\\" + file.name.replace(" ", "")
+            image_url_list.append(full_path)
+            f = open(full_path, "wb")
+            for chunk in file.chunks():
+                f.write(chunk)
+            f.close()
+        print("Just before calling the function")
+    return image_url_list, count
+
 @api_view(('POST',))
 @csrf_exempt
 def passport_photo_size(request):
@@ -338,8 +360,13 @@ def mosaic_maker(request):
     return_dict = {}
     try:
         image_url, output_url, api_root, myfile = initial_checks(request)
+        images_list, images_count = get_mosaic_files_list(request)
 
-        mosaicmaker(image_url, output_url)
+        #abc updating folder path with images list
+        logger.info("Number of images selected are ", images_count)
+        folder_path = r"E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\Mosaic-input\\"
+        #request.FILES.getlist('myfile')
+        mosaicmaker(image_url, output_url, images_list, images_count)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
         with open(output_url, 'rb') as f:
             image_data = f.read()
