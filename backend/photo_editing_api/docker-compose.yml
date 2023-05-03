@@ -7,11 +7,11 @@ services:
 #    build:
 #      context: .
 #      dockerfile: Dockerfile
-    image : arjun3816/photo_editor_api_img:0.1
+    image : arjun3816/photo_editor_api_img:0.2
     networks:
       - "UB_Network"
     ports:
-      - "8000:80"
+      - "8010:8010"
     depends_on:
       - photo_editor_Service
     volumes:
@@ -24,7 +24,7 @@ services:
     networks:
       - "UB_Network"
     ports:
-      - "5432:5431"
+      - "5432:5432"
     volumes:
       - "./postgres-data/data:/var/lib/postgresql/data"
     environment:
