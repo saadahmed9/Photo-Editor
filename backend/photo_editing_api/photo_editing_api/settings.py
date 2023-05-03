@@ -88,9 +88,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'photo_editing_db',
         'USER': 'postgres',
-        'PASSWORD':'root',
-        'HOST': '127.0.0.1',
-        #'HOST':'photo_editor_Service',
+        'PASSWORD':'postgres',
+        # 'HOST': '127.0.0.1',
+        'HOST':'52.118.208.240',
         'PORT': '5432',
     }
 }
@@ -122,7 +122,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://192.168.1.80:3000',
     'http://192.168.1.62:3000',
-    'http://192.168.56.1:3000'
+    'http://192.168.56.1:3000',
+    'https://postgres.11p5m57if4on.us-east.codeengine.appdomain.cloud:5432'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
