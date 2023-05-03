@@ -38,10 +38,17 @@
 									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
-									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
-									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
 									"  console.log(pm.response)\r",
-									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Passport photo creation response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 20000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Passport photo creation endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
 									"});\r",
 									"\r",
 									""
@@ -133,10 +140,17 @@
 									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
-									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
-									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
 									"  console.log(pm.response)\r",
-									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Background change average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 20000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The background endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
 									"});\r",
 									"\r",
 									""
@@ -211,10 +225,17 @@
 									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
-									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
-									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
 									"  console.log(pm.response)\r",
-									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Format change average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 150;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Format change endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
 									"});\r",
 									"\r",
 									""
@@ -232,7 +253,7 @@
 								{
 									"key": "myfile",
 									"type": "file",
-									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/testimage1.png"
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/noise_removal_img.jpeg"
 								},
 								{
 									"key": "function",
@@ -289,10 +310,17 @@
 									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
-									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
-									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
 									"  console.log(pm.response)\r",
-									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resize average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 200;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Resize endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
 									"});\r",
 									"\r",
 									""
@@ -343,6 +371,102 @@
 					"response": []
 				},
 				{
+					"name": "Mosaic Maker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  console.log(pm.response)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Mosaic maker average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 500;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Mosaic maker endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/UB1024logo1 (1).png"
+								},
+								{
+									"key": "function",
+									"value": "mosaic_maker",
+									"type": "text"
+								},
+								{
+									"key": "myfile_folder",
+									"type": "file",
+									"src": [
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47000.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47001.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47002.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47003.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47004.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47005.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47006.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47007.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47008.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47009.png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/mosaic_maker/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"mosaic_maker",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Noise Removal",
 					"event": [
 						{
@@ -367,10 +491,17 @@
 									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
-									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
-									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
 									"  console.log(pm.response)\r",
-									"  //console.log(pm.request.body.to.have(\"\"))\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Noise removal average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 200;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Noise removal endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
 									"});\r",
 									"\r",
 									""
@@ -440,10 +571,7 @@
 									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
 									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
-									"  //pm.expect(pm.request.body).haveOwnProperty('function');\r",
-									"  //pm.expect(pm.request.body).to.have.property(\"function\", \"passport_photo_size\");\r",
 									"  console.log(pm.response)\r",
-									"  //console.log(pm.request.body.to.have(\"\"))\r",
 									"});\r",
 									"\r",
 									"pm.test(\"PDF maker average response time\", () => {\r",
