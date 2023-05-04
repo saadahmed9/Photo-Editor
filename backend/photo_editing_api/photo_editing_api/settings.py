@@ -115,7 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 CORS_ORIGINAL_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 ALLOWED_HOSTS = ['*']
-CORS_ALLOWED_ORIGINS = ['http://192.168.1.80:3000','http://192.168.1.62:3000','http://192.168.56.1:3000','http://192.168.56.1:3000' ]
+CORS_ALLOWED_ORIGINS = ['http://192.168.1.80:3000','http://192.168.1.62:3000','http://192.168.56.1:3000','http://192.168.56.1:3000',
+                        'https://photoeditorui.11p5m57if4on.us-east.codeengine.appdomain.cloud']
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
@@ -123,7 +124,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://192.168.1.80:3000',
     'http://192.168.1.62:3000',
     'http://192.168.56.1:3000',
-    'https://postgres.11p5m57if4on.us-east.codeengine.appdomain.cloud:5432'
+    'https://postgres.11p5m57if4on.us-east.codeengine.appdomain.cloud:5432',
+    'https://photoeditorui.11p5m57if4on.us-east.codeengine.appdomain.cloud'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -131,7 +133,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
     'http://192.168.1.80',
     'http://192.168.1.62',
-    'http://192.168.56.1'
+    'http://192.168.56.1',
+    'https://photoeditorui.11p5m57if4on.us-east.codeengine.appdomain.cloud'
 ]
 
 # Internationalization

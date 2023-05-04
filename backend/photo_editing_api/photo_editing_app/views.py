@@ -251,10 +251,14 @@ def format_change(request):
         image_url, output_url, api_root, myfile = initial_checks(request)
         verify_format_change_passed(request)
         required_format = request.POST['format_change']
+        part1, part2 = myfile.name.split('.')
+
+        img_dir = "\\".join(BASE_DIR.split("\\"))
+        output_url = img_dir + r"\media\output\\" + part1+"."+required_format
+
         image = cv2.imread(image_url)
         file_name = os.path.splitext(output_url)
         cv2.imwrite(file_name[0]+"."+required_format, image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
-        part1,part2 = myfile.name.split('.')
         print("Format change functionality passed")
         return_dict['output_url'] = api_root+r"static/"+part1+"."+required_format
         with open(output_url, 'rb') as f:
@@ -338,10 +342,11 @@ def pdf_maker(request):
         print("Image conversion is done")
         return_dict['output_url'] = api_root+r"static/"+ myfile_list[0].name.split('.')[0] + ".pdf"
         #return_dict['output_url'] = api_root + r"static/" + "output.pdf"
-        with open(output_url, 'rb') as f:
-            image_data = f.read()
-        image_base64 = base64.b64encode(image_data).decode('utf-8')
-        return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"
+        with open("\\".join(BASE_DIR.split("\\")) + r"\media\output\\" + myfile_list[0].name.split('.')[0] + ".pdf",
+                  'rb') as pdf_file:
+            pdf_data = pdf_file.read()
+        pdf_data_base64 = base64.b64encode(pdf_data).decode('utf-8')
+        return_dict['imageUrl'] = f"data:application/pdf;base64,{pdf_data_base64}"
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200

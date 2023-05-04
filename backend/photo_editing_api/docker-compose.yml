@@ -7,7 +7,7 @@ services:
 #    build:
 #      context: .
 #      dockerfile: Dockerfile
-    image : arjun3816/photo_editor_api_img:0.2
+    image : arjun3816/photo_editor_api_img:0.3
     networks:
       - "UB_Network"
     ports:

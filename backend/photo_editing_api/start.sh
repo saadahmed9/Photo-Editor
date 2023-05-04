@@ -6,5 +6,5 @@ python manage.py loaddata  fixtures/data.json
 
 service cron start
 
-python manage.py runserver 0.0.0.0:8010
+python manage.py runserver 0.0.0.0:80
 
