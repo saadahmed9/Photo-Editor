@@ -86,11 +86,11 @@ WSGI_APPLICATION = 'photo_editing_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'photo_editing_db',
+        'NAME': 'photo_editing_db1',
         'USER': 'postgres',
-        'PASSWORD':'postgres',
-        # 'HOST': '127.0.0.1',
-        'HOST':'52.118.208.240',
+        'PASSWORD':'root',
+        'HOST': '127.0.0.1',
+        #'HOST':'52.118.208.240',
         'PORT': '5432',
     }
 }
