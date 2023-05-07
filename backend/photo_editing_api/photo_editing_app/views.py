@@ -172,6 +172,7 @@ def passport_photo_size(request):
     return_dict = {}
     try:
         image_url, output_url, api_root, myfile = initial_checks(request)
+
         verify_country_passed(request)
         full_str = ""
         img = passport_photo_face(image_url,output_url)
@@ -221,6 +222,7 @@ def resize(request):
     try:
         logger.info("Resize functionality")
         image_url, output_url, api_root, myfile = initial_checks(request)
+
         verify_resize_passed(request)
         image_input_size = request.POST['resize']
         image_input_size = image_input_size.split(',')
@@ -249,6 +251,7 @@ def format_change(request):
     return_dict = {}
     try:
         image_url, output_url, api_root, myfile = initial_checks(request)
+
         verify_format_change_passed(request)
         required_format = request.POST['format_change']
         part1, part2 = myfile.name.split('.')
@@ -336,7 +339,11 @@ def pdf_maker(request):
     return_dict = {}
     try:
         image_url_list, output_url, api_root, myfile_list = initial_checks_multi_files(request)
-
+        function_name = request.POST['function']
+        function_obj = get_count_by_function_name(function_name)
+        count_val = FunctionActivitySerializer(function_obj).data['function_count']
+        temp_val = count_val + 1
+        update_count(function_obj, function_name, temp_val)
         #convert_images_to_pdf(image_url_list, output_url)
         convert_images_to_pdf(image_url_list, output_url)
         print("Image conversion is done")

@@ -40,5 +40,19 @@
   "fields": {
     "function_name": "resize"
   }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 7,
+  "fields": {
+    "function_name": "pdf_maker"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 8,
+  "fields": {
+    "function_name": "mosaic_maker"
+  }
 }
 ]

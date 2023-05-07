@@ -88,9 +88,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'photo_editing_db',
         'USER': 'postgres',
-        'PASSWORD':'postgres',
-        # 'HOST': '127.0.0.1',
-        'HOST':'52.118.208.240',
+        'PASSWORD':'Arjunusa@140482',
+        'HOST': '127.0.0.1',
+        # 'HOST':'52.118.208.240',
         'PORT': '5432',
     }
 }
