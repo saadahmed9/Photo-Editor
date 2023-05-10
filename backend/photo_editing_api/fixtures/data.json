@@ -17,7 +17,7 @@
   "model": "photo_editing_app.functionactivity",
   "pk": 3,
   "fields": {
-    "function_name": "photo_college"
+    "function_name": "photo_collage"
   }
 },
 {
@@ -53,6 +53,13 @@
   "pk": 8,
   "fields": {
     "function_name": "mosaic_maker"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 9,
+  "fields": {
+    "function_name": "crop"
   }
 }
 ]

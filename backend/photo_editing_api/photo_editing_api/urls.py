@@ -28,4 +28,7 @@ urlpatterns = [
     path('noise_removal/', views.noise_removal, name='noise_removal'),
     path('pdf_maker/', views.pdf_maker, name='pdf_maker'),
     path('mosaic_maker/', views.mosaic_maker, name='mosaic_maker'),
+    path('photo_collage/', views.photo_collage, name='photo_collage'),
+    path('crop/', views.crop_image, name='crop'),
+    path('stats/', views.get_db_stat, name='stats')
 ]
