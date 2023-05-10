@@ -340,6 +340,10 @@ def pdf_maker(request):
     try:
         image_url_list, output_url, api_root, myfile_list = initial_checks_multi_files(request)
         function_name = request.POST['function']
+        function_obj = get_count_by_function_name(function_name)
+        count_val = FunctionActivitySerializer(function_obj).data['function_count']
+        temp_val = count_val + 1
+        # update_count(function_obj, function_name, temp_val)
         #convert_images_to_pdf(image_url_list, output_url)
         convert_images_to_pdf(image_url_list, output_url)
         print("Image conversion is done")
