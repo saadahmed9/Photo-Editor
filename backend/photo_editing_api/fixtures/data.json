@@ -61,5 +61,12 @@
   "fields": {
     "function_name": "crop"
   }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 10,
+  "fields": {
+    "function_name": "brightness_contrast"
+  }
 }
 ]

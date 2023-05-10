@@ -15,7 +15,7 @@ def update_count(obj,function_name,count_val):
 def get_stats():
     dict_stat = {}
     functionality_list = ['passport_photo_size', 'background_change', 'photo_collage', 'noise_removal', 'format_change',
-                          'resize','pdf_maker','mosaic_maker','crop']
+                          'resize','pdf_maker','mosaic_maker','crop','brightness_contrast']
     for i in functionality_list:
         function_obj = get_count_by_function_name(i)
         count_val = FunctionActivitySerializer(function_obj).data['function_count']

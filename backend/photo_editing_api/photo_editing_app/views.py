@@ -530,6 +530,30 @@ def crop_image(request):
 
 @api_view(('POST',))
 @csrf_exempt
+def brightness_contrast(request):
+    return_dict = {}
+    try:
+        verify_function_passed(request)
+        if request.method == 'POST':
+            function_name = request.POST['function']
+            if function_name == 'brightness_contrast':
+                function_obj = get_count_by_function_name(function_name)
+                count_val = FunctionActivitySerializer(function_obj).data['function_count']
+                temp_val = count_val + 1
+                update_count(function_obj, function_name, temp_val)
+                return_dict["message"] = "brightness_contrast updated successfully"
+                return_dict['error'] = False
+                return_dict['status'] = 200
+                return_dict["Statistics"] = get_stats()
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+    return Response(return_dict)
+
+
+@api_view(('POST',))
+@csrf_exempt
 def get_db_stat(request):
     return_dict = {}
     try:
