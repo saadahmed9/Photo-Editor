@@ -5,7 +5,9 @@ def image_resize(image,output_url,width, height, inter = cv2.INTER_AREA):
     height = int(height)
     width = int(width)
     image = cv2.imread(image)
-    (h, w) = image.shape[:2]
+#     (h, w) = image.shape[:2]
+    h = height
+    w = width
     if width is None and height is None:
         return image
     if width is None:
