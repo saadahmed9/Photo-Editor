@@ -44,7 +44,9 @@ def create_application_folder_if_not_exit():
 def is_image(file):
     filename,file_extension = os.path.splitext(file)
     file_extension = file_extension.lower()
-    if file_extension == ".jpg" or file_extension == ".jpeg" or file_extension == ".png":
+    if file_extension == ".jpg" or file_extension == ".jpeg" or file_extension == ".png" or file_extension == ".tif"\
+            or file_extension == ".bmp" or file_extension == ".jp2" or file_extension == ".webp" or file_extension == ".exr"\
+            or file_extension == ".pic" or file_extension == ".hdr" or file_extension == ".svg":
         return True
     return False
 
@@ -63,85 +65,124 @@ f = open('media/datasets/countries.json')
 data = json.load(f)
 
 f1 = open('media/datasets/countrywise_specs.txt')
-lines = f1.readline()
+# lines = f1.readlines()
+lines = [line.rstrip() for line in f1]
+print("Printing countires with no specs", lines)
+
+# def initial_checks(request):
+#     return_dict = {}
+#     try:
+#         # create_application_folder_if_not_exit()
+#         logger.info("Initial checks being performed")
+#         verify_upload_file_passed(request)
+#         verify_function_passed(request)
+#         if request.method == 'POST' and request.FILES['myfile']:
+#             function_name = request.POST['function']
+#             myfile = request.FILES['myfile']
+#             myfile.name = myfile.name.replace(" ", "")
+#             img_dir = "\\".join(BASE_DIR.split("\\"))
+#             image_url = img_dir+r"\media\uploads\\"+myfile.name
+#             output_url = img_dir+r"\media\output\\"+myfile.name
+#             f = open(image_url,"wb")
+#             for chunk in request.FILES['myfile'].chunks():
+#                 f.write(chunk)
+#             f.close()
+#             api_root = reverse_lazy('upload',request = request)
+#             api_root = api_root[:-7]
+#             print("File check is", is_image(myfile.name))
+#             if is_image(myfile.name):
+#                 verify_functionality_passed(request)
+#                 function_obj = get_count_by_function_name(function_name)
+#                 count_val = FunctionActivitySerializer(function_obj).data['function_count']
+#                 temp_val = count_val + 1
+#                 update_count(function_obj, function_name, temp_val)
+#             else:
+#                 print("Inside exception")
+#                 raise Exception("only image files are accepted as input")
+#                 #raise SuspiciousOperation("only image files are accepted as input")
+#     #ABC call a function for below as below
+#     except Exception as e:
+#         return_dict["message"] = str(e)
+#         return_dict['error'] = True
+#         return_dict['status'] = 400
+#     return image_url, output_url, api_root, myfile
+
 
 def initial_checks(request):
     return_dict = {}
-    try:
-        # create_application_folder_if_not_exit()
-        logger.info("Initial checks being performed")
-        verify_upload_file_passed(request)
-        verify_function_passed(request)
-        if request.method == 'POST' and request.FILES['myfile']:
-            function_name = request.POST['function']
-            myfile = request.FILES['myfile']
-            myfile.name = myfile.name.replace(" ", "")
-            img_dir = "\\".join(BASE_DIR.split("\\"))
-            image_url = img_dir+r"\media\uploads\\"+myfile.name
-            output_url = img_dir+r"\media\output\\"+myfile.name
-            f = open(image_url,"wb")
-            for chunk in request.FILES['myfile'].chunks():
-                f.write(chunk)
-            f.close()
-            api_root = reverse_lazy('upload',request = request)
-            api_root = api_root[:-7]
-            if is_image(myfile.name):
-                verify_functionality_passed(request)
-                function_obj = get_count_by_function_name(function_name)
-                count_val = FunctionActivitySerializer(function_obj).data['function_count']
-                temp_val = count_val + 1
-                update_count(function_obj, function_name, temp_val)
-            else:
-                raise SuspiciousOperation("only image files are accepted as input")
+    # create_application_folder_if_not_exit()
+    logger.info("Initial checks being performed")
+    verify_upload_file_passed(request)
+    verify_function_passed(request)
+    if request.method == 'POST' and request.FILES['myfile']:
+        function_name = request.POST['function']
+        myfile = request.FILES['myfile']
+        myfile.name = myfile.name.replace(" ", "")
+        img_dir = "\\".join(BASE_DIR.split("\\"))
+        image_url = img_dir+r"\media\uploads\\"+myfile.name
+        output_url = img_dir+r"\media\output\\"+myfile.name
+        f = open(image_url,"wb")
+        for chunk in request.FILES['myfile'].chunks():
+            f.write(chunk)
+        f.close()
+        api_root = reverse_lazy('upload',request = request)
+        api_root = api_root[:-7]
+        print("File check is", is_image(myfile.name))
+        if is_image(myfile.name):
+            logger.info("Performing initial checks")
+            verify_functionality_passed(request)
+            function_obj = get_count_by_function_name(function_name)
+            count_val = FunctionActivitySerializer(function_obj).data['function_count']
+            temp_val = count_val + 1
+            update_count(function_obj, function_name, temp_val)
+        else:
+            print("Inside exception")
+            raise SuspiciousOperation("only image files are accepted as input")
     #ABC call a function for below as below
-    except Exception as e:
-        return_dict["message"] = str(e)
-        return_dict['error'] = True
-        return_dict['status'] = 400
     return image_url, output_url, api_root, myfile
 
 def initial_checks_multi_files(request):
     return_dict = {}
-    try:
-        # create_application_folder_if_not_exit()
-        #verify_upload_file_passed(request)
-        verify_function_passed(request)
-        if request.method == 'POST':
-        #if request.method == 'POST' and request.FILES['myfile']:
-            function_name = request.POST['function']
-            myfile_list = []
-            myfile_name_list = []
-            image_url_list = []
-            img_dir = "\\".join(BASE_DIR.split("\\"))
-            for file in request.FILES.getlist('myfile'):
-                myfile_list.append(file)
-                myfile_name_list.append(file.name.replace(" ", ""))
-                full_path = img_dir + r"\media\uploads\\" + file.name.replace(" ", "")
-                image_url_list.append(full_path)
-                f = open(full_path, "wb")
-                for chunk in file.chunks():
-                    f.write(chunk)
-                f.close()
-            output_url = img_dir + r"\media\output\\" + myfile_list[0].name.split('.')[0] + ".pdf"
 
-            api_root = reverse_lazy('upload',request = request)
-            print("Just before calling the function")
-            api_root = api_root[:-7]
-            if True:
-            #if all(map(is_image, image_url_list)):
-                print("Inside the function")
-                verify_functionality_passed(request)
-                function_obj = get_count_by_function_name(function_name)
-                count_val = FunctionActivitySerializer(function_obj).data['function_count']
-                temp_val = count_val + 1
-                update_count(function_obj, function_name, temp_val)
-            else:
-                raise SuspiciousOperation("only image files are accepted as input")
+    # create_application_folder_if_not_exit()
+    #verify_upload_file_passed(request)
+    verify_function_passed(request)
+    if request.method == 'POST':
+    #if request.method == 'POST' and request.FILES['myfile']:
+        function_name = request.POST['function']
+        myfile_list = []
+        myfile_name_list = []
+        image_url_list = []
+        img_dir = "\\".join(BASE_DIR.split("\\"))
+        for file in request.FILES.getlist('myfile'):
+            myfile_list.append(file)
+            myfile_name_list.append(file.name.replace(" ", ""))
+            full_path = img_dir + r"\media\uploads\\" + file.name.replace(" ", "")
+            image_url_list.append(full_path)
+            f = open(full_path, "wb")
+            for chunk in file.chunks():
+                f.write(chunk)
+            f.close()
+        output_url = img_dir + r"\media\output\\" + myfile_list[0].name.split('.')[0] + ".pdf"
+
+        api_root = reverse_lazy('upload',request = request)
+        print("Just before calling the function")
+        api_root = api_root[:-7]
+        if True:
+        #if all(map(is_image, image_url_list)):
+            print("Inside the function")
+            verify_functionality_passed(request)
+            function_obj = get_count_by_function_name(function_name)
+            count_val = FunctionActivitySerializer(function_obj).data['function_count']
+            temp_val = count_val + 1
+            update_count(function_obj, function_name, temp_val)
+        else:
+            raise SuspiciousOperation("only image files are accepted as input")
     #ABC call a function for below as below
-    except Exception as e:
-        return_dict["message"] = str(e)
-        return_dict['error'] = True
-        return_dict['status'] = 400
+    # except Exception as e:
+    #     return_dict["message"] = str(e)
+    #     return_dict['error'] = True
+    #     return_dict['status'] = 400
     return image_url_list, output_url, api_root, myfile_list
 
 def get_mosaic_files_list(request):
