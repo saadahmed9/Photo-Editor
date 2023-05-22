@@ -44,7 +44,7 @@ def remove_img():
 
 
 def info():
-    print("Running cron job for every 10 minutes")
+    print("Running cron job")
 
 # Task scheduling
 schedule.every(1).minutes.do(remove_img)

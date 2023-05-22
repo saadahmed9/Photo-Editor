@@ -14,8 +14,10 @@ from photo_editing_app.contollers.mosaic_maker import mosaicmaker
 from matplotlib import colors
 from photo_editing_app.contollers.background_change import color_bg_and_add_border
 from rest_framework.reverse import reverse_lazy
-from photo_editing_app.contollers.get_objects import get_count_by_function_name,update_count,get_stats, get_stats_inmemory
-from photo_editing_app.serializers import FunctionActivitySerializer
+#from photo_editing_app.contollers.get_objects import get_count_by_function_name,update_count,get_stats, get_stats_inmemory
+from photo_editing_app.contollers.get_objects import get_stats_inmemory
+from photo_editing_app.contollers.get_statistics import read_stats,write_stats
+#from photo_editing_app.serializers import FunctionActivitySerializer
 from photo_editing_app.contollers.pose_detection import pose_detector
 from photo_editing_app.contollers.verify_params_controller import verify_resize_passed,verify_upload_file_passed,verify_function_passed,verify_functionality_passed,verify_format_change_passed,verify_colour_passed,verify_country_passed
 from PIL import ImageColor
@@ -131,10 +133,10 @@ def initial_checks(request):
         if is_image(myfile.name):
             logger.info("Performing initial checks")
             verify_functionality_passed(request)
-            function_obj = get_count_by_function_name(function_name)
-            count_val = FunctionActivitySerializer(function_obj).data['function_count']
-            temp_val = count_val + 1
-            update_count(function_obj, function_name, temp_val)
+            # function_obj = get_count_by_function_name(function_name)
+            # count_val = FunctionActivitySerializer(function_obj).data['function_count']
+            #temp_val = count_val + 1
+            #update_count(function_obj, function_name, temp_val)
         else:
             print("Inside exception")
             raise SuspiciousOperation("only image files are accepted as input")
@@ -172,10 +174,10 @@ def initial_checks_multi_files(request):
         #if all(map(is_image, image_url_list)):
             print("Inside the function")
             verify_functionality_passed(request)
-            function_obj = get_count_by_function_name(function_name)
-            count_val = FunctionActivitySerializer(function_obj).data['function_count']
-            temp_val = count_val + 1
-            update_count(function_obj, function_name, temp_val)
+            # function_obj = get_count_by_function_name(function_name)
+            # count_val = FunctionActivitySerializer(function_obj).data['function_count']
+            #temp_val = count_val + 1
+            #update_count(function_obj, function_name, temp_val)
         else:
             raise SuspiciousOperation("only image files are accepted as input")
     #ABC call a function for below as below
@@ -217,6 +219,13 @@ def passport_photo_size(request):
         verify_country_passed(request)
         full_str = ""
         img = passport_photo_face(image_url,output_url)
+
+        stats_onj = read_stats()
+        val = stats_onj["passport_photo_size"]
+        crop_count = val + 1
+        newData = {"passport_photo_size": crop_count}
+        write_stats(newData)
+
         full_str = full_str+img
         return_dict["face detection"] = full_str
         if 'No' not in return_dict["face detection"]:
@@ -244,10 +253,11 @@ def passport_photo_size(request):
                 image_base64 = base64.b64encode(image_data).decode('utf-8')
                 return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"
         #ABC call another function for the below till statistics
+
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats_inmemory("passport_photo_size")
+        return_dict["Statistics"] = read_stats()
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -265,6 +275,11 @@ def resize(request):
         image_url, output_url, api_root, myfile = initial_checks(request)
 
         verify_resize_passed(request)
+        stats_onj = read_stats()
+        val = stats_onj["resize"]
+        crop_count = val + 1
+        newData = {"resize": crop_count}
+        write_stats(newData)
         image_input_size = request.POST['resize']
         image_input_size = image_input_size.split(',')
         image_resize(image_url,output_url,width=image_input_size[0],height=image_input_size[1])
@@ -277,7 +292,7 @@ def resize(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats_inmemory("resize")
+        return_dict["Statistics"] = read_stats()
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -294,6 +309,11 @@ def format_change(request):
         image_url, output_url, api_root, myfile = initial_checks(request)
 
         verify_format_change_passed(request)
+        stats_onj = read_stats()
+        val = stats_onj["format_change"]
+        crop_count = val + 1
+        newData = {"format_change": crop_count}
+        write_stats(newData)
         required_format = request.POST['format_change']
         part1, part2 = myfile.name.split('.')
 
@@ -312,7 +332,7 @@ def format_change(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats_inmemory("format_change")
+        return_dict["Statistics"] = read_stats()
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -329,6 +349,11 @@ def background_change(request):
         image_url, output_url, api_root, myfile = initial_checks(request)
 
         verify_colour_passed(request)
+        stats_onj = read_stats()
+        val = stats_onj["background_change"]
+        crop_count = val + 1
+        newData = {"background_change": crop_count}
+        write_stats(newData)
         colour_option = request.POST['background_change']
         hexa_code = colour_option
         colour_code = ImageColor.getcolor(hexa_code, "RGB")
@@ -341,7 +366,7 @@ def background_change(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats_inmemory("background_change")
+        return_dict["Statistics"] = read_stats()
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -355,7 +380,11 @@ def noise_removal(request):
     return_dict = {}
     try:
         image_url, output_url, api_root, myfile = initial_checks(request)
-
+        stats_onj = read_stats()
+        val = stats_onj["noise_removal"]
+        crop_count = val + 1
+        newData = {"noise_removal": crop_count}
+        write_stats(newData)
         noiseremoval(image_url, output_url)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
         with open(output_url, 'rb') as f:
@@ -365,7 +394,7 @@ def noise_removal(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats_inmemory("noise_removal")
+        return_dict["Statistics"] = read_stats()
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -380,10 +409,15 @@ def pdf_maker(request):
     return_dict = {}
     try:
         image_url_list, output_url, api_root, myfile_list = initial_checks_multi_files(request)
+        stats_onj = read_stats()
+        val = stats_onj["pdf_maker"]
+        crop_count = val + 1
+        newData = {"pdf_maker": crop_count}
+        write_stats(newData)
         function_name = request.POST['function']
-        function_obj = get_count_by_function_name(function_name)
-        count_val = FunctionActivitySerializer(function_obj).data['function_count']
-        temp_val = count_val + 1
+        # function_obj = get_count_by_function_name(function_name)
+        # count_val = FunctionActivitySerializer(function_obj).data['function_count']
+        #temp_val = count_val + 1
         # update_count(function_obj, function_name, temp_val)
         #convert_images_to_pdf(image_url_list, output_url)
         convert_images_to_pdf(image_url_list, output_url)
@@ -398,7 +432,7 @@ def pdf_maker(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats_inmemory("pdf_maker")
+        return_dict["Statistics"] = read_stats()
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -413,7 +447,13 @@ def mosaic_maker(request):
     return_dict = {}
     try:
         image_url, output_url, api_root, myfile = initial_checks(request)
+        stats_onj = read_stats()
+        val = stats_onj["mosaic_maker"]
+        crop_count = val + 1
+        newData = {"mosaic_maker": crop_count}
+        write_stats(newData)
         images_list, images_count = get_mosaic_files_list(request)
+
 
         #abc updating folder path with images list
         logger.info("Number of images selected are ", images_count)
@@ -428,7 +468,7 @@ def mosaic_maker(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats_inmemory("mosaic_maker")
+        return_dict["Statistics"] = read_stats()
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -460,10 +500,10 @@ def upload(request):
             api_root = api_root[:-7]
             if is_image(myfile.name):
                 verify_functionality_passed(request)
-                function_obj = get_count_by_function_name(function_name)
-                count_val = FunctionActivitySerializer(function_obj).data['function_count']
-                temp_val = count_val + 1
-                update_count(function_obj, function_name, temp_val)
+                # function_obj = get_count_by_function_name(function_name)
+                # count_val = FunctionActivitySerializer(function_obj).data['function_count']
+                # temp_val = count_val + 1
+                #update_count(function_obj, function_name, temp_val)
                 if function_name == 'passport_photo_size':
                     verify_country_passed(request)
                     full_str = ""
@@ -512,7 +552,7 @@ def upload(request):
                 return_dict['error'] = False
                 return_dict['message'] = "Successfully Processed "
                 return_dict['status'] = 200
-                return_dict["Statistics"] = get_stats()
+                #return_dict["Statistics"] = get_stats()
             else:
                 raise SuspiciousOperation("only image files are accepted as input")
     except Exception as e:
@@ -527,17 +567,22 @@ def photo_collage(request):
     return_dict = {}
     try:
         verify_function_passed(request)
+        stats_onj = read_stats()
+        val = stats_onj["photo_collage"]
+        crop_count = val + 1
+        newData = {"photo_collage": crop_count}
+        write_stats(newData)
         if request.method == 'POST':
             function_name = request.POST['function']
             if function_name == 'photo_collage':
-                function_obj = get_count_by_function_name(function_name)
-                count_val = FunctionActivitySerializer(function_obj).data['function_count']
-                temp_val = count_val + 1
-                update_count(function_obj, function_name, temp_val)
+                # function_obj = get_count_by_function_name(function_name)
+                # count_val = FunctionActivitySerializer(function_obj).data['function_count']
+                # temp_val = count_val + 1
+               # update_count(function_obj, function_name, temp_val)
                 return_dict["message"] = "photo_collage updated successfully"
                 return_dict['error'] = False
                 return_dict['status'] = 200
-                return_dict["Statistics"] = get_stats_inmemory("photo_collage")
+                return_dict["Statistics"] = read_stats()
     except Exception as e:
         return_dict["message"] = str(e)
         return_dict['error'] = True
@@ -554,15 +599,21 @@ def crop_image(request):
         if request.method == 'POST':
             function_name = request.POST['function']
             if function_name == 'crop':
-                function_obj = get_count_by_function_name(function_name)
-                count_val = FunctionActivitySerializer(function_obj).data['function_count']
-                temp_val = count_val + 1
-                update_count(function_obj, function_name, temp_val)
+                # function_obj = get_count_by_function_name(function_name)
+                # count_val = FunctionActivitySerializer(function_obj).data['function_count']
+                # temp_val = count_val + 1
+                #update_count(function_obj, function_name, temp_val)
+                stats_onj = read_stats()
+                val = stats_onj["crop"]
+                crop_count = val + 1
+                newData = {"crop": crop_count}
+                write_stats(newData)
+
                 return_dict["message"] = "crop updated successfully"
                 return_dict['error'] = False
                 return_dict['status'] = 200
-                #return_dict["Statistics"] = get_stats()
-                return_dict["Statistics"] = get_stats_inmemory("crop")
+                return_dict["Statistics"] = read_stats()
+                #return_dict["Statistics"] = get_stats_inmemory("crop")
     except Exception as e:
         return_dict["message"] = str(e)
         return_dict['error'] = True
@@ -576,17 +627,22 @@ def brightness_contrast(request):
     return_dict = {}
     try:
         verify_function_passed(request)
+        stats_onj = read_stats()
+        val = stats_onj["brightness_contrast"]
+        crop_count = val + 1
+        newData = {"brightness_contrast": crop_count}
+        write_stats(newData)
         if request.method == 'POST':
             function_name = request.POST['function']
             if function_name == 'brightness_contrast':
-                function_obj = get_count_by_function_name(function_name)
-                count_val = FunctionActivitySerializer(function_obj).data['function_count']
-                temp_val = count_val + 1
-                update_count(function_obj, function_name, temp_val)
+                # function_obj = get_count_by_function_name(function_name)
+                # count_val = FunctionActivitySerializer(function_obj).data['function_count']
+                # temp_val = count_val + 1
+                #update_count(function_obj, function_name, temp_val)
                 return_dict["message"] = "brightness_contrast updated successfully"
                 return_dict['error'] = False
                 return_dict['status'] = 200
-                return_dict["Statistics"] = get_stats_inmemory("brightness_contrast")
+                return_dict["Statistics"] = read_stats()
     except Exception as e:
         return_dict["message"] = str(e)
         return_dict['error'] = True
@@ -603,7 +659,7 @@ def get_db_stat(request):
         if request.method == 'POST' :
             function_name = request.POST['function']
             if function_name == 'stats':
-                result = get_stats_inmemory()
+                result = read_stats()
                 sample_list = []
                 for item,value in result.items():
                     sample_list.append({'name':item,'level':value})
