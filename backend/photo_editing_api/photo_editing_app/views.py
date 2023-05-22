@@ -67,7 +67,7 @@ data = json.load(f)
 f1 = open('media/datasets/countrywise_specs.txt')
 # lines = f1.readlines()
 lines = [line.rstrip() for line in f1]
-print("Printing countires with no specs", lines)
+print("Printing countries with no specs", lines)
 
 # def initial_checks(request):
 #     return_dict = {}
