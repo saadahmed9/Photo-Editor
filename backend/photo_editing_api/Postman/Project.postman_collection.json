@@ -1,0 +1,814 @@
+{
+	"info": {
+		"_postman_id": "7a12bb80-e80f-4fdc-b2eb-00554552d100",
+		"name": "Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6595154",
+		"_collection_link": "https://warped-equinox-54232.postman.co/workspace/New-Team-Workspace~35c9cc55-32a6-4d53-ac9f-6db38d917f76/collection/6595154-7a12bb80-e80f-4fdc-b2eb-00554552d100?action=share&creator=6595154&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Photo_editor_IBM",
+			"item": [
+				{
+					"name": "Mosaic Maker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  console.log(pm.response)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Mosaic maker average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 10000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Mosaic maker endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/UB1024logo1 (1).png"
+								},
+								{
+									"key": "function",
+									"value": "mosaic_maker",
+									"type": "text"
+								},
+								{
+									"key": "myfile_folder",
+									"type": "file",
+									"src": [
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47000 - Copy - Copy.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47000 - Copy (2).png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47000 - Copy.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47000.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47001 - Copy.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47001.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47002.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47003.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47004.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47005 - Copy.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47005.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47006 - Copy.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47006.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47007 - Copy.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47007.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47008 - Copy.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47008.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47009.png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/mosaic_maker/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"mosaic_maker",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Format_change",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  console.log(pm.response)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Format change average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 5000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Format change endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47007 - Copy.png"
+								},
+								{
+									"key": "function",
+									"value": "format_change",
+									"type": "text"
+								},
+								{
+									"key": "format_change",
+									"value": "jpg",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/format_change/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"format_change",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "passport_photo_size",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('face detection');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('pose detector');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('Spects_detector');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  console.log(pm.response)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Passport photo creation response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 40000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Passport photo creation endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47005.png"
+								},
+								{
+									"key": "function",
+									"value": "passport_photo_size",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "France",
+									"type": "text"
+								},
+								{
+									"key": "background_req",
+									"value": "yes",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/passport_photo_size/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"passport_photo_size",
+								""
+							],
+							"query": [
+								{
+									"key": "myfile",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "function",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "background_change",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  console.log(pm.response)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Background change average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 20000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The background endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/WhatsApp Image 2023-04-12 at 7.02.19 PM.jpeg"
+								},
+								{
+									"key": "function",
+									"value": "background_change",
+									"type": "text"
+								},
+								{
+									"key": "background_change",
+									"value": "white",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/background_change/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"background_change",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resize",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  console.log(pm.response)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Resize average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 5000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Resize endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/face-4.png"
+								},
+								{
+									"key": "function",
+									"value": "resize",
+									"type": "text"
+								},
+								{
+									"key": "resize",
+									"value": "180,250",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/resize/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"resize",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Noise Removal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  console.log(pm.response)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Noise removal average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 5000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The Noise removal endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": "/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47000 - Copy (2).png"
+								},
+								{
+									"key": "function",
+									"value": "noise_removal",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/noise_removal/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"noise_removal",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pdf maker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"Successfully Processed \");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if response has all the functionality specific keys in the json\", function () {\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('output_url');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('imageUrl');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('error');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('message');\r",
+									"  pm.expect(pm.response.json()).haveOwnProperty('status');\r",
+									"  console.log(pm.response)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"PDF maker average response time\", () => {\r",
+									"  // set the response time in milliseconds\r",
+									"  const expectedTimeInMilliseconds = 4000;\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.lessThan(\r",
+									"    expectedTimeInMilliseconds + 1,\r",
+									"    `The PDF maker endpoint did not respond within ${expectedTimeInMilliseconds} ms. Response came in ${pm.response.responseTime} ms`\r",
+									"  );\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "myfile",
+									"type": "file",
+									"src": [
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47000.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47006 - Copy.png",
+										"/E:/Career/University at Buffalo/Semester 2/CSE_611/pics/Mosiac_10images-20230502T224810Z-001/Mosiac_10images/47007 - Copy.png"
+									]
+								},
+								{
+									"key": "function",
+									"value": "pdf_maker",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/pdf_maker/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"pdf_maker",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"photo_collage updated successfully\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "function",
+									"value": "photo_collage",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/photo_collage/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"photo_collage",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crop",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Message is successfully processed\", function () {\r",
+									"  pm.expect(pm.response.json().message).to.eql(\"crop updated successfully\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate if error response is false\", function () {\r",
+									"  pm.expect(pm.response.json().error).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "function",
+									"value": "crop",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/crop/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"crop",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "stats",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "function",
+									"value": "stats",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://application-79.11p5m57if4on.us-east.codeengine.appdomain.cloud/stats/",
+							"protocol": "https",
+							"host": [
+								"application-79",
+								"11p5m57if4on",
+								"us-east",
+								"codeengine",
+								"appdomain",
+								"cloud"
+							],
+							"path": [
+								"stats",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
