@@ -14,7 +14,7 @@ from photo_editing_app.contollers.mosaic_maker import mosaicmaker
 from matplotlib import colors
 from photo_editing_app.contollers.background_change import color_bg_and_add_border
 from rest_framework.reverse import reverse_lazy
-from photo_editing_app.contollers.get_objects import get_count_by_function_name,update_count,get_stats
+from photo_editing_app.contollers.get_objects import get_count_by_function_name,update_count,get_stats, get_stats_inmemory
 from photo_editing_app.serializers import FunctionActivitySerializer
 from photo_editing_app.contollers.pose_detection import pose_detector
 from photo_editing_app.contollers.verify_params_controller import verify_resize_passed,verify_upload_file_passed,verify_function_passed,verify_functionality_passed,verify_format_change_passed,verify_colour_passed,verify_country_passed
@@ -247,7 +247,7 @@ def passport_photo_size(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats()
+        return_dict["Statistics"] = get_stats_inmemory("passport_photo_size")
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -277,7 +277,7 @@ def resize(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats()
+        return_dict["Statistics"] = get_stats_inmemory("resize")
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -312,7 +312,7 @@ def format_change(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats()
+        return_dict["Statistics"] = get_stats_inmemory("format_change")
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -341,7 +341,7 @@ def background_change(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats()
+        return_dict["Statistics"] = get_stats_inmemory("background_change")
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -365,7 +365,7 @@ def noise_removal(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats()
+        return_dict["Statistics"] = get_stats_inmemory("noise_removal")
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -398,7 +398,7 @@ def pdf_maker(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats()
+        return_dict["Statistics"] = get_stats_inmemory("pdf_maker")
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -428,7 +428,7 @@ def mosaic_maker(request):
         return_dict['error'] = False
         return_dict['message'] = "Successfully Processed "
         return_dict['status'] = 200
-        return_dict["Statistics"] = get_stats()
+        return_dict["Statistics"] = get_stats_inmemory("mosaic_maker")
 
     #ABC for the below implement another method for exceptions
     except Exception as e:
@@ -537,7 +537,7 @@ def photo_collage(request):
                 return_dict["message"] = "photo_collage updated successfully"
                 return_dict['error'] = False
                 return_dict['status'] = 200
-                return_dict["Statistics"] = get_stats()
+                return_dict["Statistics"] = get_stats_inmemory("photo_collage")
     except Exception as e:
         return_dict["message"] = str(e)
         return_dict['error'] = True
@@ -561,7 +561,8 @@ def crop_image(request):
                 return_dict["message"] = "crop updated successfully"
                 return_dict['error'] = False
                 return_dict['status'] = 200
-                return_dict["Statistics"] = get_stats()
+                #return_dict["Statistics"] = get_stats()
+                return_dict["Statistics"] = get_stats_inmemory("crop")
     except Exception as e:
         return_dict["message"] = str(e)
         return_dict['error'] = True
@@ -585,7 +586,7 @@ def brightness_contrast(request):
                 return_dict["message"] = "brightness_contrast updated successfully"
                 return_dict['error'] = False
                 return_dict['status'] = 200
-                return_dict["Statistics"] = get_stats()
+                return_dict["Statistics"] = get_stats_inmemory("brightness_contrast")
     except Exception as e:
         return_dict["message"] = str(e)
         return_dict['error'] = True
@@ -602,7 +603,7 @@ def get_db_stat(request):
         if request.method == 'POST' :
             function_name = request.POST['function']
             if function_name == 'stats':
-                result = get_stats()
+                result = get_stats_inmemory()
                 sample_list = []
                 for item,value in result.items():
                     sample_list.append({'name':item,'level':value})
