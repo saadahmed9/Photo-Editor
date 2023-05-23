@@ -1,0 +1,41 @@
+.passport-photo-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .passport-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    margin: 50px;
+  }
+  
+  .ant-upload {
+    cursor: pointer;
+  }
+  
+  .center-card-container {
+    /* border: 1px dotted black; */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 60%;
+  }
+  
+  .passport-photo-card {
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .uploaded-image {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+  }
+  
