@@ -1,0 +1,4 @@
+.idea
+backend/photo_editing_api/postgres-data/data
+backend/photo_editing_api/media/output
+backend/photo_editing_api/media/uploads
