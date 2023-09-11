@@ -94,12 +94,12 @@ WSGI_APPLICATION = 'photo_editing_api.wsgi.application'
 #         'PORT': '5432',
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 # Password validation
@@ -123,7 +123,7 @@ CORS_ORIGINAL_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 ALLOWED_HOSTS = ['*']
 CORS_ALLOWED_ORIGINS = ['http://192.168.1.80:3000','http://192.168.1.62:3000','http://192.168.56.1:3000','http://192.168.56.1:3000',
-                        'https://photoeditorui.11p5m57if4on.us-east.codeengine.appdomain.cloud','http://10.84.13.2:3000']
+                        'https://photoeditorui.11p5m57if4on.us-east.codeengine.appdomain.cloud','http://10.84.13.2:3000','http://localhost:3000']
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
