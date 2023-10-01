@@ -78,7 +78,7 @@ const PassportPhoto = () => {
               >
                 <Upload {...props}>
                   <p>
-                    <UploadOutlined /> Click or drag passport photo to this area to upload
+                    <UploadOutlined rev={undefined} /> Click or drag passport photo to this area to upload
                   </p>
                 </Upload><br></br>
                 {imageUrl && (
