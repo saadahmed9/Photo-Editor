@@ -22,7 +22,7 @@ RUN pip install -r requirements.txt
 
 COPY . /var/opt
 
-COPY deeplab.py /usr/local/lib/python3.11/site-packages/pixellib/semantic/
+# COPY deeplab.py /usr/local/lib/python3.11/site-packages/pixellib/semantic/
 
 # Change to executeable mode
 #RUN chmod +x /var/opt/start.sh
