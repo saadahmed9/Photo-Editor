@@ -356,7 +356,7 @@ def background_change(request):
         write_stats(newData)
         colour_option = request.POST['background_change']
         hexa_code = colour_option
-        colour_code = ImageColor.getcolor(hexa_code, "RGB")
+        colour_code = ImageColor.getcolor(hexa_code, "RGBA")
         color_bg_and_add_border(image_url,output_url,colour_code)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
         with open(output_url, 'rb') as f:
