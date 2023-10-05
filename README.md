@@ -85,7 +85,12 @@ python manage.py runserver
 
 
 
-frontend
-- cd frontend\
-- npm install
-- npm start
+## Setting Up Frontend
+
+Navigate to the `frontend` directory and install the necessary packages, then start the server:
+
+```bash
+cd frontend
+npm install
+npm start
+
