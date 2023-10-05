@@ -26,70 +26,61 @@ git clone git@github.com:xlab-classes/cse611-fall-2023-team-photoedting.git
 or
 git clone https://github.com/xlab-classes/cse611-fall-2023-team-photoedting.git
 
-Setting Up Backend
-1. Copy Model Files
-Place your model files into the backend\photo_editing_api\media\models\ directory.
-2. Navigate to Project Directory
-Open PowerShell.
-Use the cd command to navigate to your project’s backend directory.
-bash
-Copy code
+## Setting Up Backend
+
+### 1. Copy Model Files
+Move model files to `backend/photo_editing_api/media/models/`.
+
+### 2. Navigate to Project Directory
+Open your terminal or PowerShell and navigate using:
+```bash
 cd path\to\backend\photo_editing_api\
-3. Virtual Environment Setup
-If a virtual environment hasn't been created:
-bash
-Copy code
+
+#### 3. Setup Virtual Environment
+If not already created, initialize a virtual environment and activate it:
 python -m venv venv
-Activate the virtual environment:
-powershell
-Copy code
-.\venv\Scripts\Activate.ps1
+.\venv\Scripts\Activate.ps1  # Windows
+source venv/bin/activate  # MacOS/Linux
+
 4. Install Dependencies
-Install the required dependencies from the requirements.txt file.
-bash
-Copy code
-pip install -r .\requirements.txt
-For dlib installation errors, ensure the necessary Visual Studio components are installed. If the issue persists, consider installing dlib separately or using a pre-built binary.
-5. Code Modification (if necessary)
-Navigate to deeplab.py and make necessary changes as per instructions. For instance, update the import statement on line 15.
+Install dependencies from requirements.txt. For dlib errors, ensure Visual Studio components are installed or install dlib separately.
+pip install -r requirements.txt
+
+5. Modify Code (if Necessary)
+Edit deeplab.py as instructed (e.g., update import statements).
+
 6. Run Development Server
-After installing dependencies and making modifications, run the Django development server:
-bash
-Copy code
+Start the Django server using:
 python manage.py runserver
-The server should start, and you'll see an address in the console (usually http://127.0.0.1:8000/ or http://localhost:8000/).
+
+Access the server at http://127.0.0.1:8000/ or http://localhost:8000/.
+
 Testing Setup
-Navigate to the provided address in a web browser. You should see the Django server's welcome page or your project's home page.
+Navigate to the server address in a browser to view the Django welcome page or project home page.
+
 Troubleshooting
-For errors, refer to the console output for clues.
-Ensure compatibility of Python environment and packages with the project requirements.
+Refer to console output for error details.
+Ensure Python environment and package compatibility.
 Possible Issues & Solutions
-Issue: Import error for BatchNormalization from tensorflow.python.keras.layers.
+Issue: BatchNormalization import error from tensorflow.python.keras.layers.
 Solutions:
-Check TensorFlow version:
-bash
-Copy code
-pip show tensorflow
-Modify import statements in deeplab.py (or another file) based on TensorFlow version:
-python
-Copy code
+
+Check TensorFlow version: pip show tensorflow.
+Adjust import statements in deeplab.py:
 from tensorflow.keras.layers import BatchNormalization  # TensorFlow 2.x
 # or
 from keras.layers import BatchNormalization  # TensorFlow 1.x
-Install a specific TensorFlow version if necessary:
-bash
-Copy code
-pip install tensorflow==<specific_version>
+
+Install specific TensorFlow version: pip install tensorflow==<specific_version>.
 Additional Notes
-Restart virtual environment or terminal session after installing or upgrading TensorFlow.
-Reinstall or upgrade packages as needed for compatibility with TensorFlow version.
-Always activate the virtual environment before any installations or upgrades.
+Restart the virtual environment after TensorFlow installation or upgrade.
+Always activate the virtual environment before installations or upgrades.
 Final Steps
-After making changes, run the server again:
-bash
-Copy code
+Run the server again after making changes and monitor the console for errors or warnings.
 python manage.py runserver
-Monitor the console for errors or warnings and address them as needed.
+
+
+
 
 frontend
 - cd frontend\
