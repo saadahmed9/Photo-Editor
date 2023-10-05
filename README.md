@@ -33,27 +33,34 @@ Move model files to `backend/photo_editing_api/media/models/`.
 
 ### 2. Navigate to Project Directory
 Open your terminal or PowerShell and navigate using:
-
+```bash
 cd path\to\backend\photo_editing_api\
+```
 
 ### 3. Setup Virtual Environment
 If not already created, initialize a virtual environment and activate it:
 
+```bash
 python -m venv venv
 .\venv\Scripts\Activate.ps1 # Windows
 
 source venv/bin/activate  # MacOS/Linux
+```
 
 ### 4. Install Dependencies
 Install dependencies from requirements.txt. For dlib errors, ensure Visual Studio components are installed or install dlib separately.
+```bash
 pip install -r requirements.txt
+```
 
 ### 5. Modify Code (if Necessary)
 Edit deeplab.py as instructed (e.g., update import statements).
 
 ### 6. Run Development Server
 Start the Django server using:
+```bash
 python manage.py runserver
+```
 
 Access the server at http://127.0.0.1:8000/ or http://localhost:8000/.
 
@@ -62,27 +69,38 @@ Navigate to the server address in a browser to view the Django welcome page or p
 
 ### Troubleshooting
 Refer to console output for error details.
-Ensure Python environment and package compatibility.
-Possible Issues & Solutions
-Issue: BatchNormalization import error from tensorflow.python.keras.layers.
-Solutions:
 
-Check TensorFlow version: pip show tensorflow.
-Adjust import statements in deeplab.py:
+Ensure Python environment and package compatibility.
+
+### Possible Issues & Solutions
+-Issue: BatchNormalization 
+
+import error from tensorflow.python.keras.layers.
+
+Solutions:
+Check TensorFlow version: 
+```bash
+pip show tensorflow.
+```
+
+-Adjust import statements in deeplab.py:
 from tensorflow.keras.layers import BatchNormalization  # TensorFlow 2.x
 or
 from keras.layers import BatchNormalization  # TensorFlow 1.x
 
-Install specific TensorFlow version: pip install tensorflow==<specific_version>.
+Install specific TensorFlow version: 
+pip install tensorflow==<specific_version>.
 
 ### Additional Notes
-Restart the virtual environment after TensorFlow installation or upgrade.
-Always activate the virtual environment before installations or upgrades.
-Final Steps
+-Restart the virtual environment after TensorFlow installation or upgrade.
+
+-Always activate the virtual environment before installations or upgrades.
+
+### Final Steps
 Run the server again after making changes and monitor the console for errors or warnings.
+```bash
 python manage.py runserver
-
-
+```
 
 
 ## Setting Up Frontend
