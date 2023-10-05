@@ -33,32 +33,33 @@ Move model files to `backend/photo_editing_api/media/models/`.
 
 ### 2. Navigate to Project Directory
 Open your terminal or PowerShell and navigate using:
-```bash
+
 cd path\to\backend\photo_editing_api\
 
-#### 3. Setup Virtual Environment
+### 3. Setup Virtual Environment
 If not already created, initialize a virtual environment and activate it:
+
 python -m venv venv
 .\venv\Scripts\Activate.ps1  # Windows
 source venv/bin/activate  # MacOS/Linux
 
-4. Install Dependencies
+### 4. Install Dependencies
 Install dependencies from requirements.txt. For dlib errors, ensure Visual Studio components are installed or install dlib separately.
 pip install -r requirements.txt
 
-5. Modify Code (if Necessary)
+### 5. Modify Code (if Necessary)
 Edit deeplab.py as instructed (e.g., update import statements).
 
-6. Run Development Server
+### 6. Run Development Server
 Start the Django server using:
 python manage.py runserver
 
 Access the server at http://127.0.0.1:8000/ or http://localhost:8000/.
 
-Testing Setup
+### Testing Setup
 Navigate to the server address in a browser to view the Django welcome page or project home page.
 
-Troubleshooting
+### Troubleshooting
 Refer to console output for error details.
 Ensure Python environment and package compatibility.
 Possible Issues & Solutions
@@ -72,7 +73,8 @@ from tensorflow.keras.layers import BatchNormalization  # TensorFlow 2.x
 from keras.layers import BatchNormalization  # TensorFlow 1.x
 
 Install specific TensorFlow version: pip install tensorflow==<specific_version>.
-Additional Notes
+
+### Additional Notes
 Restart the virtual environment after TensorFlow installation or upgrade.
 Always activate the virtual environment before installations or upgrades.
 Final Steps
