@@ -70,7 +70,7 @@ Solutions:
 Check TensorFlow version: pip show tensorflow.
 Adjust import statements in deeplab.py:
 from tensorflow.keras.layers import BatchNormalization  # TensorFlow 2.x
-# or
+or
 from keras.layers import BatchNormalization  # TensorFlow 1.x
 
 Install specific TensorFlow version: pip install tensorflow==<specific_version>.
