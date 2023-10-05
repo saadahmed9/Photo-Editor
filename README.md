@@ -40,7 +40,8 @@ cd path\to\backend\photo_editing_api\
 If not already created, initialize a virtual environment and activate it:
 
 python -m venv venv
-.\venv\Scripts\Activate.ps1  # Windows
+.\venv\Scripts\Activate.ps1 # Windows
+
 source venv/bin/activate  # MacOS/Linux
 
 ### 4. Install Dependencies
