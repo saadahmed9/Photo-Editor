@@ -26,17 +26,89 @@ git clone git@github.com:xlab-classes/cse611-fall-2023-team-photoedting.git
 or
 git clone https://github.com/xlab-classes/cse611-fall-2023-team-photoedting.git
 
-Backend (Using powershell)
-- Copy the models to backend\photo_editing_api\media\models\
-- cd into backend\photo_editing_api\
-- Create virtual environment - python -m venv venv  (creates venv folder)
-- Activate virtual environment - .\venv\Scripts\Activate.ps1
-- pip install -r .\requirements.txt
-- Finally run the python manage.py runserver -- This will throw error
-- Navigate to line 15 in deeplab.py file (This is a library downloaded after pip install). Update 'from tensorflow.python.keras.layers import BatchNormalization' to 'from tensorflow.keras.layers import BatchNormalization'
-- Now it should provide the address it is hosting
+## Setting Up Backend
 
-frontend
-- cd frontend\
-- npm install
-- npm start
+### 1. Copy Model Files
+Move model files to `backend/photo_editing_api/media/models/`.
+
+### 2. Navigate to Project Directory
+Open your terminal or PowerShell and navigate using:
+```bash
+cd path\to\backend\photo_editing_api\
+```
+
+### 3. Setup Virtual Environment
+If not already created, initialize a virtual environment and activate it:
+
+```bash
+python -m venv venv
+.\venv\Scripts\Activate.ps1 # Windows
+
+source venv/bin/activate  # MacOS/Linux
+```
+
+### 4. Install Dependencies
+Install dependencies from requirements.txt. For dlib errors, ensure Visual Studio components are installed or install dlib separately.
+```bash
+pip install -r requirements.txt
+```
+
+### 5. Modify Code (if Necessary)
+Edit deeplab.py as instructed (e.g., update import statements).
+
+### 6. Run Development Server
+Start the Django server using:
+```bash
+python manage.py runserver
+```
+
+Access the server at http://127.0.0.1:8000/ or http://localhost:8000/.
+
+### Testing Setup
+Navigate to the server address in a browser to view the Django welcome page or project home page.
+
+### Troubleshooting
+Refer to console output for error details.
+
+Ensure Python environment and package compatibility.
+
+### Possible Issues & Solutions
+-Issue: BatchNormalization 
+
+import error from tensorflow.python.keras.layers.
+
+Solutions:
+Check TensorFlow version: 
+```bash
+pip show tensorflow.
+```
+
+-Adjust import statements in deeplab.py:
+from tensorflow.keras.layers import BatchNormalization  # TensorFlow 2.x
+or
+from keras.layers import BatchNormalization  # TensorFlow 1.x
+
+Install specific TensorFlow version: 
+pip install tensorflow==<specific_version>.
+
+### Additional Notes
+-Restart the virtual environment after TensorFlow installation or upgrade.
+
+-Always activate the virtual environment before installations or upgrades.
+
+### Final Steps
+Run the server again after making changes and monitor the console for errors or warnings.
+```bash
+python manage.py runserver
+```
+
+
+## Setting Up Frontend
+
+Navigate to the `frontend` directory and install the necessary packages, then start the server:
+
+```bash
+cd frontend
+npm install
+npm start
+
