@@ -239,7 +239,8 @@ def passport_photo_size(request):
                 logger.info("change background and border only if required")
                 bg_change_flag = request.data.get("background_req", False)
                 if((not bg_change_flag) or (bg_change_flag and (request.POST['background_req'] == "yes"))):
-                    color_bg_and_add_border(output_url, output_url, (255, 255, 255))
+                    logger.info("Changing background to white")
+                    color_bg_and_add_border(output_url, output_url, (255, 255, 255, 1))
                 if country in lines:
                     text = spects_detector(image_url)
                     print(text)
