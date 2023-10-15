@@ -1,7 +1,6 @@
 import cv2
 from matplotlib import colors
 import os
-from photo_editing_api.settings import MODEL_DIR
 import logging
 import rembg
 from PIL import Image
@@ -21,4 +20,5 @@ def color_bg_and_add_border(input_image_path, output_image_path, bg_color, borde
     output_image = cv2.imread(temp_output)
     output_image_with_border = cv2.copyMakeBorder(output_image, border_thickness, border_thickness, border_thickness, border_thickness, cv2.BORDER_CONSTANT, value=border_color)
     cv2.imwrite(output_image_path, output_image_with_border)
+    logger.info("background change complete")
     return None
