@@ -356,7 +356,7 @@ def background_change(request):
         write_stats(newData)
         colour_option = request.POST['background_change']
         hexa_code = colour_option
-        colour_code = ImageColor.getcolor(hexa_code, "RGB")
+        colour_code = ImageColor.getcolor(hexa_code, "RGBA")
         color_bg_and_add_border(image_url,output_url,colour_code)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
         with open(output_url, 'rb') as f:
@@ -459,7 +459,7 @@ def mosaic_maker(request):
         logger.info("Number of images selected are ", images_count)
         #folder_path = r"E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\Mosaic-input\\"
         #request.FILES.getlist('myfile')
-        mosaicmaker(image_url, output_url, images_list, images_count)
+        mosaicmaker(image_url, output_url, images_list, 20)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
         with open(output_url, 'rb') as f:
             image_data = f.read()
