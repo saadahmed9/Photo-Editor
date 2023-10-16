@@ -27,6 +27,8 @@ export const Collage = () => {
   const cropperRef = useRef(null);
   const [cropData, setCropData] = useState("#");
   const [imageCollection, setImageCollection] = useState([]);
+  const [imageUrl, setImageUrl] = useState();
+  const [isLoading, setIsLoading]= useState(false);
 
 
   const handleFileChange = (e) => {
@@ -39,6 +41,24 @@ export const Collage = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleClearone = () => {
+    setIsLoading(false);
+    setImageUrl(null);
+  };
+
+  function ConfirmDelete()
+ {
+  /* eslint-disable no-restricted-globals */
+  var result = confirm("Are you sure you want to delete?");
+  if(result){
+    setImageCollection([]);
+  }
+ }
+
+
+  const handleClear = () => {
+    setImageCollection([]);
+  };
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -283,25 +303,15 @@ export const Collage = () => {
       </Layout>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
         <label style={{ color: 'white', textAlign: 'center' }}>Images:</label>
-        <Menu>
-          {imageCollection.map((image, index) => (
-            <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
-            <img src={image} style={{ maxWidth: '100%', height: '100%' }} draggable="true"
-              onDragStart={(e) => {
-                e.dataTransfer.setData("image/jpeg", image);
-              }} />
-          </Menu.Item>
-          
-          ))}
-        </Menu>
-        <div style={{ position: "relative", width: "200px", height: "50px", }}>
-          <button style={{ position: "absolute", width: "100%", height: "100%", }}>
+        <div style={{ position: "relative", width: "200px",height:'50px' }}>
+          <button style={{ width: "100%", height: "100%", }}>
             <i class="fa fa-plus-circle" aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}></i>
             <input
               type="file"
               accept="image/*"
               multiple
               onChange={(e) => SiderImageUpload(e)}
+              //onClick={(e) => e.target.value = null} 
               style={{
                 position: "absolute",
                 width: "100%",
@@ -313,9 +323,22 @@ export const Collage = () => {
               }}
             />
           </button>
+          
         </div>
-
-
+        <button style={{ width: "100%" }} onClick={ConfirmDelete}>Clear All</button>
+        <Menu>
+          {imageCollection.map((image, index) => (
+            <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
+            <img src={image} style={{ maxWidth: '100%', height: '100%' }} draggable="true"
+              onDragStart={(e) => {
+                e.dataTransfer.setData("image/jpeg", image);
+              }} />
+            <Button type="danger" onClick={handleClear} style={{backgroundColor:'#002140',color:'white',margin:'1rem 0rem 0rem 4rem'}}>
+                    Clear
+                  </Button>
+          </Menu.Item>         
+          ))}
+        </Menu>      
       </Sider>
     </Layout>
   );
