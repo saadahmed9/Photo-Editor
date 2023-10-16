@@ -43,51 +43,36 @@ class App extends Component {
 
           <ul id="nav" className="nav">
             <li>
-            <img src="/logo.png" className="image" style={{marginTop:'10px'}}/>
+            <img src="/logo.png" className="image" style={{marginTop:'0px'}}/>
 
             </li>
-            <div style={{position:'relative',bottom:'7px',display:'inline'}}>
+            <div style={{position:'relative',display:'inline'}}>
 
 
             <li className="current">
               <Link to="/">Home</Link>
             </li>
 
-            <li>
-              <Link to="/passport">Passport-Photo</Link>
-            </li>
+            <div class="dropdown">
+              <button class="dropbtn">Features</button>
+                <div class="dropdown-content">
+                  <Link to="/passport">Passport-Photo</Link>
+                  <Link to="/photoresizeandcrop">Crop</Link>
+                  <Link to="/photocollage">Collage</Link>
+                  <Link to="/noiseremoval">Noise-Removal</Link>
+                  <Link to="/imageformatconversion">Format-Conversion</Link>
+                  <Link to="/backgroundchange">Background-Change</Link>
+                  <Link to="/brightnessandcontrast">Brightness & Contrast</Link>
+                  <Link to="/resize">Resize</Link>
+                  <Link to="/mosaic">Mosaic</Link>
+                  <Link to="/pdf">PDF</Link>
+                  <Link to="/Imagecompression">Image Compression</Link>
+                  <Link to="/Video">Video Compression</Link>
+              </div>
 
-            <li>
-              <Link to="/photoresizeandcrop">Crop</Link>
-            </li>
+              </div>
 
-            <li>
-              <Link to="/photocollage">Collage</Link>
-            </li>
-
-            <li>
-              <Link to="/noiseremoval">Noise-Removal</Link>
-            </li>
-
-            <li>
-              <Link to="/imageformatconversion">Format-Conversion</Link>
-            </li>
-            <li>
-              <Link to="/backgroundchange">Background-Change</Link>
-            </li>
-
-            <li>
-              <Link to="/brightnessandcontrast">Brightness & Contrast</Link>
-            </li>
-            <li>
-              <Link to="/resize">Resize</Link>
-            </li>
-            <li>
-              <Link to="/pdf">PDF</Link>
-            </li>
-            <li>
-              <Link to="/mosaic">Mosaic</Link>
-            </li>
+            
             </div>
 
           </ul>

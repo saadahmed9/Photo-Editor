@@ -3,6 +3,15 @@ import Fade from "react-reveal";
 import history from '../history';
 
 class Footer extends Component {
+  
+
+  scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
   render() {
     
 
@@ -12,7 +21,7 @@ class Footer extends Component {
           
 
           <div id="go-top">
-            <a className="smoothscroll" title="Back to Top" onClick={()=>history.push('/')}>
+            <a className="smoothscroll" title="Back to Top" onClick={this.scrollToTop}>
               <i className="icon-up-open"></i>
             </a>
           </div>
