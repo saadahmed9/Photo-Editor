@@ -46,13 +46,14 @@ function FormatConversion(props1) {
     { key: '1', name: 'JPG' },
     { key: '2', name: 'PNG' },
     { key: '3', name: 'JPEG' },
-    { key: '4', name: 'SVG' },
+    { key: '4', name: 'HEIC' },
     { key: '6', name: 'GIF' },
-    {key:'7',name:'BMP'},
-    {key:'8',name:'WEBP'},
-    {key:'9',name:'HDR'},
-    {key:'10',name:'PIC'},
-    {key:'11',name:'EXR'}
+    { key: '7', name: 'BMP' },
+    { key: '8', name: 'WEBP' },
+    { key: '9', name: 'HDR' },
+    { key: '10', name: 'PIC'},
+    { key: '11', name: 'HEIF'},
+    { key: '12', name: 'TIFF' }
   ];
 
   const handleMenuClick = (event) => {
