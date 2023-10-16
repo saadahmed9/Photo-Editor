@@ -20,10 +20,11 @@ from photo_editing_app.contollers.get_statistics import read_stats,write_stats
 #from photo_editing_app.serializers import FunctionActivitySerializer
 from photo_editing_app.contollers.pose_detection import pose_detector
 from photo_editing_app.contollers.verify_params_controller import verify_resize_passed,verify_upload_file_passed,verify_function_passed,verify_functionality_passed,verify_format_change_passed,verify_colour_passed,verify_country_passed
-from PIL import ImageColor
+from PIL import ImageColor, Image
 from django.http import HttpResponse
 import base64
 import logging
+import pillow_heif
 # Create your views here.
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -320,11 +321,30 @@ def format_change(request):
 
         img_dir = "\\".join(BASE_DIR.split("\\"))
         output_url = img_dir + r"\media\output\\" + part1+"."+required_format
-
-        image = cv2.imread(image_url)
         file_name = os.path.splitext(output_url)
-        cv2.imwrite(file_name[0]+"."+required_format, image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
-        print("Format change functionality passed")
+        logger.info("converting image to {}".format(required_format))
+        match required_format:
+            case "gif":   
+                image = Image.open(image_url)
+                image.save(file_name[0]+"."+required_format)
+
+            case "heif":
+                # Register the HEIF opener with PIL
+                pillow_heif.register_heif_opener()
+                image = Image.open(image_url)
+                image.save(file_name[0]+"."+required_format)
+            
+            case "heic":
+                # Register the HEIF opener with PIL
+                pillow_heif.register_heif_opener()
+                image = Image.open(image_url)
+                image.save(file_name[0]+"."+required_format)
+            
+            case _:
+                image = cv2.imread(image_url)
+                cv2.imwrite(file_name[0]+"."+required_format, image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
+
+        logger.info("Format change functionality completed")
         return_dict['output_url'] = api_root+r"static/"+part1+"."+required_format
         with open(output_url, 'rb') as f:
             image_data = f.read()
