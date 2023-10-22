@@ -1,19 +1,18 @@
+// Importing required libraries and components
 import React, { useState, useRef, useEffect } from "react";
-import { Card, Upload, Button, Layout, Spin,Modal, Tooltip  } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Card, Upload, Button, Layout, Spin, Modal, Tooltip } from 'antd';
+import { UploadOutlined, LoadingOutlined, InfoCircleOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import './passportPhoto.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Cropper from "react-cropper";
 import { Select } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
-import {Fade } from 'react-reveal';
+import { Fade } from 'react-reveal';
 import { v4 as uuidv4 } from 'uuid';
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { ArrowRightOutlined } from '@ant-design/icons';
 import { Checkbox } from 'antd';
 
 
+// Constants and initial configurations
 const antIcon = (
   <LoadingOutlined
     style={{
@@ -25,6 +24,8 @@ const antIcon = (
 );
 const { Option } = Select;
 const { Sider, Content } = Layout;
+
+// Content section component
 const ContentSection = ({ children }) => {
   return (
     <Content style={{ padding: "0 50px" }}>
@@ -33,7 +34,11 @@ const ContentSection = ({ children }) => {
   );
 };
 
+
+// Main PassportPhoto component
 const PassportPhoto = (props1) => {  
+
+  // States and Refs initialization
   const { uuid } = props1;
   const [imageUrl, setImageUrl] = useState();
   const [collapsed, setCollapsed] = useState(false);
@@ -46,11 +51,12 @@ const PassportPhoto = (props1) => {
   const [isLoading,setIsLoading]= useState(false);
   const [fileName, setfileName] = useState(null);
 
+  // Function to handle sidebar collapse
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
     };
 
-
+    // Component for displaying hint when sidebar is collapsed
     const CollapsedHint = () => (
         <div className="collapsed-hint">
             <ArrowRightOutlined className="hint-icon" />

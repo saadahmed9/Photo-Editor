@@ -1,17 +1,15 @@
-import React, { useState,useEffect } from "react";
-import { Card, Upload, Button, Layout, Spin,Modal, Tooltip } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import './BackgroundRemoval.css'
+// Import necessary libraries and components
+import React, { useState, useEffect } from "react";
+import { Card, Upload, Button, Layout, Spin, Modal, Tooltip } from 'antd';
+import { UploadOutlined, LoadingOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import './BackgroundRemoval.css';
 import { ChromePicker } from "react-color";
 import axios from 'axios';
-import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
-import {Fade } from 'react-reveal';
+import { Fade } from 'react-reveal';
 import { v4 as uuidv4 } from 'uuid';
 
-import { InfoCircleOutlined } from '@ant-design/icons';
-
-
+// Loading spinner configuration
 const antIcon = (
   <LoadingOutlined
     style={{
@@ -21,8 +19,11 @@ const antIcon = (
     spin
   />
 );
+
+// Destructure Layout components
 const { Sider, Content } = Layout;
 
+// Content section component
 const ContentSection = ({ children }) => {
   return (
     <Content style={{ padding: "0 50px" }}>
@@ -32,13 +33,16 @@ const ContentSection = ({ children }) => {
 };
 
 function BackgroundRemoval (props1) {
-  const { uuid } = props1;
+    const { uuid } = props1;
+
+  // State for image, color, loading, etc.
   const [imageUrl, setImageUrl] = useState(); 
   const [color, setColor] = useState("#000000");
   const [displayUrl, setDisplayUrl] = useState(); 
   const [fileType, setFileType] =useState(null);
   const [fileName, setfileName] = useState(null);
-  
+
+  // Handle color picker change
   const handleColorChange = (newColor) => {
     setColor(newColor.hex);
   };
@@ -49,15 +53,19 @@ function BackgroundRemoval (props1) {
     setCollapsed(collapsed);
   }; 
 
-
+  // Clear all uploaded data
   const handleClear = () => {
     setIsLoading(false);
     setImageUrl(null);
     setDisplayUrl(null);
-  };
+    };
+
+   // Extract image type from its data URL
   function getImageTypeFromMime(dataUrl) {    
     return  dataUrl.split(',')[0].split(':')[1].split(';')[0].split('/')[1];
-  }
+    }
+
+  // Handle file upload
   const handleUpload = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -70,18 +78,27 @@ function BackgroundRemoval (props1) {
     reader.onerror = (error) => {
       console.error('Error: ', error);
     };
-  };
+    };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    handleUpload(file);
-  };
+    // Handle file drop into the component
+    const handleDrop = (e) => {
+        e.preventDefault();
 
+        if (!e.dataTransfer.files.length) {
+            console.log('No files were dragged into the area.');
+            return;
+        }
+
+        const file = e.dataTransfer.files[0];
+        handleUpload(file);
+    };
+
+ // Disable default dragover event
   document.addEventListener('dragover', (e) => {
     e.preventDefault();
   });
 
+  // Configuration for the Upload component
   const props = {
     name: 'file',
     accept: 'image/*',
@@ -98,7 +115,9 @@ function BackgroundRemoval (props1) {
         handleUpload(info.file.originFileObj);
       }
     },
-  };
+    };
+
+   // Convert data URL to file object
   function dataURLtoFile(dataURL, fileName) {
     console.log('dataurl: ', dataURL, fileName);
     // extract the MIME type and base64 data from the URL
@@ -136,6 +155,7 @@ function BackgroundRemoval (props1) {
       .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
   }
 
+  // Send a POST request to change the background of the uploaded image
   function handlePreview () {
     setIsLoading(true);
     const formData = new FormData();
@@ -149,7 +169,8 @@ function BackgroundRemoval (props1) {
       )
       .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
   }
-  
+
+  // Download the image with the modified background
   function handleDownload () {
         const link = document.createElement('a');
         link.href = displayUrl;
@@ -160,7 +181,7 @@ function BackgroundRemoval (props1) {
   };
 
 
-
+  // Add drag-drop event listener on component mount and remove it on unmount
   useEffect(() => {
     document.addEventListener('drop', handleDrop);
 
@@ -169,30 +190,46 @@ function BackgroundRemoval (props1) {
       document.removeEventListener("drop", handleDrop);
     };
   }, []);
+
+  // Display an information modal
   const info = () => {
     Modal.info({
-      title: 'Background Change',
+        title: 'Switch Up Your Scene:',
       content: (
         <div>
-          involves changing the background of image while preserving the visual content of the image:
+              Transform your image's background while keeping its main elements intact.
   <ol>
-  <li>Input Image: Start by drag & drop or upload the image file.</li>
-  <li>Choose Color: Choose the background color from the left panel.</li>
+                  <li>Upload: Just drag & drop or select your image.</li>
+                  <li>Backdrop Shade: Pick your desired color from the left panel.</li>
     
-    <li>Preview and Download: Preview and download the photo.</li>
+                  <li>Finish: Preview and grab your newly-styled photo.</li>
   </ol>
         </div>
       ),
       onOk() {},
       width:600,
     });
-  };
+    };
+
+   // Render the component
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider className="sidebar" collapsible collapsed={collapsed} onCollapse={onCollapse}>
-      <label className="label">Choose BackgroundColor:</label>
-      <ChromePicker color={color} onChange={handleColorChange} />  
-      </Sider>
+          <Sider className="sidebar" collapsible collapsed={collapsed} onCollapse={onCollapse}>
+              {collapsed ? (
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                      <Tooltip title="Choose Background Color">
+                          <div style={{ width: '40px', height: '40px', backgroundColor: color, border: `3px solid ${color}` }} className="visual-cue-animation"></div>
+                      </Tooltip>
+
+                  </div>
+              ) : (
+                  <>
+                          <label className="label" style={{ color: color }}>Choose BackgroundColor:</label>
+                      <ChromePicker color={color} onChange={handleColorChange} />
+                  </>
+              )}
+          </Sider>
+
       <Layout className="site-layout">
       <ContentSection>
         {!imageUrl ? 
@@ -201,19 +238,19 @@ function BackgroundRemoval (props1) {
             {/* Users can convert their images into the desired format, such as JPEG, PNG, and more.
             Please select the format and upload the image in box below. */}
             <div style={{position:'relative', left:'160px',top:'5rem'}}>
-  <b>Background Change</b> involves changing the background of image while preserving the visual content of the image:
+                                  <b>Background Change</b> Switch out the background without losing your image's essence:
   <ol>
-  <li>Input Image: Start by drag & drop or upload the image file.</li>
-  <li>Choose Color: Choose the background color from the left panel.</li>
+                                      <li>Upload: Drag & drop or click to select your image.</li>
+                                      <li>Backdrop Color: Pick a shade from the left panel.</li>
     
-    <li>Preview and Download: Preview and download the photo.</li>
+                                      <li>See & Save: Preview then download your transformed photo.</li>
   </ol>
   </div>  </Fade>
               <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
            <div style={{flexGrow: '1'}}>
            <Card className="passport-photo-card"
                    title={
-                     displayUrl ? "Uploaded Image and Result":"Drag and Drop Photo"
+                                          displayUrl ? "Uploaded Image and Result" : "Ready to Change the Scene?"
                    }
                    cover=
                    {
@@ -230,7 +267,7 @@ function BackgroundRemoval (props1) {
                  >
                  <Upload {...props} className="my-upload">
                    <p>
-                     <UploadOutlined /> Click or drag Photo to this area to upload
+                                              <UploadOutlined /> Drag & drop or tap to upload your image
                    </p>
                    {isLoading && <Spin indicator={antIcon} />}
                  </Upload><br></br>

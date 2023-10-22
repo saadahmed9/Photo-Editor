@@ -1,16 +1,22 @@
+// Imports from React and related libraries
 import React, { useState, useEffect } from "react";
-import { Card, Upload, Button, Layout, Menu,Spin,Modal,Tooltip } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import './FormatConversion.css';
 import axios from 'axios';
-import { toast } from "react-toastify";
-import { LoadingOutlined } from '@ant-design/icons';
-import {Fade}  from 'react-reveal';
 import { v4 as uuidv4 } from 'uuid';
-import { InfoCircleOutlined } from '@ant-design/icons';
 
+// Imports from Ant Design
+import {
+    Card, Upload, Button, Layout, Menu, Spin, Modal, Tooltip
+} from 'antd';
+import {
+    UploadOutlined, LoadingOutlined, InfoCircleOutlined
+} from '@ant-design/icons';
 
+// CSS and other resources
+import './FormatConversion.css';
+import { toast } from "react-toastify";
+import { Fade } from 'react-reveal';
 
+// Configuration for loading icon
 const antIcon = (
   <LoadingOutlined
     style={{
@@ -20,9 +26,15 @@ const antIcon = (
     spin
   />
 );
+
+// Destructure Layout properties for easy use
 const { Sider, Content } = Layout;
+
+// Axios default configuration
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
+
+// Component to encapsulate content section
 const ContentSection = ({ children }) => {
   return (
     <Content style={{ padding: "0 50px" }}>
@@ -31,17 +43,27 @@ const ContentSection = ({ children }) => {
   );
 };
 
+
+// Main component
 function FormatConversion(props1) {
-  const { uuid } = props1;
+    // Destructure properties
+    const { uuid } = props1;
+
+    // State management using useState hooks
   const [imageUrl, setImageUrl] = useState();
   const [displayUrl, setDisplayUrl] = useState();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedFormat, setselectedFormat] = useState(null);
   const [isLoading,setIsLoading]= useState(false);
-  const [fileName, setfileName] = useState(null);
+    const [fileName, setfileName] = useState(null);
+
+    // Event handler for Sider collapse
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
-  };
+    };
+
+
+    // Define possible formats for image conversion
   const menuItems = [
     { key: '1', name: 'JPG' },
     { key: '2', name: 'PNG' },
@@ -56,19 +78,23 @@ function FormatConversion(props1) {
     { key: '12', name: 'TIFF' }
   ];
 
+
+  // Handler to detect format menu click
   const handleMenuClick = (event) => {
     const selectedFormat = menuItems.find((item) => item.key === event.key)?.name;
     setselectedFormat(selectedFormat);
     console.log(selectedFormat)
   }; 
 
-
+  // Clear the uploaded image
   const handleClear = () => {
     setIsLoading(false);
     setImageUrl(null);    
     setDisplayUrl(null);
   };
 
+
+  // Handle image uploads
   const handleUpload = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -82,6 +108,8 @@ function FormatConversion(props1) {
     };
   };
 
+
+  // Properties for the Upload component
   const props = {
     name: 'file',
     accept: 'image/*',
@@ -100,6 +128,8 @@ function FormatConversion(props1) {
     },
   };
 
+
+  // Drag and drop handling
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -110,7 +140,9 @@ function FormatConversion(props1) {
   //   const blob = await response.blob();
   //   return blob;
   // }
-  
+
+
+  // Convert Data URI to blob for image processing
   function dataURItoBlob(dataURI) {
     // Convert data URI to binary data
     const byteString = atob(dataURI.split(',')[1]);
@@ -129,7 +161,9 @@ function FormatConversion(props1) {
     // Create Blob object from ArrayBuffer
     return new Blob([ab], { type: mimeType });
   }
-  
+
+
+  // Convert Data URI to File object for easier handling
   function dataURLtoFile(dataURL, fileName) {
     const base64Data = dataURL.replace(/^data:image\/\w+;base64,/, "");
     const updatedDataURL = `data:image/png;base64,${base64Data}`;  
@@ -138,6 +172,7 @@ function FormatConversion(props1) {
   }
   
 
+  // Get image type from MIME type in data URI
   function getImageTypeFromMime(dataUrl) {    
     return  dataUrl.split(',')[0].split(':')[1].split(';')[0].split('/')[1];
   }
@@ -147,7 +182,9 @@ function FormatConversion(props1) {
   //   const extension = dataUrl.substring(extensionIndex + 1);
   //   return extension;
   // }
-  
+
+
+  // Download the processed image
   function downloadImage(url1,type) {
     fetch(url1)
       .then(response => response.blob())
@@ -170,6 +207,8 @@ function FormatConversion(props1) {
       .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
   }
 
+
+  // Handle preview button click
   function handlePreview () {
     setIsLoading(true);
     if(selectedFormat==null) {
@@ -193,7 +232,9 @@ function FormatConversion(props1) {
       )
       .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
   }
-  
+
+
+  // Download the displayed image
   function handleDownload () {
         const link = document.createElement('a');
         link.href = displayUrl;
@@ -203,10 +244,14 @@ function FormatConversion(props1) {
         link.remove();
   };
 
+
+  // Prevent default drag over for custom drag and drop
   document.addEventListener('dragover', (e) => {
     e.preventDefault();
   });
-  
+
+
+  // Attach drag and drop handlers using useEffect
   useEffect(() => {
     document.addEventListener('drop', handleDrop);
 
@@ -215,35 +260,49 @@ function FormatConversion(props1) {
       document.removeEventListener("drop", handleDrop);
     };
   }, []);
+
+  // Show information modal
   const info = () => {
     Modal.info({
       title: 'Format Conversion',
       content: (
         <div>
-         involves changing the file format while preserving the visual content of the image:
+              Effortlessly transform its format while retaining the visual core.
 <ol>
-<li>Input Image: Start by drag & drop or upload the image file that needs to be converted.</li>
+                  <li>Upload: Drag & drop or select the image you're aiming to convert.</li>
 
-<li>Format Selection: Determine the desired output format, such as JPEG, PNG, or JPG.</li>
+                  <li>Format Choice: Decide on your new format—JPEG, PNG, or JPG.</li>
 
-<li>Output Image: Save the newly encoded image data into a file with the desired output format.</li>
+                  <li>Finish: Download your image, redefined and ready.</li>
 </ol>
         </div>
       ),
       onOk() {},
       width:600,
     });
-  };
+    };
+
+    // Component render
     return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider style={{backgroundColor: '#000524'}} collapsible collapsed={collapsed} onCollapse={onCollapse}>
-    <label style={{ color: 'white', textAlign: 'center' }}>Convert To:</label>
-      <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden', textAlign: 'center' }} onClick={handleMenuClick}>
-      {menuItems.map((item) => (
-        <Menu.Item key={item.key}>{item.name}</Menu.Item>
-      ))}        
-      </Menu>      
-    </Sider>
+        <Layout style={{ minHeight: "100vh" }}>
+            <Sider style={{ backgroundColor: '#000524' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
+                <label className="format-menu-label">Convert To:</label>
+                <Menu
+                    theme="dark"
+                    mode="inline"
+                    style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden' }}
+                    onClick={handleMenuClick}
+                >
+                    {menuItems.map((item) => (
+                        <Menu.Item
+                            key={item.key}
+                            className={`format-menu-item ${selectedFormat === item.name ? 'format-menu-item-selected' : ''}`}
+                        >
+                            {item.name}
+                        </Menu.Item>
+                    ))}
+                </Menu>
+            </Sider>
       <Layout className="site-layout">
         <ContentSection>
           
@@ -253,20 +312,20 @@ function FormatConversion(props1) {
           {/* Users can convert their images into the desired format, such as JPEG, PNG, and more.
           Please select the format and upload the image in box below. */}
           <div style={{position:'relative', left:'160px',top:'5rem'}}>
-<b>Format conversion</b> involves changing the file format while preserving the visual content of the image:
+                                    <b>Format conversion</b> Transform the file type without altering the picture's essence:
 <ol>
-<li>Input Image: Start by drag & drop or upload the image file that needs to be converted.</li>
+                                        <li>Upload: Drag & drop or click to select the image you want to convert.</li>
 
-<li>Format Selection: Determine the desired output format, such as JPEG, PNG, or JPG.</li>
+                                        <li>Choose Format: Pick your target format, be it JPEG, PNG, or JPG.</li>
 
-<li>Output Image: Save the newly encoded image data into a file with the desired output format.</li>
+                                        <li>Download: Grab your image in its fresh format.</li>
 </ol>
 </div>  </Fade>
             <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
               <div style={{flexGrow: '1'}}>
                   <Card className="passport-photo-card"
                       title={
-                        displayUrl ? "Uploaded Image and Result":"Drag and Drop Photo"
+                                            displayUrl ? "Uploaded Image and Result" : "Ready for a Format Flip?"
                       }
                       cover=
                       {
@@ -283,7 +342,7 @@ function FormatConversion(props1) {
                     >
                     <Upload {...props} className="my-upload">
                       <p>
-                        <UploadOutlined /> Click or drag passport photo to this area to upload
+                        <UploadOutlined /> Click or drag a photo to this area to upload
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>
@@ -328,7 +387,7 @@ function FormatConversion(props1) {
                     >
                     <Upload {...props} className="my-upload">
                       <p>
-                        <UploadOutlined /> Click or drag passport photo to this area to upload
+                                                <UploadOutlined /> Drag & drop or tap to introduce your image
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>

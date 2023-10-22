@@ -1,54 +1,56 @@
+/* ---- Passport Photo Styles ---- */
+
+/* Container for the passport photo */
 .passport-photo-container {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
 }
 
-.passport-photo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
-  /* margin: 50px; */
-}
-
+/* Upload cursor indication */
 .ant-upload {
-  cursor: pointer;
+    cursor: pointer;
 }
 
+/* Container for the central card */
 .center-card-container {
-  /* border: 1px dotted black; */
-  border-radius: 10px;
-  display: flex;
-  justify-content: center !important;
-  align-items: center !important;
-  width: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100%;
 }
 
+/* Card styling for the passport photo */
 .passport-photo-card {
-  border-radius: 10px;
-  text-align: center;
-  justify-content: center !important;
-  align-items: center !important;
-  height: 100%;
-  width: 100%;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
+    width: 100%;
 }
 
+/* Style for the uploaded image */
 .uploaded-image {
-  width: 100%;
-  height: 300px;
-  object-fit: contain;
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
 }
 
+/* Style for the label */
 .labelStyle {
-  color: white !important;
-  margin-left: 5px;
+    color: white !important;
+    margin-left: 15px; /* Updated to 15px for consistency */
+    font-weight: 500; /* Make the label a bit bolder */
 }
 
+/* ---- Collapsed Hint Styles ---- */
 
-/* ... existing styles ... */
-
+/* Styling for the collapsed hint container */
 .collapsed-hint {
-    margin-left:12%;
+    margin-left: 12%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,6 +60,7 @@
     animation: fadeIn 1.5s infinite alternate;
 }
 
+/* FadeIn animation for the hint */
 @keyframes fadeIn {
     from {
         opacity: 0.5;
@@ -68,12 +71,14 @@
     }
 }
 
+/* Icon styling for the hint */
 .hint-icon {
     font-size: 24px;
     margin-bottom: 10px;
     animation: bounce 1s infinite alternate;
 }
 
+/* Bounce animation for the hint icon */
 @keyframes bounce {
     from {
         transform: translateY(0);
@@ -84,60 +89,53 @@
     }
 }
 
+/* ---- Dropdown Selector Styles ---- */
 
-/* ... existing styles ... */
-
-/* Enhancing the dropdown selector */
+/* Base styles for the dropdown selector */
 .Select {
     border: 1px solid rgba(0, 5, 36, 0.2) !important;
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
-    background-color: #f4f4f4 !important; /* A subtle background color */
+    background-color: #f4f4f4 !important;
 }
 
+    /* Hover effects for the dropdown selector */
     .Select:hover {
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.12);
         transform: translateY(-2px);
     }
 
+    /* Styling for the dropdown arrow */
+    .Select .ant-select-arrow {
+        color: #000524;
+        transition: transform 0.3s ease;
+    }
 
+    /* Hover effect for the dropdown arrow */
+    .Select:hover .ant-select-arrow {
+        transform: rotate(180deg);
+    }
 
-/* Style for the checkbox */
+    /* Enhancing the dropdown options for a better UX */
+    .Select .ant-select-item {
+        transition: background-color 0.2s ease;
+    }
+
+        .Select .ant-select-item:hover {
+            background-color: #e8e8e8;
+        }
+
+/* ---- Checkbox Styles ---- */
+
+/* Base styles for the modern checkbox */
 .modern-checkbox .ant-checkbox-inner {
     border-color: #000524;
     border-radius: 3px;
 }
 
+/* Checked state styling for the modern checkbox */
 .modern-checkbox .ant-checkbox-checked .ant-checkbox-inner {
     background-color: #000524;
     border-color: #000524;
 }
-
-.labelStyle {
-    color: white !important;
-    margin-left: 15px;
-    font-weight: 500; /* Make the label a bit bolder */
-}
-
-/* Customizing the dropdown arrow */
-.Select .ant-select-arrow {
-    color: #000524;
-    transition: transform 0.3s ease;
-}
-
-.Select:hover .ant-select-arrow {
-    transform: rotate(180deg);
-}
-
-/* Enhancing the dropdown options for a better UX */
-.Select .ant-select-item {
-    transition: background-color 0.2s ease;
-}
-
-    .Select .ant-select-item:hover {
-        background-color: #e8e8e8; /* A subtle hover effect on dropdown items */
-    }
-
-
-

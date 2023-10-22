@@ -1,19 +1,21 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import "./Demo.css";
-import { Card, Upload, Button, Layout, Menu ,Modal, Tooltip,Input, Row, Col} from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import {Fade} from 'react-reveal';
+import {
+    Card, Upload, Button, Layout, Menu, Modal, Tooltip,
+    Input, Row, Col
+} from 'antd';
+import { UploadOutlined, InfoCircleOutlined, PictureOutlined } from '@ant-design/icons';
+import { Fade } from 'react-reveal';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { InfoCircleOutlined } from '@ant-design/icons';
 
 
 const { Sider, Content } = Layout;
 
-
+// Content section component
 const ContentSection = ({ children }) => {
   return (
     <Content style={{ padding: "0 50px" }}>
@@ -22,12 +24,14 @@ const ContentSection = ({ children }) => {
   );
 };
 
+// Main Demo component
 export const Demo = (props1) => {  
+
+  // State variables
   const { uuid } = props1;
   const [imageSrc, setImageSrc] = useState('');
   const [aspectRatio, setAspectRatio] = useState(16 / 9);
   const [cropperKey, setCropperKey] = useState(0);
-  const cropperRef = useRef(null);
   const [cropData, setCropData] = useState("#");
   const [fileName, setfileName] = useState(null);
   const [collapsed, setCollapsed] = useState(false);
@@ -36,13 +40,20 @@ export const Demo = (props1) => {
   const [numerator, setNumerator] = useState('');
   const [denominator, setDenominator] = useState('');
 
+
+  const cropperRef = useRef(null);
+
+  // Handler for custom ratio input change
   const handleInputChange = (e) => {
     setCustomRatio(e.target.value);
   };
-  
+
+  // Sidebar collapse handler
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
-  };
+    };
+
+  // Aspect ratio menu items
   const menuItems = [
     { key: '1', name: '16/9' },
     { key: '2', name: '1/1' },
@@ -50,6 +61,7 @@ export const Demo = (props1) => {
     { key: '4', name: '3/4' },
   ];
 
+  // Handler for aspect ratio menu item click
   const handleMenuClick = (event) => {
     const selectedAspectRatio = menuItems.find((item) => item.key === event.key)?.name;
     const [width, height] = selectedAspectRatio.split('/');
@@ -58,7 +70,7 @@ export const Demo = (props1) => {
   };
 
 
-
+  // Get cropped image data
   const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
       const formData = new FormData();
@@ -80,10 +92,12 @@ export const Demo = (props1) => {
 
   };
 
+  // Extract image type from MIME type
   function getImageTypeFromMime(dataUrl) {    
     return  dataUrl.split(',')[0].split(':')[1].split(';')[0].split('/')[1];
   }
 
+  // Handler for file upload
   const handleUpload = (file) => {
     const reader = new FileReader();
     let uniqueId = uuidv4();
@@ -98,7 +112,9 @@ export const Demo = (props1) => {
     reader.onerror = (error) => {
       console.error('Error: ', error);
     };
-  };
+    };
+
+  // Handler for drag and drop
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -109,6 +125,7 @@ export const Demo = (props1) => {
     e.preventDefault();
   });
 
+  // Add drag and drop event listener to document
   useEffect(() => {
     document.addEventListener('drop', handleDrop);
 
@@ -116,7 +133,10 @@ export const Demo = (props1) => {
     return () => {
       document.removeEventListener("drop", handleDrop);
     };
-  }, []);  const props = {
+  }, []);
+
+    // Upload properties
+    const props = {
     name: 'file',
     accept: 'image/*',
     beforeUpload: (file) => {
@@ -132,7 +152,9 @@ export const Demo = (props1) => {
         handleUpload(info.file.originFileObj);
       }
     },
-  };
+    };
+
+   // Modal info display
   const info = () => {
     Modal.info({
       title: 'Photo Crop',
@@ -153,60 +175,57 @@ export const Demo = (props1) => {
     });
   };
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider style={{ backgroundColor: '#000524' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <label style={{ color: 'white', textAlign: 'center' }}>Choose Ratio:</label>
+      <Layout style={{ minHeight: "100vh" }}>
+          <Sider width={200} style={{ backgroundColor: '#000524' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
+
+              {collapsed ? (
+                  <div className="photo-crop-cue">
+                      <PictureOutlined style={{ fontSize: '32px', color: 'white', textAlign: 'center', marginTop: '20px' }} />
+                      <div style={{ color: 'white', textAlign: 'center', marginTop: '10px' }}>Photo Crop</div>
+                  </div>
+              ) : (
+                  <>
+                      <label style={{ color: 'white', textAlign: 'center' }}>Choose Ratio:</label>
         <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden', textAlign: 'center' }}
           onClick={(e) => handleMenuClick(e)}>
-          {menuItems.map((item) => (
-            <Menu.Item key={item.key} >{item.name}</Menu.Item>
-          ))}
-         <Row gutter={16} align="middle" justify="center">
-  <Col span={10} style={{paddingLeft:'0px', position:'relative', left:'-5px',bottom:'4px'}}>
-    <Input 
-      style={{ width: '30px' }} 
-      placeholder="Width" 
-      value={numerator} 
-      onChange={(e) => setNumerator(e.target.value)} 
-    />
-  </Col>
-  <Col style={{position:'relative', left:'2px'}}>
-   / 
-  </Col>
-  <Col span={10} style={{paddingLeft:'0px', position:'relative', left:'-5px', bottom:'4px'}}>
-    <Input 
-      style={{ width: '30px', position:'relative', right:'14px' }} 
-      placeholder="Height" 
-      value={denominator} 
-      onChange={(e) => setDenominator(e.target.value)} 
-    />
-  </Col>
-  <Col span={6}>
-    
-  </Col>
-</Row>
-<Button
-      style={{ marginLeft: '10px' }}
-      onClick={() => {
-        if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
-          console.error('Invalid ratio!');
-          return;
-        }
-        setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
-        setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
-      }}
-    >
-      Set Custom Ratio
-    </Button>
+                              {menuItems.map((item) => (
+                                  <Menu.Item className="ratio-menu-item" key={item.key}>{item.name}</Menu.Item>
+                              ))}
+                              <div className="custom-ratio-container">
+                                  <Input
+                                      className="custom-ratio-input"
+                                      placeholder="Width"  // Change placeholder to "Width"
+                                      value={numerator}
+                                      onChange={(e) => setNumerator(e.target.value)}
+                                  />
+                                  <span>/</span>
+                                  <Input
+                                      className="custom-ratio-input"
+                                      placeholder="Height"  // Change placeholder to "Height"
+                                      value={denominator}
+                                      onChange={(e) => setDenominator(e.target.value)}
+                                  />
+                              </div>
+                              <Button className="custom-ratio-button" onClick={() => {
+                                  if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
+                                      console.error('Invalid ratio!');
+                                      return;
+                                  }
+                                  setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
+                                  setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
+                              }}>
+                                  Set Custom Ratio
+                              </Button>
 
 
 
         </Menu>
-       
+                  </>
+              )}
 
       </Sider>
-      <Layout className="site-layout">
-        <ContentSection>
+          <Layout className="site-layout">
+              <ContentSection>
           {!imageSrc ? 
          <div className="passport-photo-container" style={{display:'block'}}>
          <Fade>

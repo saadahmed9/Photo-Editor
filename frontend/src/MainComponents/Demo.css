@@ -1,9 +1,87 @@
+/* ---- General styles ---- */
+
+/* Box styling with border-box and padding */
 .box {
     display: inline-block;
     padding: 10px;
     box-sizing: border-box;
-  }
-  .img-preview {
+}
+
+/* Image preview overflow handling */
+.img-preview {
     overflow: hidden;
-  }
-  
+}
+
+/* ---- Photo Crop Cue styles ---- */
+
+/* Basic structure for photo crop cue with center alignment */
+.photo-crop-cue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Animation for pulsing effect */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Applying the pulse animation to the picture icon within the photo crop cue */
+.photo-crop-cue .anticon-picture {
+    animation: pulse 1.5s infinite;
+}
+
+/* ---- Sidebar Menu styles ---- */
+
+/* Style applied to the menu item during hover in the sidebar */
+.ratio-menu-item:hover {
+    background-color: #292f4c !important;
+}
+
+/* ---- Custom Ratio Input styles ---- */
+
+/* Container styling for the custom ratio input */
+.custom-ratio-container {
+    margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px; /* Added padding to ensure there's a gap from the border */
+}
+
+/* Styling for each individual ratio input */
+.custom-ratio-input {
+    width: calc(50% - 10px); /* Adjusted width to be half of the container width minus some space for margin */
+    margin: 0 5px;
+    text-align: center;
+}
+
+/* ---- Custom Ratio Button styles ---- */
+
+/* Base styles for the custom ratio button */
+.custom-ratio-button {
+    display: block;
+    margin: 10px auto;
+    background-color: #007acc;
+    border-color: #007acc;
+    color: white;
+    width: 80%; /* Restrict width to ensure it fits within the sider */
+}
+
+    /* Hover effect for the custom ratio button */
+    .custom-ratio-button:hover {
+        background-color: #005ea8;
+        border-color: #005ea8;
+    }

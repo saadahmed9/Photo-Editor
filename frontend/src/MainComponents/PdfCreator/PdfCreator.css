@@ -1,6 +1,9 @@
+/* Global Styles */
+
 .sidebar {
     background-color: #000524;
 }
+
 .center-card-container {
     margin-bottom: none;
     display: flex;
@@ -8,15 +11,164 @@
     justify-content: center;
     align-items: center;
 }
-.uploaded-images{
+
+.uploaded-images {
     width: 100%;
     height: 100px;
     object-fit: contain;
-  }
-
+}
 
 .label {
     margin-top: 50px;
     text-align: center;
     color: white;
 }
+
+/* Collapsed Sidebar Styles */
+
+.pdf-creator-collapsed-sidebar {
+    background: linear-gradient(45deg, #000524, #333);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pdf-creator-collapsed-icon-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pdf-creator-collapsed-icon {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+    .pdf-creator-collapsed-icon:hover {
+        transform: scale(1.1);
+    }
+
+/* Image Upload Section */
+
+.image-upload-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #000524;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.image-upload-label {
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.upload-clear-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.upload-button-container {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.upload-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.5rem;
+}
+
+.upload-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.clear-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .clear-button:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+/* Image Grid & Items */
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 10px;
+    padding: 10px;
+}
+
+.image-item {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    position: relative;
+}
+
+    .image-item:hover {
+        transform: scale(1.05);
+    }
+
+.image {
+    width: 100%;
+    display: block;
+}
+
+/* Remove Image Button Styles */
+
+.remove-image-btn {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 1px 2px;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+    .remove-image-btn:hover {
+        color: rgba(255, 0, 0, 0.9);
+        border-color: rgba(255, 0, 0, 0.9);
+    }
+
+/* Button Styles */
+
+Button[type="primary"] {
+    background-color: #000524;
+    border: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+    Button[type="primary"]:hover {
+        background-color: #333;
+        transform: scale(1.05);
+    }
