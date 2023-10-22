@@ -10,6 +10,8 @@ import { LoadingOutlined } from '@ant-design/icons';
 import {Fade } from 'react-reveal';
 import { v4 as uuidv4 } from 'uuid';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { Checkbox } from 'antd';
 
 
 const antIcon = (
@@ -46,7 +48,17 @@ const PassportPhoto = (props1) => {
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
-  };
+    };
+
+
+    const CollapsedHint = () => (
+        <div className="collapsed-hint">
+            <ArrowRightOutlined className="hint-icon" />
+            <p>Choose Country</p>
+        </div>
+    );
+
+
   const menuItems = [
     { key: '1', name: 'Brazil' },
 { key: '2', name: 'Canada' },
@@ -259,21 +271,28 @@ const PassportPhoto = (props1) => {
   };
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider style={{backgroundColor: '#000524'}} collapsible collapsed={collapsed} onCollapse={onCollapse}>
-    <label style={{ color: 'white', textAlign: 'center' }}>Choose Country:</label>
-       <Select style={{ width: 180, marginLeft:'5px'}} onChange={handleMenuClick}>
-        {menuItems.map((item) => (
-          <Option key={item.key} value={item.key}>{item.name}</Option>
-        ))}      
-    </Select>    
-    <label className="labelStyle" style={{fontSize:'12px'}}>
-      <input style={{color:'white'}}
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-        /> Apply high end features.
-        </label>   
-  </Sider>
+          <Sider style={{ backgroundColor: '#000524' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
+              {collapsed ? (
+                  <CollapsedHint />
+              ) : (
+                  <>
+                      <label style={{ color: 'white', textAlign: 'center' }}>Choose Country:</label>
+                      <Select style={{ width: 180, marginLeft: '5px' }} onChange={handleMenuClick}>
+                          {menuItems.map((item) => (
+                              <Option key={item.key} value={item.key}>{item.name}</Option>
+                          ))}
+                      </Select>
+                          <label className="labelStyle">
+                              <Checkbox
+                                  checked={isChecked}
+                                  onChange={(e) => handleCheckboxChange(e)}
+                                  className="modern-checkbox"
+                              />
+                              &nbsp; Apply high end features.
+                          </label>
+                  </>
+              )}
+          </Sider>
   <Layout className="site-layout">
         <ContentSection>
           { !imageUrl ? 
