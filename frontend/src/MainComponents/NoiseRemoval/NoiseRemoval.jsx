@@ -1,15 +1,18 @@
-import React, { useState,useEffect} from "react";
-import { Card, Upload, Button, Layout,Spin,Modal, Tooltip } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import './NoiseRemoval.css'
+import React, { useState, useEffect } from "react";
+import {
+    Card, Upload, Button, Layout, Spin, Modal, Tooltip
+} from 'antd';
+import {
+    UploadOutlined, LoadingOutlined, InfoCircleOutlined
+} from '@ant-design/icons';
 import axios from 'axios';
-import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
-import {Fade} from 'react-reveal';
+import { Fade } from 'react-reveal';
 import { v4 as uuidv4 } from 'uuid';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import './NoiseRemoval.css'
 
 
+// Constants
 const antIcon = (
   <LoadingOutlined
     style={{
@@ -21,6 +24,8 @@ const antIcon = (
 );
 const { Content } = Layout;
 
+
+// Content section layout
 const ContentSection = ({ children }) => {
   return (
     <Content style={{ padding: "0 50px" }}>
@@ -29,28 +34,37 @@ const ContentSection = ({ children }) => {
   );
 };
 
-function NoiseRemoval (props1) {
+function NoiseRemoval(props1) {
+
+  // State declarations
   const { uuid } = props1;
   const [imageUrl, setImageUrl] = useState(); 
   const [displayUrl, setDisplayUrl] = useState();
   const [fileType, setFileType] =useState(null);
   const [isLoading,setIsLoading]= useState(false);
   const [fileName, setfileName] = useState(null);
+    const [collapsed, setCollapsed] = useState(false);
 
-  const [collapsed, setCollapsed] = useState(false);
+  // Handle sidebar collapse
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   }; 
 
+
+  // Clear uploaded and processed images
   const handleClear = () => {
     setIsLoading(false);
     setImageUrl(null);
     setDisplayUrl(null);
-  };
+    };
+
+  // Get image type from DataURL
   function getImageTypeFromMime(dataUrl) {    
     return  dataUrl.split(',')[0].split(':')[1].split(';')[0].split('/')[1];
   }
 
+
+  // Handle image upload and set states
   const handleUpload = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -65,6 +79,7 @@ function NoiseRemoval (props1) {
     };
   };
 
+  // Handle file drop event
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -75,6 +90,8 @@ function NoiseRemoval (props1) {
     e.preventDefault();
   });
 
+
+  // Upload props for antd
   const props = {
     name: 'file',
     accept: 'image/*',
@@ -93,6 +110,7 @@ function NoiseRemoval (props1) {
     },
   };
 
+  // Convert DataURL to File object
   function dataURLtoFile(dataURL, fileName) {
     const mime = dataURL.split(',')[0].split(':')[1].split(';')[0];
     const data = atob(dataURL.split(',')[1]);
@@ -103,7 +121,9 @@ function NoiseRemoval (props1) {
     const blob = new Blob([array], { type: mime });
     const file = new File([blob], fileName, { type: mime });
     return file;
-  }
+    }
+
+  // Download image and set the processed image URL
   function downloadImage(url1,type) {
     fetch(url1)
       .then(response => response.blob())
@@ -120,6 +140,7 @@ function NoiseRemoval (props1) {
       .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
   }
 
+  // Send uploaded image for noise removal and fetch the processed image
   function handlePreview () {
     setIsLoading(true);
     const formData = new FormData();
@@ -132,7 +153,9 @@ function NoiseRemoval (props1) {
       )
       .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
   }
-  
+
+
+  // Allow user to download the processed image
   function handleDownload () {
         const link = document.createElement('a');
         link.href = displayUrl;
@@ -142,25 +165,28 @@ function NoiseRemoval (props1) {
         link.remove();
   };
 
-
+  // Add event listeners for file drag and drop
   useEffect(() => {
     document.addEventListener('drop', handleDrop);
 
     // Remove event listener when component is unmounted
+    // Cleanup on component unmount
     return () => {
       document.removeEventListener("drop", handleDrop);
     };
   }, []);
+
+  // Information modal
   const info = () => {
     Modal.info({
       title: 'Noise Removal',
       content: (
         <div>
-          involves creating sharp and clean images by removing unwanted distortions or noise.
+              Target noise and distortions to produce a sharper, clearer picture.
   <ol>
-  <li>Input Image: Start by drag & drop or upload the image file.</li>
+                  <li>Upload: Drag & drop or select the image craving clarity.</li>
     
-  <li>Preview and Download: Preview and download the photo.</li>
+                  <li>Result: Preview and capture your noise-free masterpiece.</li>
   </ol>
         </div>
       ),
@@ -178,18 +204,18 @@ function NoiseRemoval (props1) {
             {/* Users can convert their images into the desired format, such as JPEG, PNG, and more.
             Please select the format and upload the image in box below. */}
             <div style={{position:'relative', left:'200px',top:'5rem'}}>
-  <b>Noise Removal</b> involves creating sharp and clean images by removing unwanted distortions or noise.
+                                  <b>Noise Removal</b> Eliminate noise and distortions for a pristine finish:
   <ol>
-  <li>Input Image: Start by drag & drop or upload the image file.</li>
+                                      <li>Upload: Drag & drop or click to select your image.</li>
     
-  <li>Preview and Download: Preview and download the photo.</li>
+                                      <li>Download: Preview your refined photo and save it.</li>
   </ol>
   </div>  </Fade>
               <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
            <div style={{flexGrow: '1'}}>
              <Card className="passport-photo-card"
                   title={
-                   displayUrl ? "Uploaded Image and Result":"Drag and Drop Photo"
+                                          displayUrl ? "Uploaded Image and Result" : "Ready to Clear the Haze?"
                  }
                  cover=
                    {
@@ -206,7 +232,7 @@ function NoiseRemoval (props1) {
                >
                  <Upload {...props} className="my-upload">
                    <p>
-                     <UploadOutlined /> Click or drag Photo to this area to upload
+                                              <UploadOutlined /> Drag & drop or tap to start your clarity journey.
                    </p>
                    {isLoading && <Spin indicator={antIcon} />}
                  </Upload><br></br>

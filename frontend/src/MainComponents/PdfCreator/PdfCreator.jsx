@@ -8,6 +8,7 @@ import {toast} from 'react-toastify';
 import {Fade} from 'react-reveal';
 import { v4 as uuidv4 } from 'uuid';
 
+// Spinner icon configuration
 const antIcon = (
   <LoadingOutlined
     style={{
@@ -19,6 +20,7 @@ const antIcon = (
 );
 const { Sider, Content } = Layout;
 
+// This component acts as the content section, wrapping children within the needed styling
 const ContentSection = ({ children }) => {
   return (
     <Content style={{ padding: "0 50px" }}>
@@ -28,29 +30,46 @@ const ContentSection = ({ children }) => {
 };
 
 export const PdfCreator = () => {
+    // State declarations
   const [imageSrc, setImageSrc] = useState('');
   const [cropperKey, setCropperKey] = useState(0);
   const [imageCollection, setImageCollection] = useState([]);  
   const [pdfUrl, setpdfUrl] = useState(null);
   const [isLoading,setIsLoading]= useState(false);
   const [fileName, setfileName] = useState(null);
-
-
   const [collapsed, setCollapsed] = useState(false);
 
+  // Handle sidebar collapse and expansion
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
-  };
+    };
 
-  const handleUpload = (file) => {
+    // Image removal handlers
+    const handleImageRemove = (indexToRemove) => {
+        const newImageCollection = imageCollection.filter((_, index) => index !== indexToRemove);
+        setImageCollection(newImageCollection);
+    };
+
+    const handleRemoveImage = (index) => {
+    const newImageCollection = [...imageCollection];
+    newImageCollection.splice(index, 1);
+    setImageCollection(newImageCollection);
+};
+
+
+  // Image uploading handlers
+    const handleUpload = (file) => {
+     // Generate a unique ID for the file name
     let uniqueId = uuidv4();
-    setfileName(file.name.split('.').slice(0, -1).join('.')+'_'+uniqueId);
+        setfileName(file.name.split('.').slice(0, -1).join('.') + '_' + uniqueId);
+    // Validate blob
     if (!(file instanceof Blob)) {
       console.log(file);
       console.error('Error: parameter is not a Blob object');
       //return;
-    }
+      }
 
+    // Read image data
     const reader = new FileReader();
     const blob = new Blob([file], { type: file.type });
 
@@ -62,7 +81,9 @@ export const PdfCreator = () => {
     reader.onerror = (error) => {
       console.error('Error: ', error);
     };
-  };
+    };
+
+   // Handle image drop into the component
   const handleDrop = (e) => {
 
     e.preventDefault();
@@ -76,10 +97,12 @@ export const PdfCreator = () => {
     }
   };
 
+  // Prevent default dragover behavior
   document.addEventListener('dragover', (e) => {
     e.preventDefault();
   });
 
+  // Add drag-drop event listener
   useEffect(() => {
     document.addEventListener('drop', handleDrop);
 
@@ -87,7 +110,10 @@ export const PdfCreator = () => {
     return () => {
       document.removeEventListener("drop", handleDrop);
     };
-  }, []);  const props = {
+  }, []);
+
+    // Image upload configurations
+    const props = {
     name: 'file',
     accept: 'image/*',
     beforeUpload: (file) => {
@@ -103,11 +129,16 @@ export const PdfCreator = () => {
         handleUpload(info.file.originFileObj);
       }
     },
-  };
-  const handleClear = () => {
+    };
+
+    // Clear all images
+    const handleClear = () => {
     setImageCollection([]);
-  };
-  const SiderImageUpload = (event) => {
+    };
+
+
+    // Handle the addition of images from the sidebar
+    const SiderImageUpload = (event) => {
     console.log(event.target.files);
     const files = event.target.files;
 
@@ -127,6 +158,7 @@ export const PdfCreator = () => {
     }
   };
 
+  // Utility function to convert data URI to a File
   function dataURItoFile(dataURI, filename) {
     let byteString = atob(dataURI.split(',')[1]);
     let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
@@ -139,7 +171,7 @@ export const PdfCreator = () => {
     return new File([blob], filename, {type: mimeString});
   }
   
-  
+  // Fetch data on upload and create PDF
   function getDataOnUpload() {
     setIsLoading(true);
     const formData = new FormData();
@@ -162,45 +194,59 @@ export const PdfCreator = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <label style={{ color: 'white', textAlign: 'center' }}>Images:</label>
-        <div style={{ position: "relative", width: "200px", height: "50px", }}>
-          <button style={{ position: "absolute", width: "100%", height: "100%", }}>
-            <i class="fa fa-plus-circle" aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}></i>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={(e) => SiderImageUpload(e)}
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                opacity: "0",
-                left: "0",
-                top: "0",
-                cursor: "pointer",
-              }}
-            />
-          </button>
-        </div>
-        <button style={{ width: "100%" }} onClick={handleClear}>Clear</button>
-        <Menu>
-          {imageCollection.map((image, index) => (
-            <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
-            <img src={image} style={{ maxWidth: '100%', height: '100%' }} draggable="true"
-              onDragStart={(e) => {
-                e.dataTransfer.setData("image/jpeg", image);
-              }} />
-          </Menu.Item>
-          
-          ))}
-        </Menu>
-       
+          <Sider
+              collapsible
+              collapsed={collapsed}
+              onCollapse={onCollapse}
+              className={collapsed ? "pdf-creator-collapsed-sidebar" : "pdf-creator-expanded-sidebar"}
+          >
+              {collapsed ?
+                  (
+                      <div className="pdf-creator-collapsed-icon-container">
+                          <i className="fa fa-camera pdf-creator-collapsed-icon" aria-hidden="true" title="Add images to create a PDF"></i>
+                      </div>
+                  ) :
+                  (
+                      <>
+                          <div className="image-upload-header">
+                              <label className="image-upload-label">Images</label>
+                              <div className="upload-clear-buttons">
+                                  <div className="upload-button-container">
+                                      <i className="fa fa-plus-circle upload-icon" aria-hidden="true"></i>
+                                      <input
+                                          type="file"
+                                          accept="image/*"
+                                          multiple
+                                          onChange={(e) => SiderImageUpload(e)}
+                                          className="upload-input"
+                                      />
+                                  </div>
+                                  <button className="clear-button" onClick={handleClear}>Clear</button>
+                              </div>
+                          </div>
+                          <div className="images-grid">
+                              {imageCollection.map((image, index) => (
+                                  <div key={index} className="image-item">
+                                      <img src={image} className="image" draggable="true"
+                                          onDragStart={(e) => {
+                                              e.dataTransfer.setData("image/jpeg", image);
+                                          }}
+                                      />
+                                      <button className="remove-image-btn" onClick={() => handleRemoveImage(index)}>Remove</button>
+                                  </div>
+                              ))}
+                          </div>
 
-      </Sider>
+                      </>
+                  )
+              }
+          </Sider>
+
+
       <div style={{marginLeft:'12%', marginTop:'10px', textAlign:'center'}}>
-      <Button type="primary" onClick={getDataOnUpload} style={{ margin: '10px',backgroundColor:'#000524' }}>Create PDF</Button>
+
+              <Button type="primary" onClick={getDataOnUpload} style={{ margin: '10px', backgroundColor: '#000524', border: 'none', padding:'6px 16px'}} onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#333"} onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#000524"}>Create PDF</Button>
+             
      
     {isLoading && <Spin indicator={antIcon} style={{position: 'absolute',
     height: '100%',
