@@ -1,8 +1,8 @@
 {
-  "United States" : "192,192",
+  "USA" : "192,192",
   "Canada" : "189,247",
   "Mexico": "192,192",
-  "United kingdom" : "170,132",
+  "UK" : "170,132",
   "Germany": "170,132",
   "Italy": "170,132",
   "France": "170,132",
@@ -13,8 +13,18 @@
   "Japan": "170,132",
   "Singapore" : "170,132",
   "Korea": "170,132",
-  "spain": "151,113",
   "Brazil": "264,189",
   "India": "132,132",
-  "China": "181,162"
+  "Spain":"132,170",
+  "China": "181,162",
+  "Saudi_Arabia":"192,192",
+  "UAE":"151,227",
+  "New_Zealand":"132,170",
+  "Malaysia":"132,189",
+  "Argentina":"132,170",
+  "South_Africa":"132,170",
+  "Thailand":"192,192",
+  "Indonesia":"132,170",
+  "Vietnam":"152,227",
+  "Chile":"132,170"
 }

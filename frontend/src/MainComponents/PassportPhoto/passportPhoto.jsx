@@ -56,6 +56,37 @@ const PassportPhoto = (props1) => {
     setCollapsed(collapsed);
     };
 
+    const countryUrlMap = {
+      Brazil: 'https://www.gov.br/mre/pt-br/consulado-montreal/brazilian-passport',
+      Canada: 'https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports/photos.html',
+      France: 'https://www.service-public.fr/particuliers/vosdroits/F10619?lang=en',// ... add URLs for other countries
+      China: 'https://www.ivisa.com/photo/blog/china-passport-visa-photo-requirements-and-size',
+      France: 'https://www.service-public.fr/particuliers/vosdroits/F10619?lang=en',
+      Germany: 'https://dublin.diplo.de/ie-en/-/2380534',
+      India: 'https://www.cgisf.gov.in/docs/1553603117PHOTO_GUIDELINES.pdf',
+      Italy: 'https://it.usembassy.gov/visas/niv/photo-requirements/',
+      Japan:'https://www.sf.us.emb-japan.go.jp/itpr_en/e_m03_01_02.html#:~:text=Size%3A%2035mm%20x%2045mm%20(width,more%20than%2036%20mm%20high.',
+      Korea: 'https://overseas.mofa.go.kr/us-losangeles-en/brd/m_4394/view.do?seq=725383&srchFr=&srchTo=&srchWord=photo&srchTp=0&multi_itm_seq=0&itm_seq_1=0&itm_seq_2=0&company_cd=&company_nm=&page=1',
+      Mexico: 'https://do.usembassy.gov/u-s-citizen-services/passports/photo-requirements-u-s-passports-visa/',
+      Netherlands:'https://www.netherlandsworldwide.nl/passport-id-card/photo-requirements',
+      Russia: 'https://ru.usembassy.gov/u-s-citizen-services/passports/photos/',
+      Singapore: 'https://www.mfa.gov.sg/Overseas-Mission/Phnompenh/Consular-Services/Application-for-Singapore-Passport',
+      Spain:'https://es.usembassy.gov/passports/#guidelines',
+      Turkey: 'https://www.timpson.co.uk/services/passport-photos/international-passport-photo-sizes/turkey',
+      UK: 'https://www.gov.uk/photos-for-passports/photo-requirements#:~:text=You%20need%20to%20provide%202,version%20of%20a%20larger%20picture',
+      USA: 'https://travel.state.gov/content/travel/en/passports/how-apply/photos.html',
+      Saudi_Arabia: 'https://www.saudiembassy.net/guideline-accepted-photographs-saudi-visas',
+      UAE:'https://u.ae/en/information-and-services/passports-and-traveling/the-emirati-passport',
+      New_Zealand:'https://www.passports.govt.nz/passport-photos/how-to-take-a-passport-photo/',
+      Malaysia:'https://www.imi.gov.my/index.php/en/main-services/passport/malaysian-international-passport/',
+      Argentina: 'https://cnyor.cancilleria.gob.ar/en',
+      South_Africa:'https://www.southafrica-usa.net/homeaffairs/pp_tourist.htm',
+      Thailand:'https://thaiconsulatela.thaiembassy.org/en/publicservice/documents-required-for-renew-thai-passport-2?page=61b1064202fd6d10a962f3a4',
+      Indonesia:'https://consular.embassyofindonesia.org/page/generalinformation.html',
+      Vietnam:'https://vietnamconsulate-sf.org/en/2017/05/11/thu-tuc-cap-ho-chieu-lan-dau-cho-cong-dan-viet-nam-dinh-cu-tai-hoa-ky/',
+      Chile:'https://minrel.gob.cl/minrel/ministry/procedures-for-chileans/passport'
+    }
+    
     // Component for displaying hint when sidebar is collapsed
     const CollapsedHint = () => (
         <div className="collapsed-hint">
@@ -66,24 +97,34 @@ const PassportPhoto = (props1) => {
 
 
   const menuItems = [
-    { key: '1', name: 'Brazil' },
+    { key: '1', name: 'USA' },
 { key: '2', name: 'Canada' },
 { key: '3', name: 'China' },
 { key: '4', name: 'France' },
-{ key: '5', name: 'France' },
-{ key: '6', name: 'Germany' },
-{ key: '7', name: 'India' },
-{ key: '8', name: 'Italy' },
-{ key: '9', name: 'Japan' },
-{ key: '10', name: 'Korea' },
-{ key: '11', name: 'Mexico' },
-{ key: '12', name: 'Netherlands' },
-{ key: '13', name: 'Russia' },
-{ key: '14', name: 'Singapore' },
-{ key: '15', name: 'Spain' },
-{ key: '16', name: 'Turkey' },
-{ key: '17', name: 'United Kingdom' },
-{ key: '18', name: 'United States' }
+{ key: '5', name: 'Germany' },
+{ key: '6', name: 'India' },
+{ key: '7', name: 'Italy' },
+{ key: '8', name: 'Japan' },
+{ key: '9', name: 'Korea' },
+{ key: '10', name: 'Mexico' },
+{ key: '11', name: 'Netherlands' },
+{ key: '12', name: 'Russia' },
+{ key: '13', name: 'Singapore' },
+{ key: '15', name: 'Turkey' },
+{ key: '16', name: 'UK' },
+{ key: '17', name: 'Brazil' },
+{ key: '18', name: 'Saudi_Arabia' },
+{ key: '19', name: 'UAE' },
+{ key: '20', name: 'New_Zealand' },
+{ key: '21', name: 'Malaysia' },
+{ key: '22', name: 'Argentina' },
+{ key: '23', name: 'South_Africa' },
+{ key: '24', name: 'Thailand' },
+{ key: '25', name: 'Indonesia' },
+{ key: '26', name: 'Vietnam' },
+{ key: '27', name: 'Chile' },
+{ key: '28', name: 'Spain' },
+
   ];
   const [isChecked, setIsChecked] = useState(false);
 
@@ -95,6 +136,12 @@ const PassportPhoto = (props1) => {
     setSelectedCountry(selectedCountry);
     console.log(selectedCountry)
   }; 
+
+  const handleVisitWebsite = () => {
+    if (selectedCountry && countryUrlMap[selectedCountry]) {
+      window.open(countryUrlMap[selectedCountry], '_blank');
+    }
+  };
 
   const handleClear = () => {
     setIsLoading(false);
@@ -285,9 +332,22 @@ const PassportPhoto = (props1) => {
                       <label style={{ color: 'white', textAlign: 'center' }}>Choose Country:</label>
                       <Select style={{ width: 180, marginLeft: '5px' }} onChange={handleMenuClick}>
                           {menuItems.map((item) => (
-                              <Option key={item.key} value={item.key}>{item.name}</Option>
+                              <Option key={item.key} value={item.key}>{item.name.replace('_', ' ')}</Option>
                           ))}
                       </Select>
+
+                          {/* Display text and a button to visit the website under the "Choose Country" dropdown */}
+                          {selectedCountry && countryUrlMap[selectedCountry] && (
+                            <div style={{ marginTop: '4px',marginLeft: '8px' }}>
+                              <p style={{ color: 'white', marginBottom: '2px' }}>
+                                Check requirements here:
+                              </p>
+                              <Button type="primary" onClick={handleVisitWebsite}>
+                                Visit Website
+                              </Button>
+                            </div>
+                          )}
+                          
                           <label className="labelStyle">
                               <Checkbox
                                   checked={isChecked}
