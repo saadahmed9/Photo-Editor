@@ -25,6 +25,7 @@ from django.http import HttpResponse
 import base64
 import logging
 import pillow_heif
+from photo_editing_app.contollers.video_compression import compress_video
 # Create your views here.
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -687,6 +688,48 @@ def get_db_stat(request):
                 return_dict["Statistics"] = sample_list
             else:
                 raise SuspiciousOperation("pass function value as stats")
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+    return Response(return_dict)
+
+@api_view(('POST',))
+@csrf_exempt
+def video_compression(request):
+
+    logger.info("video compression endpoint!")
+    return_dict = {}
+    try:
+        verify_upload_file_passed(request)
+        verify_functionality_passed(request)
+        if request.method == 'POST' and request.FILES['myfile']:
+            myfile = request.FILES['myfile']
+            myfile.name = myfile.name.replace(" ", "")
+            video_folder = "\\".join(BASE_DIR.split("\\"))
+            video_url = video_folder+r"\media\uploads\\"+myfile.name
+            output_url = video_folder+r"\media\output\\"+myfile.name
+            input_file_size = os.path.getsize(video_url) / (1024 * 1024)
+            f = open(video_url,"wb")
+            for chunk in request.FILES['myfile'].chunks():
+                f.write(chunk)
+            f.close()
+            api_root = reverse_lazy('upload',request = request)
+            api_root = api_root[:-7]
+
+            return_dict['output_url'] = api_root+r"static/"+ myfile.name
+            compress_video(video_url, output_url)
+            output_file_size = os.path.getsize(output_url) / (1024 * 1024)
+        with open(output_url, 'rb') as f:
+            output_video_data = f.read()
+        video_base64 = base64.b64encode(output_video_data).decode('utf-8')
+        return_dict['videoUrl']=f"data:video/mp4;base64,{video_base64}"   
+        return_dict['input_file_size'] = input_file_size
+        return_dict['output_file_size'] = output_file_size
+        return_dict['error'] = False
+        return_dict['message'] = "Successfully Processed "
+        return_dict['status'] = 200
+
     except Exception as e:
         return_dict["message"] = str(e)
         return_dict['error'] = True
