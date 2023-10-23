@@ -23,7 +23,7 @@ class PhotoResizeAndCrop extends Component {
                 </Link>
               </div>
               <div className="col">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQci2ouAMeuzt13WH12zo__-QD2nihq8D-PjA&usqp=CAU" className="image" />
+                <img src="/photoCrop.png" className="image" />
               </div>
             </div>
           </div>

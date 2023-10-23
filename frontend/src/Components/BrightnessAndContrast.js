@@ -13,7 +13,7 @@ class BrightnessAndContrast extends Component {
           <div className="container">
             <div className="row">
             <div className="col">
-                <img src="/BrightnessContrast.jpeg" className="image" />
+                <img src="/brightnessAndContrast.png" className="image" />
               </div>
               <div className="col">
               <Link to="/brightnessandcontrast">

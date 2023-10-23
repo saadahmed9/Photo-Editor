@@ -13,7 +13,7 @@ class PDF extends Component {
           <div className="container">
             <div className="row">
             <div className="col">
-                <img src="/PDF.png" className="image" />
+                <img src="/pdfCreator.png" className="image" />
               </div>
               <div className="col">
               <Link to="/pdf">

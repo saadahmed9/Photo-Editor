@@ -20,7 +20,7 @@ class Mosaic extends Component {
                 </Link>
               </div>
             <div className="col">
-                <img src="/Mosaic.png" className="image" />
+                <img src="/mosaic.png" className="image" />
               </div>
               
               

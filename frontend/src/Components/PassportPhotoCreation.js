@@ -16,7 +16,7 @@ class PassportPhotoCreation extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ1SEFzoI-Vt9R70QNa62hv5n9lZNFS4eVwA&usqp=CAU" className="image"/>
+                <img src="/passportPhoto.png" className="image"/>
               </div>
               <div className="col">
               <Link to="/passport">
