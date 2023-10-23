@@ -31,5 +31,6 @@ urlpatterns = [
     path('photo_collage/', views.photo_collage, name='photo_collage'),
     path('crop/', views.crop_image, name='crop'),
     path('stats/', views.get_db_stat, name='stats'),
-    path('brightness_contrast/', views.brightness_contrast, name='brightness_contrast')
-]
+    path('brightness_contrast/', views.brightness_contrast, name='brightness_contrast'),
+    path('video_compression/', views.video_compression, name='video_compression')
+]   
