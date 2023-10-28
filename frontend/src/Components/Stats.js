@@ -33,8 +33,9 @@ const Stats=()=>  {
       <section className="class1">
         <Slide left duration={1300}>
           <div className="row">
-           <p>{featureMessage}</p>
+           
 <div style={{margin:'12rem 0rem 12rem 0rem'}}>
+<p style={{ textAlign: "center" }}>{featureMessage}</p>
               <BarChart width={1500} height={300} data={stats}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name"/>
