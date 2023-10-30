@@ -8,7 +8,8 @@ logger.setLevel(logging.INFO)
 
 def compress_video(input_video_path, output_video_path):
     # clean up any existing output video files if exists
-    os.remove(output_video_path)
+    if os.path.exists(output_video_path):
+        os.remove(output_video_path)
     
     logger.info("video compression in progress")
     try:
