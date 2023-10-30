@@ -78,3 +78,20 @@
     font-size: 16px;
     color: white;
 }
+
+/* Style for hint in collapsed sidebar */
+.collapsed-hint-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: white;
+}
+
+    .collapsed-hint-container p {
+        margin-top: 10px;
+        font-weight: bold;
+        text-align: center; /* This ensures the text is horizontally centered */
+        width: 100%; /* Ensuring the width is 100% might help as well */
+    }
