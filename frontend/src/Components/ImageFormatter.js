@@ -14,7 +14,7 @@ class ImageFormatter extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <img src="/formatconversion.png" className="image" />
+                <img src="/formatConversion.png" className="image" />
               </div>
               <div className="col">
               <Link to="/imageformatconversion">

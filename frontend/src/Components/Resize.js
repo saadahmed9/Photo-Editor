@@ -21,7 +21,7 @@ class Resize extends Component {
                 </Link>
               </div>
               <div className="col">
-                <img src="/resize.png" className="image" />
+                <img src="/photoResize.png" className="image" />
               </div>
             </div>
           </div>

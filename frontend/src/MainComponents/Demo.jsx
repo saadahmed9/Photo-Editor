@@ -43,15 +43,6 @@ export const Demo = (props1) => {
 
   const cropperRef = useRef(null);
 
-  const [isCircleCrop, setIsCircleCrop] = useState(false);
-
-  // Handler for toggle between normal crop and circle crop
-  const handleCropTypeToggle = () => {
-    setIsCircleCrop(!isCircleCrop);
-    setNumerator(''); // Reset custom ratio values when switching crop type
-    setDenominator('');
-  };
-
   // Handler for custom ratio input change
   const handleInputChange = (e) => {
     setCustomRatio(e.target.value);
@@ -73,16 +64,12 @@ export const Demo = (props1) => {
   // Handler for aspect ratio menu item click
   const handleMenuClick = (event) => {
     const selectedAspectRatio = menuItems.find((item) => item.key === event.key)?.name;
-    if (!isCircleCrop) {
-      const [width, height] = selectedAspectRatio.split('/');
-      setAspectRatio(parseFloat(width) / parseFloat(height));
-    } else {
-      // Handle circle crop ratio differently
-      // You can set a fixed aspect ratio for the circle crop, like 1/1
-      setAspectRatio(1);
-    }
+    const [width, height] = selectedAspectRatio.split('/');
+    setAspectRatio(parseFloat(width) / parseFloat(height));
     setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
   };
+
+
   // Get cropped image data
   const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
@@ -189,7 +176,7 @@ export const Demo = (props1) => {
   };
   return (
       <Layout style={{ minHeight: "100vh" }}>
-          <Sider width={220} style={{ backgroundColor: '#000524' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
+          <Sider width={200} style={{ backgroundColor: '#000524' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
 
               {collapsed ? (
                   <div className="photo-crop-cue">
@@ -199,94 +186,46 @@ export const Demo = (props1) => {
               ) : (
                   <>
                       <label style={{ color: 'white', textAlign: 'center' }}>Choose Ratio:</label>
-        <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden', textAlign: 'center' }}
-          onClick={(e) => handleMenuClick(e)}>
-                              
-            
-            
-            {isCircleCrop && (
-                <div className="custom-ratio-container">
-                <Input
-                  className="custom-ratio-input"
-                  placeholder="Ratio"
-                  value={customRatio}
-                  onChange={(e) => setCustomRatio(e.target.value)}
-                  style={{ marginRight: '0.5em' }} 
-                />
-                <span className="multiplication-sign" >×</span>
-                <Input
-                  className="custom-ratio-input"
-                  placeholder="Ratio"
-                  value={customRatio} // Both text boxes have the same value for circle crop
-                  onChange={(e) => setCustomRatio(e.target.value)}
-                  style={{ marginLeft: '0.5em' }} 
-                />
-                </div>
-
-              )}
-
-            {!isCircleCrop && (
-                      <div>
-                        <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '10vh', overflow: 'hidden', textAlign: 'center' }}
-                                onClick={(e) => handleMenuClick(e)}>
-                                      {menuItems.map((item) => (
-                                          <Menu.Item className="ratio-menu-item" key={item.key}>{item.name}</Menu.Item>
-                                      ))}
+                      <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden', textAlign: 'center' }}
+                          onClick={(e) => handleMenuClick(e)}>
+                          {menuItems.map((item) => (
+                              <Menu.Item className="ratio-menu-item" key={item.key}>{item.name}</Menu.Item>
+                          ))}
+                          <Row gutter={16} align="middle" justify="center">
+                              <Col span={10} style={{ paddingLeft: '0px', position: 'relative', left: '-5px', bottom: '4px' }}>
+                                  <Input
+                                      style={{ width: '30px' }}
+                                      placeholder="Width"
+                                      value={numerator}
+                                      onChange={(e) => setNumerator(e.target.value)}
+                                  />
+                              </Col>
+                              <Col style={{ position: 'relative', left: '2px' }}>
+                                  /
+                              </Col>
+                              <Col span={10} style={{ paddingLeft: '0px', position: 'relative', left: '-5px', bottom: '4px' }}>
+                                  <Input
+                                      style={{ width: '30px', position: 'relative', right: '14px' }}
+                                      placeholder="Height"
+                                      value={denominator}
+                                      onChange={(e) => setDenominator(e.target.value)}
+                                  />
+                              </Col>
+                          </Row>
+                          <Button className="custom-ratio-button" onClick={() => {
+                              if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
+                                  console.error('Invalid ratio!');
+                                  return;
+                              }
+                              setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
+                              setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
+                          }}>
+                              Set Custom Ratio
+                          </Button>
                       </Menu>
-                      </div>
-            )}
-
-
-
-            {!isCircleCrop && (
-              
-                <div className="custom-ratio-container">
-                  <Input
-                    className="custom-ratio-input"
-                    placeholder="Width"
-                    value={numerator}
-                    onChange={(e) => setNumerator(e.target.value)}
-                    style={{ marginRight: '0.5em' }} 
-                  />
-                  <span>/</span>
-                  <Input
-                    className="custom-ratio-input"
-                    placeholder="Height"
-                    value={denominator}
-                    onChange={(e) => setDenominator(e.target.value)}
-                    style={{ marginLeft: '0.5em' }} 
-                  />
-                  
-                  </div>
-              )}
-
-              {!isCircleCrop && (
-                <Button
-                  className="custom-ratio-button"
-                  onClick={() => {
-                    if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
-                      console.error('Invalid ratio!');
-                      return;
-                    }
-                    setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
-                    setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
-                  }}
-                >
-                  Set Custom Ratio
-                </Button>
-              )}
-
-
-
-              <Button className="custom-ratio-button" onClick={() => handleCropTypeToggle()}>
-                {isCircleCrop ? 'Switch to Normal Crop' : 'Switch to Circle Crop'}
-              </Button>
-            
-        </Menu>
                   </>
               )}
-
-      </Sider>
+          </Sider>
           <Layout className="site-layout">
               <ContentSection>
           {!imageSrc ? 

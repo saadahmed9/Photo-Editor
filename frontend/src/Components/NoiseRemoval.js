@@ -21,7 +21,7 @@ class NoiseRemoval extends Component {
               </Link>
             </div>
             <div className="col">
-              <img src="/NoiseRemoval.jpeg" className="image" />
+              <img src="/noiseRemoval.png" className="image" />
             </div>
           </div>
         </div>

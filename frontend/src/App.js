@@ -12,6 +12,7 @@ import BackgroundRemoval from "./MainComponents/BackgroundRemoval/BackgroundRemo
 import ResizeImage from "./MainComponents/ResizeImage/ResizeImage";
 import PdfCreator from "./MainComponents/PdfCreator/PdfCreator";
 import Mosaic from "./MainComponents/Mosaic/Mosaic";
+import ImageCompression from "./MainComponents/ImageCompression/ImageCompression";
 import { v4 as uuidv4 } from 'uuid';
 import Collage from "./MainComponents/PhotoCollage/Collage";
 import { ToastContainer } from 'react-toastify';
@@ -84,6 +85,7 @@ class App extends Component {
           <Route path="/photocollage" element={<Collage uuid={this.state.uuid}/>} />
           <Route path="/noiseremoval" element={<NoiseRemoval uuid={this.state.uuid}/>} />
           <Route path="/imageformatconversion" element={<FormatConversion uuid={this.state.uuid}/>} />
+          <Route path="/imagecompression" element={<ImageCompression uuid={this.state.uuid}/>} />
           <Route path="/brightnessandcontrast" element={<BrightnessContrast uuid={this.state.uuid}/>} />
           <Route path="/backgroundchange" element={<BackgroundRemoval  uuid={this.state.uuid}/>} />
           <Route path="/resize" element={<ResizeImage  uuid={this.state.uuid}/>} />

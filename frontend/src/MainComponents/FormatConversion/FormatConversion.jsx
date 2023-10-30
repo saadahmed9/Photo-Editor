@@ -8,7 +8,7 @@ import {
     Card, Upload, Button, Layout, Menu, Spin, Modal, Tooltip
 } from 'antd';
 import {
-    UploadOutlined, LoadingOutlined, InfoCircleOutlined
+    UploadOutlined, LoadingOutlined, InfoCircleOutlined, ArrowRightOutlined
 } from '@ant-design/icons';
 
 // CSS and other resources
@@ -286,22 +286,31 @@ function FormatConversion(props1) {
     return (
         <Layout style={{ minHeight: "100vh" }}>
             <Sider style={{ backgroundColor: '#000524' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
-                <label className="format-menu-label">Convert To:</label>
-                <Menu
-                    theme="dark"
-                    mode="inline"
-                    style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden' }}
-                    onClick={handleMenuClick}
-                >
-                    {menuItems.map((item) => (
-                        <Menu.Item
-                            key={item.key}
-                            className={`format-menu-item ${selectedFormat === item.name ? 'format-menu-item-selected' : ''}`}
+                {collapsed ? (
+                    <div className="collapsed-hint-container">
+                        <UploadOutlined />
+                        <p>Select Format</p>
+                    </div>
+                ) : (
+                    <>
+                        <label className="format-menu-label">Convert To:</label>
+                        <Menu
+                            theme="dark"
+                            mode="inline"
+                            style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden' }}
+                            onClick={handleMenuClick}
                         >
-                            {item.name}
-                        </Menu.Item>
-                    ))}
-                </Menu>
+                            {menuItems.map((item) => (
+                                <Menu.Item
+                                    key={item.key}
+                                    className={`format-menu-item ${selectedFormat === item.name ? 'format-menu-item-selected' : ''}`}
+                                >
+                                    {item.name}
+                                </Menu.Item>
+                            ))}
+                        </Menu>
+                    </>
+                )}
             </Sider>
       <Layout className="site-layout">
         <ContentSection>

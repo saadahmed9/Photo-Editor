@@ -21,7 +21,7 @@ class BackgroundChange extends Component {
                 </Link>
               </div>
               <div className="col">
-                <img src="/backgroundChange.jpeg" className="image" />
+                <img src="/backgroundChange.png" className="image" />
               </div>
             </div>
           </div>
