@@ -1,17 +1,31 @@
 import logging
-import shutil
+import ffmpeg
+import os
 
 logging.basicConfig(format= '[%(asctime)s] %(message)s')
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 def compress_video(input_video_path, output_video_path):
+    # clean up any existing output video files if exists
+    os.remove(output_video_path)
+    
     logger.info("video compression in progress")
-    ## temporarily copy file from input location to output location
-    ## TODO: video compression logic
     try:
-        shutil.copy2(input_video_path, output_video_path)
-    except IOError as e:
-        logger.error("Error occured in compressing video")
+        logger.info(" input " + input_video_path)
+        logger.info(" output " + output_video_path)
+        
+        logger.info("starting compression")
+        (
+            ffmpeg.input(input_video_path)
+            .output(output_video_path)
+            .run()
+        )
+        return_value = 1
+    except Exception as e:
+        logger.error("Error occured in compressing video" + str(e))
+        return_value = 0
+
     logger.info("video compression complete")
-    return None
+    return return_value
+
