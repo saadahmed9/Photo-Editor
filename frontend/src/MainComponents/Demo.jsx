@@ -186,44 +186,46 @@ export const Demo = (props1) => {
               ) : (
                   <>
                       <label style={{ color: 'white', textAlign: 'center' }}>Choose Ratio:</label>
-        <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden', textAlign: 'center' }}
-          onClick={(e) => handleMenuClick(e)}>
-                              {menuItems.map((item) => (
-                                  <Menu.Item className="ratio-menu-item" key={item.key}>{item.name}</Menu.Item>
-                              ))}
-                              <div className="custom-ratio-container">
+                      <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden', textAlign: 'center' }}
+                          onClick={(e) => handleMenuClick(e)}>
+                          {menuItems.map((item) => (
+                              <Menu.Item className="ratio-menu-item" key={item.key}>{item.name}</Menu.Item>
+                          ))}
+                          <Row gutter={16} align="middle" justify="center">
+                              <Col span={10} style={{ paddingLeft: '0px', position: 'relative', left: '-5px', bottom: '4px' }}>
                                   <Input
-                                      className="custom-ratio-input"
-                                      placeholder="Width"  // Change placeholder to "Width"
+                                      style={{ width: '30px' }}
+                                      placeholder="Width"
                                       value={numerator}
                                       onChange={(e) => setNumerator(e.target.value)}
                                   />
-                                  <span>/</span>
+                              </Col>
+                              <Col style={{ position: 'relative', left: '2px' }}>
+                                  /
+                              </Col>
+                              <Col span={10} style={{ paddingLeft: '0px', position: 'relative', left: '-5px', bottom: '4px' }}>
                                   <Input
-                                      className="custom-ratio-input"
-                                      placeholder="Height"  // Change placeholder to "Height"
+                                      style={{ width: '30px', position: 'relative', right: '14px' }}
+                                      placeholder="Height"
                                       value={denominator}
                                       onChange={(e) => setDenominator(e.target.value)}
                                   />
-                              </div>
-                              <Button className="custom-ratio-button" onClick={() => {
-                                  if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
-                                      console.error('Invalid ratio!');
-                                      return;
-                                  }
-                                  setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
-                                  setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
-                              }}>
-                                  Set Custom Ratio
-                              </Button>
-
-
-
-        </Menu>
+                              </Col>
+                          </Row>
+                          <Button className="custom-ratio-button" onClick={() => {
+                              if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
+                                  console.error('Invalid ratio!');
+                                  return;
+                              }
+                              setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
+                              setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
+                          }}>
+                              Set Custom Ratio
+                          </Button>
+                      </Menu>
                   </>
               )}
-
-      </Sider>
+          </Sider>
           <Layout className="site-layout">
               <ContentSection>
           {!imageSrc ? 
