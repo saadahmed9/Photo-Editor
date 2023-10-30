@@ -30,6 +30,8 @@ git clone https://github.com/xlab-classes/cse611-fall-2023-team-photoedting.git
 
 ### 1. Copy Model Files
 Move model files to `backend/photo_editing_api/media/models/`.
+- In Windows : Copy the ffmpeg.exe from cse611-fall-2023-team-photoedting\backend\photo_editing_api\media to cse611-fall-2023-team-photoedting\backend\photo_editing_api\venv\Scripts
+- In linux : sudo apt install ffmpeg (To be confimed)
 
 ### 2. Navigate to Project Directory
 Open your terminal or PowerShell and navigate using:
