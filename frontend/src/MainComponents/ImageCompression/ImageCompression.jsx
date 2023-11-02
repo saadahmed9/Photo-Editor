@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Imports from Ant Design
 import {
-    Card, Upload, Button, Layout, Menu, Spin, Modal, Tooltip
+    Card, Upload, Button, Layout, Menu, Spin, Modal, Tooltip, Slider
 } from 'antd';
 import {
     UploadOutlined, LoadingOutlined, InfoCircleOutlined
@@ -67,8 +67,7 @@ function ImageCompression(props1) {
   const menuItems = [
     { key: '1', name: 'JPG' },
     { key: '2', name: 'PNG' },
-    { key: '3', name: 'JPEG' },
-    { key: '12', name: 'TIFF' }
+    { key: '3', name: 'JPEG' }
   ];
 
 
@@ -278,24 +277,50 @@ function ImageCompression(props1) {
     // Component render
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <Sider style={{ backgroundColor: '#000524' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
-                <label className="format-menu-label">Compress As:</label>
-                <Menu
-                    theme="dark"
-                    mode="inline"
-                    style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden' }}
-                    onClick={handleMenuClick}
-                >
-                    {menuItems.map((item) => (
-                        <Menu.Item
-                            key={item.key}
-                            className={`format-menu-item ${selectedFormat === item.name ? 'format-menu-item-selected' : ''}`}
-                            style={{ textAlign: 'center' ,backgroundColor: '#00093e' }}
-                        >
-                            {item.name}
-                        </Menu.Item>
-                    ))}
-                </Menu>
+            <Sider
+                collapsible
+                collapsed={collapsed}
+                onCollapse={(value) => setCollapsed(value)} // Assuming you have a setter function for the collapsed state
+                style={{ backgroundColor: '#000524' }}
+            >
+                {/* When sidebar is collapsed, show only the visual cue */}
+                {collapsed ? (
+                    <div className="visual-cue-container">
+                        <Tooltip title="Select File Format & Adjust Compression">
+                            <span className="visual-cue">&#x1F50D;</span> {/* Example using a magnifying glass emoji */}
+                        </Tooltip>
+                    </div>
+                ) : (
+                <>
+
+                            <div className="sidebar-content">
+                            {!collapsed && (
+                                <div className="compression-rate-slider-container">
+                                    <label className="compression-rate-label">Compression Rate:</label>
+                                    <Slider defaultValue={50} min={1} max={100} />
+                                </div>
+                            )}
+
+                            <label className="format-menu-label">Compress As:</label>
+                            <Menu
+                                theme="dark"
+                                mode="inline"
+                                style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden' }}
+                                onClick={handleMenuClick}
+                            >
+                                {menuItems.map((item) => (
+                                    <Menu.Item
+                                        key={item.key}
+                                        className={`format-menu-item ${selectedFormat === item.name ? 'format-menu-item-selected' : ''}`}
+                                        style={{ textAlign: 'center', backgroundColor: '#00093e' }}
+                                    >
+                                        {item.name}
+                                    </Menu.Item>
+                                ))}
+                                </Menu>
+                            </div>
+                </>
+                )}
             </Sider>
       <Layout className="site-layout">
         <ContentSection>
