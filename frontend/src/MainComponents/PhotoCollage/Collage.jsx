@@ -234,7 +234,7 @@ export const Collage = () => {
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <Sider style={{ backgroundColor: '#000524', height: '100vh', overflowY: 'scroll' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
+            <Sider style={{ backgroundColor: '#000524', height: '100vh'}} collapsible collapsed={collapsed} onCollapse={onCollapse}>
                 <label style={{ color: 'white', textAlign: 'center' }}>Choose Template:</label>
                 <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524' }}
                     onClick={(e) => handleMenuClick(e)}>
