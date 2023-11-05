@@ -208,7 +208,8 @@ const info = () => {
 };
   return (
     <Layout style={{ minHeight: "100vh" }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh'}}>
+        <div className="slider-container">
         <label style={{ color: 'white', textAlign: 'center' }}>Template:</label>
         <Menu>
           {imageCollection1.map((image, index) => (
@@ -244,6 +245,7 @@ const info = () => {
             />
           </button>
         </div>}
+      </div>
       </Sider>
       <Layout className="site-layout">
         {(!imageCollection1.length > 0 || !imageCollection.length > 0) ?
