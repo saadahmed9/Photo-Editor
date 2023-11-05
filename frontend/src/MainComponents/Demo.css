@@ -58,12 +58,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 10px; /* Added padding to ensure there's a gap from the border */
+    padding: 0 20px; /* Added padding to ensure there's a gap from the border */
 }
 
 /* Styling for each individual ratio input */
 .custom-ratio-input {
-    width: calc(50% - 10px); /* Adjusted width to be half of the container width minus some space for margin */
+    width: calc(20% - 20px); /* Adjusted width to be half of the container width minus some space for margin */
     margin: 0 5px;
     text-align: center;
 }
@@ -85,3 +85,8 @@
         background-color: #005ea8;
         border-color: #005ea8;
     }
+
+.multiplication-sign {
+    font-size: 15px; /* Adjust the size as needed */
+    /* Add some spacing around the sign */
+}
