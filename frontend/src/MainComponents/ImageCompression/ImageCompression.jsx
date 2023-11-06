@@ -208,11 +208,11 @@ function ImageCompression(props1) {
       toast.error("Select image format");
       return;
     }
-    if(selectedFormat.toLowerCase() === getImageTypeFromMime(imageUrl)){
-      setIsLoading(false);
-      toast.error("Uploaded Image is already in the same format")
-      return;
-    }
+    // if(selectedFormat.toLowerCase() === getImageTypeFromMime(imageUrl)){
+    //   setIsLoading(false);
+    //   toast.error("Uploaded Image is already in the same format")
+    //   return;
+    // }
     const formData = new FormData();
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+ getImageTypeFromMime(imageUrl)));
     formData.append('format_change', selectedFormat.toLowerCase());
