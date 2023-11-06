@@ -12,6 +12,7 @@ import NoiseRemoval from "./Components/NoiseRemoval";
 import PhotoCollage from "./Components/PhotoCollage";
 import ImageFormatter from "./Components/ImageFormatter";
 import ImageCompression from "./Components/ImageCompression";
+import VideoCompression from "./Components/VideoCompression";
 import BrightnessAndContrast from "./Components/BrightnessAndContrast";
 import BackgroundChange from "./Components/BackgroundChange";
 import Resize from "./Components/Resize";
@@ -43,6 +44,7 @@ class Home extends Component {
         <NoiseRemoval  />
         <ImageFormatter/>
         <ImageCompression/>
+        <VideoCompression/>
         <BackgroundChange/>
         <BrightnessAndContrast/>
         <Resize/>
