@@ -178,3 +178,55 @@
   top: 5px;
   left: 35px;
 }
+
+.collapsed-visual-cue {
+    color: white; /* Adjust color as needed */
+    font-size: 24px; /* Adjust size as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Full height of the collapsed sider */
+    cursor: pointer;
+}
+
+    /* Additional styling for the icon/image */
+    .collapsed-visual-cue i {
+        transition: transform 0.2s;
+    }
+
+    .collapsed-visual-cue:hover i {
+        transform: scale(1.1); /* Slightly enlarge the icon on hover */
+    }
+
+.collapsed-visual-cue {
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+}
+
+    .collapsed-visual-cue:hover {
+        /* Styles for hover state */
+    }
+
+
+/* This will apply to the Menu within the Sider when it is not collapsed */
+.sider-menu {
+    overflow-y: auto;
+    height: calc(100vh - 50px); /* Adjust the 50px if you have other elements inside your Sider that take up space */
+}
+
+/* Ensure the overall layout has a full height for proper scrolling behavior */
+.ant-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Add this if you don't have it yet - it prevents the page from being larger than the viewport height */
+html, body, #root, .ant-layout {
+    height: 100%;
+}
