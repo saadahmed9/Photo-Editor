@@ -1,0 +1,146 @@
+/* Passport Photo Container Styles */
+
+/* Main container for the passport photo */
+.passport-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    margin: 50px;
+}
+
+/* Upload Component Styling */
+
+/* General style for Ant Design's upload component */
+.ant-upload {
+    cursor: pointer;
+}
+
+/* Center Card Styles */
+
+/* A centered container that wraps around content */
+.center-card-container {
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+
+/* Passport Photo Card Styles */
+
+/* Main styling for the passport photo card */
+.passport-photo-card {
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* Uploaded Video Styling */
+
+/* Styles for video after they have been uploaded */
+.uploaded-video {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+}
+
+/* Format Menu Styles */
+
+/* General style for menu items in the format menu */
+.format-menu-item {
+    height:auto;
+    border: 1px solid #aaa;
+    border-radius: 15px;
+    margin: 5px 0;
+    padding: 10px;
+    flex-shrink: 0;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+    /* Hover effect for format menu items */
+    .format-menu-item:hover {
+        background-color: #888;
+        transform: scale(1.05);
+    }
+
+/* Styling for a selected menu item */
+.format-menu-item-selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Label style for the format menu */
+.format-menu-label {
+    text-align: center;
+    margin-top:20px;
+    margin-bottom: 20px; /* Increase bottom margin to push the slider down */
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+}
+
+/* Add to your existing styles... */
+
+.visual-cue-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Take up full height */
+}
+
+.visual-cue {
+    display: block; /* Make it a block to allow width and height */
+    width: 40px; /* Width of the visual cue */
+    height: 40px; /* Height of the visual cue */
+    margin: 16px; /* Add some margin around the cue */
+    background-color: #4CAF50; /* Background color for the cue */
+    color: white; /* Color of the text/icon inside the cue */
+    text-align: center; /* Center text/icon horizontally */
+    line-height: 40px; /* Center text/icon vertically */
+    font-size: 24px; /* Size of the text/icon */
+    border-radius: 50%; /* Make it round */
+    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+    transition: background-color 0.3s ease; /* Transition for background color change on hover */
+}
+
+    .visual-cue:hover {
+        background-color: #367c2b; /* Darken the background color on hover */
+    }
+
+/* Ensure your tooltip is styled as needed */
+
+/* Slider Container Styles */
+.compression-rate-slider-container {
+    margin-top: 20px; /* Add top margin to create space above the slider */
+    margin-bottom: 20px; /* If you want to also add space below the slider */
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+/* Label Styles for Slider */
+.compression-rate-label {
+    display: block;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* New sidebar content container styles */
+.sidebar-content {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center children along the main axis (vertically, in this case) */
+    align-items: center;
+    gap:10px;
+    padding: 5px;
+    padding-top: 50px;
+    overflow-y: auto;
+    height: 100%; /* Take up the full height of the sidebar */
+}
+
+
+
