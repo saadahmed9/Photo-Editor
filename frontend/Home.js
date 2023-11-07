@@ -49,7 +49,9 @@ class Home extends Component {
         <BrightnessAndContrast/>
         <Resize/>
         <PDF/>
-        <Mosaic/>
+        <Mosaic />
+        <ImageCompression />
+        <VideoCompression />
         <Stats/>
         <Footer  />
       </div>
