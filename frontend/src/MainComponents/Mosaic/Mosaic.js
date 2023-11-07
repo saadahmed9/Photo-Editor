@@ -322,7 +322,7 @@ const info = () => {
       </Layout>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
               {collapsed ? (
-                  <div className="collapsed-icon-container">
+                  <div className="collapsed-icon-container" onClick={() => onCollapse(false)}>
                       <Tooltip title="Upload images">
                           <UploadOutlined style={{ fontSize: '24px', color: '#fff' }} />
                       </Tooltip>

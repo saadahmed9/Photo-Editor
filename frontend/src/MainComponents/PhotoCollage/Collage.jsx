@@ -320,9 +320,9 @@ export const Collage = () => {
 
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
                 {collapsed ? (
-                    <div className="collapsed-visual-cue">
+                    <div className="collapsed-visual-cue" onClick={() => onCollapse(false)}>
                         <Tooltip title="Upload images">
-                            <UploadOutlined />
+                            <UploadOutlined style={{ fontSize: '24px', color: '#fff', cursor: 'pointer' }} />
                         </Tooltip>
                     </div>
                 ) : (
