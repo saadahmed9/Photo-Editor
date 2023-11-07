@@ -1,0 +1,32 @@
+/* Mosaic.css */
+.slider-container {
+    /* Other styles for slider-container */
+}
+
+.collapsed-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.collapsed-icon {
+    font-size: 24px; /* Adjust size as needed */
+    color: #fff; /* Change color to fit your theme */
+    cursor: pointer;
+    /* Add any additional styling for the icon as needed */
+}
+
+    /* You can add a transition or animation to make it more appealing */
+    .collapsed-icon:hover {
+        color: #ccc; /* Change hover color as desired */
+        transition: color 0.3s ease;
+    }
+
+.collapsed-visual-cue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* Add any additional styling you need here */
+}

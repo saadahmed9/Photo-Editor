@@ -3,7 +3,7 @@ import { Card, Upload, Button, Layout,Menu, Spin,Modal,Tooltip} from 'antd';
 import './Mosaic.css'
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined, PictureOutlined, UploadOutlined } from '@ant-design/icons';
 import {Fade } from 'react-reveal';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
@@ -208,12 +208,15 @@ const info = () => {
 };
   return (
     <Layout style={{ minHeight: "100vh" }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh'}}>
-        <div className="slider-container">
-       {collapsed ? (
-                        <div className="collapsed-icon-container">
-                        </div>
-                    ) : (
+          <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh' }}>
+              <div className="slider-container">
+                  {collapsed ? (
+                      <div className="collapsed-icon-container">
+                          <Tooltip title="Choose Template">
+                              <PictureOutlined style={{ fontSize: '24px', color: '#fff' }} />
+                          </Tooltip>
+                      </div>
+                  ) : (
                         <>
                         
         <label style={{ color: 'white', textAlign: 'center' }}>Template:</label>
@@ -317,11 +320,14 @@ const info = () => {
             </div>
             </div>   }     
       </Layout>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
-      {collapsed ? (
-                        <div className="collapsed-icon-container">
-                        </div>
-                    ) : (
+          <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
+              {collapsed ? (
+                  <div className="collapsed-icon-container">
+                      <Tooltip title="Upload images">
+                          <UploadOutlined style={{ fontSize: '24px', color: '#fff' }} />
+                      </Tooltip>
+                  </div>
+              ) : (
                         <>
         <label style={{ color: 'white', textAlign: 'center' }}>Images:</label>
         <div style={{ position: "relative", width: "200px",height:'50px' }}>
