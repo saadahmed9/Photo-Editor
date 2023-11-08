@@ -14,7 +14,14 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: saad12ah/photoeditor-frontend
+        image: saad12ah/image2
+        resources:
+          limits:
+            cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
+            memory: "1400Mi" # Limit the pod to use a maximum of 512 megabytes of memory
+          requests:
+            cpu: "0.2" # Request at least 0.2 CPU cores for the pod
+            memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service
