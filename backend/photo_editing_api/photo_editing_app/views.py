@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import SuspiciousOperation
+from django.urls import reverse_lazy
 from photo_editing_app.contollers.passport_photo import passport_photo_face
 from photo_editing_app.contollers.resize_operation import image_resize
 from photo_editing_app.contollers.specs_finder import spects_detector
@@ -736,4 +737,54 @@ def video_compression(request):
         return_dict["message"] = str(e)
         return_dict['error'] = True
         return_dict['status'] = 400
+    return Response(return_dict)
+
+
+@api_view(('POST',))
+@csrf_exempt
+def image_compression(request):
+    logger.info("image compression endpoint!")
+    return_dict = {}
+    try:
+        verify_upload_file_passed(request)
+        verify_functionality_passed(request)
+        if request.method == 'POST' and request.FILES['myfile']:
+            myfile = request.FILES['myfile']
+            myfile.name = myfile.name.replace(" ", "")
+            image_folder = "\\".join(BASE_DIR.split("\\"))
+            input_image_path = image_folder + r"\media\uploads\\" + myfile.name
+            output_image_path = image_folder + r"\media\output\\" + myfile.name
+            f = open(input_image_path, "wb")
+            for chunk in request.FILES['myfile'].chunks():
+                f.write(chunk)
+            f.close()
+            api_root = reverse_lazy('upload', request=request)
+            api_root = api_root[:-7]
+
+            return_dict['output_url'] = api_root + r"static/" + myfile.name
+            image = cv2.imread(input_image_path)
+            compression_params = [cv2.IMWRITE_JPEG_QUALITY, 10]
+            success = cv2.imwrite(output_image_path, image, compression_params)
+
+            if not success:
+                raise Exception("Failed compressing the image file")
+                
+            input_file_size = "{:.2f}".format(os.path.getsize(input_image_path) / (1024 * 1024))
+            output_file_size = "{:.2f}".format(os.path.getsize(output_image_path) / (1024 * 1024))
+
+            with open(output_image_path, 'rb') as f:
+                output_image_data = f.read()
+            image_base64 = base64.b64encode(output_image_data).decode('utf-8')
+            return_dict['imageUrl'] = f"data:image/jpeg;base64,{image_base64}"
+            return_dict['input_file_size'] = input_file_size + "MB"
+            return_dict['output_file_size'] = output_file_size + "MB"
+            return_dict['error'] = False
+            return_dict['message'] = "Successfully Processed"
+            return_dict['status'] = 200
+
+    except Exception as e:
+        return_dict["message"] = str(e)
+        return_dict['error'] = True
+        return_dict['status'] = 400
+
     return Response(return_dict)

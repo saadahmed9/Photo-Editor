@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'photo_editing_app',
-    'django_cron'
+    'django_cron',
+    'django.core.files.base',
+    'django.http'
 ]
 
 MIDDLEWARE = [
