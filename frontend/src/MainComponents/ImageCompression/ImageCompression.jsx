@@ -69,8 +69,7 @@ function ImageCompression(props1) {
   const menuItems = [
     { key: '1', name: 'JPG' },
     { key: '2', name: 'JPEG' },
-    { key: '3', name: 'PNG' },
-    { key: '4', name: 'TIFF' }
+    { key: '3', name: 'PNG' }
   ];
 
 
