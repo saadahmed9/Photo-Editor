@@ -54,6 +54,8 @@ function ImageCompression(props1) {
   const [displayUrl, setDisplayUrl] = useState();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedFormat, setselectedFormat] = useState(null);
+  const [compressionRate, setCompressionRate] = useState(50);
+  
   const [isLoading,setIsLoading]= useState(false);
     const [fileName, setfileName] = useState(null);
 
@@ -66,8 +68,8 @@ function ImageCompression(props1) {
     // Define possible formats for image compression
   const menuItems = [
     { key: '1', name: 'JPG' },
-    { key: '2', name: 'PNG' },
-    { key: '3', name: 'JPEG' }
+    { key: '2', name: 'JPEG' },
+    { key: '3', name: 'PNG' }
   ];
 
 
@@ -77,6 +79,12 @@ function ImageCompression(props1) {
     setselectedFormat(selectedFormat);
     console.log(selectedFormat)
   }; 
+
+  // Handle the compression rate change
+    const handleSliderChange = (value) => {
+      setCompressionRate(value);
+      console.log(compressionRate)
+    };
 
   // Clear the uploaded image
   const handleClear = () => {
@@ -176,7 +184,7 @@ function ImageCompression(props1) {
   // }
 
 
-  // Download the processed image
+  // Download the processed image  
   function downloadImage(url1,type) {
     fetch(url1)
       .then(response => response.blob())
@@ -215,9 +223,10 @@ function ImageCompression(props1) {
     // }
     const formData = new FormData();
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+ getImageTypeFromMime(imageUrl)));
-    formData.append('format_change', selectedFormat.toLowerCase());
-    formData.append('function', 'format_change');
-    axios.post(process.env.REACT_APP_API_URL+'/format_change/', formData)
+    formData.append('output_format', selectedFormat.toLowerCase());
+    formData.append('compression_rate', compressionRate);
+    formData.append('function', 'image_compression');
+    axios.post(process.env.REACT_APP_API_URL+'/image_compression/', formData)
       .then(response => {
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
       }
@@ -226,15 +235,17 @@ function ImageCompression(props1) {
   }
 
 
+
+
   // Download the displayed image
-  function handleDownload () {
-        const link = document.createElement('a');
-        link.href = displayUrl;
-        link.setAttribute('download', 'image.'+selectedFormat.toLowerCase());
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-  };
+  // function handleDownload () {
+  //       const link = document.createElement('a');
+  //       link.href = displayUrl;
+  //       link.setAttribute('download', 'image.'+selectedFormat.toLowerCase());
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       link.remove();
+  // };
 
 
   // Prevent default drag over for custom drag and drop
@@ -297,7 +308,8 @@ function ImageCompression(props1) {
                             {!collapsed && (
                                 <div className="compression-rate-slider-container">
                                     <label className="compression-rate-label">Compression Rate:</label>
-                                    <Slider defaultValue={50} min={1} max={100} />
+                                    <Slider value={compressionRate} min={1}  max={100} onChange={handleSliderChange} />
+                                    <span>{compressionRate}</span>
                                 </div>
                             )}
 

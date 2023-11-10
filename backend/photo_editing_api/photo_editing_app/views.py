@@ -27,6 +27,8 @@ import base64
 import logging
 import pillow_heif
 from photo_editing_app.contollers.video_compression import compress_video
+from photo_editing_app.contollers.image_compression import compress_image
+
 # Create your views here.
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -739,52 +741,56 @@ def video_compression(request):
         return_dict['status'] = 400
     return Response(return_dict)
 
+import numpy as np
+from django.core.files.base import ContentFile
+from django.http import JsonResponse
 
 @api_view(('POST',))
 @csrf_exempt
 def image_compression(request):
     logger.info("image compression endpoint!")
     return_dict = {}
-    try:
-        verify_upload_file_passed(request)
-        verify_functionality_passed(request)
-        if request.method == 'POST' and request.FILES['myfile']:
-            myfile = request.FILES['myfile']
-            myfile.name = myfile.name.replace(" ", "")
-            image_folder = "\\".join(BASE_DIR.split("\\"))
-            input_image_path = image_folder + r"\media\uploads\\" + myfile.name
-            output_image_path = image_folder + r"\media\output\\" + myfile.name
-            f = open(input_image_path, "wb")
-            for chunk in request.FILES['myfile'].chunks():
-                f.write(chunk)
-            f.close()
-            api_root = reverse_lazy('upload', request=request)
-            api_root = api_root[:-7]
+    if request.method == 'POST':
+        try:
+            verify_upload_file_passed(request)
+            verify_functionality_passed(request)
+            image_file = request.FILES.get('myfile')
+            image_file.name = image_file.name.replace(" ", "")
+            compression_rate = int(request.POST.get('compression_rate'))
+            logger.info(compression_rate)
+            output_format = request.POST.get('output_format')
+            # Read the image using OpenCV
+            image = cv2.imdecode(np.frombuffer(image_file.read(), np.uint8), 1)
 
-            return_dict['output_url'] = api_root + r"static/" + myfile.name
-            image = cv2.imread(input_image_path)
-            compression_params = [cv2.IMWRITE_JPEG_QUALITY, 10]
-            success = cv2.imwrite(output_image_path, image, compression_params)
+            # Determine compression parameter based on output format
+            compression_param = None
+            if output_format.lower() == 'jpeg':
+                compression_param = [cv2.IMWRITE_JPEG_QUALITY, compression_rate]
+            elif output_format.lower() == 'jpg':
+                compression_param = [cv2.IMWRITE_JPEG_QUALITY, compression_rate]
+            elif output_format.lower() == 'png':
+                compression_param = [cv2.IMWRITE_PNG_COMPRESSION, compression_rate]
+            elif output_format.lower() == 'tiff':
+                compression_param = [cv2.IMWRITE_TIFF_COMPRESSION, compression_rate]
 
-            if not success:
-                raise Exception("Failed compressing the image file")
-                
-            input_file_size = "{:.2f}".format(os.path.getsize(input_image_path) / (1024 * 1024))
-            output_file_size = "{:.2f}".format(os.path.getsize(output_image_path) / (1024 * 1024))
+            if compression_param:
+                compressed_image_base64 = compress_image(output_format, image, compression_param)
 
-            with open(output_image_path, 'rb') as f:
-                output_image_data = f.read()
-            image_base64 = base64.b64encode(output_image_data).decode('utf-8')
-            return_dict['imageUrl'] = f"data:image/jpeg;base64,{image_base64}"
-            return_dict['input_file_size'] = input_file_size + "MB"
-            return_dict['output_file_size'] = output_file_size + "MB"
-            return_dict['error'] = False
-            return_dict['message'] = "Successfully Processed"
-            return_dict['status'] = 200
+                # Add relevant information to the return dictionary
+                return_dict['imageUrl'] = f"data:image/{output_format};base64,{compressed_image_base64}"
+                return_dict['format'] = output_format
+                return_dict['error'] = False
+                return_dict['message'] = "Successfully processed image"
+                return_dict['status'] = 200
+            else:
+                return_dict['error'] = True
+                return_dict['message'] = 'Unsupported output format'
+                return_dict['status'] = 400
 
-    except Exception as e:
-        return_dict["message"] = str(e)
-        return_dict['error'] = True
-        return_dict['status'] = 400
+        except Exception as e:
+            return_dict['error'] = True
+            return_dict['message'] = str(e)
+            return_dict['status'] = 400
 
     return Response(return_dict)
+
