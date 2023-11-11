@@ -57,19 +57,21 @@ class App extends Component {
 
             <div className="dropdown">
               <button className="dropbtn">Features</button>
-                <div className="dropdown-content">
-                  <Link to="/passport">Passport-Photo</Link>
+              <div className="dropdown-content glass-effect">
+                  <div className="dropdown-grid">
+                  <Link to="/passport">Passport Photo</Link>
                   <Link to="/photoresizeandcrop">Crop</Link>
                   <Link to="/photocollage">Collage</Link>
-                  <Link to="/noiseremoval">Noise-Removal</Link>
-                  <Link to="/imageformatconversion">Format-Conversion</Link>
-                  <Link to="/backgroundchange">Background-Change</Link>
-                  <Link to="/brightnessandcontrast">Brightness & Contrast</Link>
+                  <Link to="/noiseremoval">Noise Removal</Link>
+                  <Link to="/imageformatconversion">Format Conversion</Link>
+                  <Link to="/backgroundchange">Background Change</Link>
+                  <Link to="/brightnessandcontrast">Brightness And Contrast</Link>
                   <Link to="/resize">Resize</Link>
                   <Link to="/mosaic">Mosaic</Link>
                   <Link to="/pdf">PDF</Link>
                   <Link to="/Imagecompression">Image Compression</Link>
                   <Link to="/VideoCompression">Video Compression</Link>
+                  </div>
               </div>
 
               </div>
