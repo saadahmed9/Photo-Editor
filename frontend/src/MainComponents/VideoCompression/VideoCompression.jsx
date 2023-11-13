@@ -51,7 +51,9 @@ function VideoCompression(props1) {
   const [collapsed, setCollapsed] = useState(false);
 //   const [selectedFormat, setselectedFormat] = useState(null);
   const [isLoading,setIsLoading]= useState(false);
-    const [fileName, setfileName] = useState(null);
+  const [fileName, setfileName] = useState(null);
+  const [inputSize, setInputSize] = useState();
+  const [outputSize, setOutputSize] = useState();
 
     // Event handler for Sider collapse
   const onCollapse = (collapsed) => {
@@ -63,6 +65,8 @@ function VideoCompression(props1) {
     setIsLoading(false);
     setVideoUrl(null);    
     setDisplayUrl(null);
+    setInputSize(null);
+    setOutputSize(null);
   };
 
 
@@ -176,6 +180,8 @@ function VideoCompression(props1) {
     formData.append('function', 'video_compression');
     axios.post(process.env.REACT_APP_API_URL+'/video_compression/', formData)
       .then(response => {
+        setInputSize(response.data.input_file_size);
+        setOutputSize(response.data.output_file_size);
         downloadVideo(response.data.videoUrl)
       }
       )
@@ -279,6 +285,10 @@ function VideoCompression(props1) {
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>
+                    
+                    {inputSize && outputSize && (
+                      <p> <b>Input File Size:</b> {inputSize} &emsp; &emsp; &emsp; <b>Output File Size:</b> {outputSize} </p>
+                    )}
                     {videoUrl && (
                       <Button type="danger" onClick={handleClear} style={{ margin: '10px' }}>
                         Clear Video
@@ -324,6 +334,10 @@ function VideoCompression(props1) {
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>
+
+                    {inputSize && outputSize && (
+                      <p> <b>Input File Size:</b> {inputSize} &emsp; &emsp; &emsp; <b>Output File Size:</b> {outputSize} </p>
+                    )}
                     {videoUrl && (
                       <Button type="danger" onClick={handleClear} style={{ margin: '10px' }}>
                         Clear Video
