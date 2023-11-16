@@ -1,6 +1,7 @@
 .passport-photo-container {
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 
 .passport-photo-container {
@@ -20,4 +21,55 @@
   width: 100%;
   height: 300px;
   object-fit: contain;
+}
+.home {
+  /* existing styles for .home */
+}
+
+.home__heading {
+  text-align: center; /* Center the text horizontally */
+  color: #0b0b0b;
+  font-size: 32px; /* Set the font size */
+  font-weight: bold; 
+  margin-bottom: 20px; /* Add some spacing below the text */
+  
+}
+
+.home__features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 30px;
+  margin-top: 40px;
+  padding: 0 100px; /* Add left and right padding to the grid container */
+}
+
+.home__feature {
+  /* existing styles for .home__feature */
+  background-color: rgba(239, 172, 170, 0.552);/* Light transparent background color */
+  padding: 20px; /* Add some padding for better visibility */
+  border-radius: 10px; /* Add rounded corners to the feature box */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+  display: flex; /* Make the feature a flex container */
+  flex-direction: column; /* Stack the image, title, and description vertically */
+  align-items: center; /* Center the image and title horizontally */
+  justify-content: center; /* Center the image, title, and description vertically */
+  border: 1px solid #121111; /* Add a border to the card */
+}
+
+.home__feature img {
+  width: 100%; /* Ensure the image takes up the full width of the card */
+  height: auto; /* Maintain the aspect ratio of the image */
+  object-fit: contain; /* Contain the image within the card, preserving aspect ratio */
+  display: block; /* Make the image a block-level element to ensure proper vertical alignment */
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+.home__feature h2 {
+  margin-top: 10px; /* Add some spacing between the image and the title */
+  color: #333; /* Dark text color for better contrast */
+}
+
+.home__feature p {
+  margin-top: 10px; /* Add some spacing between the title and the description */
+  color: #171616;
 }

@@ -39,18 +39,6 @@ class Home extends Component {
       <div className="Home">
         <Header/>
         <PassportPhotoCreation />
-        <PhotoResizeAndCrop  />
-        <PhotoCollage  />
-        <NoiseRemoval  />
-        <ImageFormatter/>
-        <BackgroundChange/>
-        <BrightnessAndContrast/>
-        <Resize/>
-        <PDF/>
-        <Mosaic />
-        <ImageCompression />
-        <VideoCompression />
-        <Stats/>
         <Footer  />
       </div>
     );

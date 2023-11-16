@@ -48,6 +48,16 @@
     background-color: #efeded;
   }
   .class2{
-    background-color: black;
+    background-color: rgb(195, 200, 222);
   }
   
+  .footer {
+    background-color: #222;
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+    margin:0;
+   }
+
+   
+
