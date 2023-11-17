@@ -4,7 +4,7 @@ import { Card } from 'antd';
 import '../passport.jpeg';
 import history from '../history';
 import { Routes, Route, Link } from "react-router-dom";
-import './PassportPhoto/passportPhoto.css';
+
 
 class PassportPhotoCreation extends Component {
   render() {
