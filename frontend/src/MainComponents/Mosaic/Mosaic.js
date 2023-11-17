@@ -3,7 +3,7 @@ import { Card, Upload, Button, Layout,Menu, Spin,Modal,Tooltip} from 'antd';
 import './Mosaic.css'
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { LoadingOutlined, PictureOutlined, UploadOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
 import {Fade } from 'react-reveal';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
@@ -65,13 +65,6 @@ function Mosaic (props1) {
       reader.readAsDataURL(file);
     }
   };
-
-    // Add a function to handle image removal
-    const handleRemoveImage = (index) => {
-        const newImageCollection = [...imageCollection];
-        newImageCollection.splice(index, 1);
-        setImageCollection(newImageCollection);
-    };
 
   const SiderImageUpload1 = (event) => {
     const file= event.target.files[0];
@@ -215,17 +208,8 @@ const info = () => {
 };
   return (
     <Layout style={{ minHeight: "100vh" }}>
-          <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh' }}>
-              <div className="slider-container">
-                  {collapsed ? (
-                      <div className="collapsed-icon-container">
-                          <Tooltip title="Choose Template">
-                              <PictureOutlined style={{ fontSize: '24px', color: '#fff' }} />
-                          </Tooltip>
-                      </div>
-                  ) : (
-                        <>
-                        
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh'}}>
+        <div className="slider-container">
         <label style={{ color: 'white', textAlign: 'center' }}>Template:</label>
         <Menu>
           {imageCollection1.map((image, index) => (
@@ -261,10 +245,7 @@ const info = () => {
             />
           </button>
         </div>}
-        
-        </>
-        )}
-        </div>
+      </div>
       </Sider>
       <Layout className="site-layout">
         {(!imageCollection1.length > 0 || !imageCollection.length > 0) ?
@@ -284,6 +265,33 @@ const info = () => {
  </div>  </Fade>
              <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
             <div style={{ flexGrow: '1' }}>
+            {/* <Card
+                className='passport-photo-card'
+                title='Mosaic Will be displayed here'
+                cover={displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+            >
+               {isLoading && <Spin indicator={antIcon} />}
+                <p className='ant-upload-text'>
+                </p>
+                <br />
+                {(
+                 <Button type="primary" onClick={handlePreview} style={{ margin: '10px' }}>
+                    Preview Photo
+                  </Button>
+                )}
+                {displayUrl && (
+                 <Button type="success" onClick={handleDownload} style={{ margin: '10px' }}>
+                    Download Photo
+                  </Button>
+                )}
+                {selectedFile && (
+            <>
+              <div style={{marginLeft:'25%', marginTop:'10px', textAlign:'center'}}>
+              </div>
+              
+            </>
+          )}            
+            </Card> */}
             </div>
         </div>
         </div> 
@@ -327,19 +335,11 @@ const info = () => {
             </div>
             </div>   }     
       </Layout>
-          <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
-              {collapsed ? (
-                  <div className="collapsed-icon-container" onClick={() => onCollapse(false)}>
-                      <Tooltip title="Upload images">
-                          <UploadOutlined style={{ fontSize: '24px', color: '#fff' }} />
-                      </Tooltip>
-                  </div>
-              ) : (
-                        <>
+      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
         <label style={{ color: 'white', textAlign: 'center' }}>Images:</label>
         <div style={{ position: "relative", width: "200px",height:'50px' }}>
           <button style={{ width: "100%", height: "100%", }}>
-            <i class="fa fa-plus-circle" aria-hidden="true" style={{ position: "center", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}></i>
+            <i class="fa fa-plus-circle" aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}></i>
             <input
               type="file"
               accept="image/*"
@@ -360,20 +360,16 @@ const info = () => {
           
         </div>
         <button style={{ width: "100%" }} onClick={handleClear}>Clear</button>
-                          <Menu>
-                              {imageCollection.map((image, index) => (
-                                  <div key={index} className="image-item">
-                                      <img src={image} className="image" draggable="true"
-                                          onDragStart={(e) => {
-                                              e.dataTransfer.setData("image/jpeg", image);
-                                          }}
-                                      />
-                                      <button className="remove-image-btn" onClick={() => handleRemoveImage(index)}>Remove</button>
-                                  </div>
-                              ))}
-        </Menu>     
-        </>
-        )} 
+        <Menu>
+          {imageCollection.map((image, index) => (
+            <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
+            <img src={image} style={{ maxWidth: '100%', height: '100%' }} draggable="true"
+              onDragStart={(e) => {
+                e.dataTransfer.setData("image/jpeg", image);
+              }} />
+          </Menu.Item>         
+          ))}
+        </Menu>      
       </Sider>
     </Layout>
   );

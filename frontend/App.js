@@ -11,7 +11,6 @@ import FormatConversion from "./MainComponents/FormatConversion/FormatConversion
 import BackgroundRemoval from "./MainComponents/BackgroundRemoval/BackgroundRemoval";
 import ResizeImage from "./MainComponents/ResizeImage/ResizeImage";
 import ImageCompression from "./MainComponents/ImageCompression/ImageCompression";
-import VideoCompression from "./MainComponents/VideoCompression/VideoCompression";
 import PdfCreator from "./MainComponents/PdfCreator/PdfCreator";
 import Mosaic from "./MainComponents/Mosaic/Mosaic";
 import { v4 as uuidv4 } from 'uuid';
@@ -69,7 +68,7 @@ class App extends Component {
                   <Link to="/mosaic">Mosaic</Link>
                   <Link to="/pdf">PDF</Link>
                   <Link to="/imagecompression">Image Compression</Link>
-                  <Link to="/videoCompression">Video Compression</Link>
+                  <Link to="/Video">Video Compression</Link>
               </div>
 
               </div>
@@ -87,7 +86,6 @@ class App extends Component {
           <Route path="/noiseremoval" element={<NoiseRemoval uuid={this.state.uuid}/>} />
           <Route path="/imageformatconversion" element={<FormatConversion uuid={this.state.uuid}/>} />
           <Route path="/imagecompression" element={<ImageCompression uuid={this.state.uuid}/>} />
-          <Route path="/videocompression" element={<VideoCompression uuid={this.state.uuid}/>} />
           <Route path="/brightnessandcontrast" element={<BrightnessContrast uuid={this.state.uuid}/>} />
           <Route path="/backgroundchange" element={<BackgroundRemoval  uuid={this.state.uuid}/>} />
           <Route path="/resize" element={<ResizeImage  uuid={this.state.uuid}/>} />

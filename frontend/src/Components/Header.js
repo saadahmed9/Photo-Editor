@@ -3,6 +3,14 @@ import Fade from "react-reveal";
 
 
 class Header extends Component {
+  
+  scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
 
   render() {
 
@@ -21,6 +29,11 @@ class Header extends Component {
           </div>
         </div>
 
+        <p className="scrolldown">
+          <a className="smoothscroll" onClick={this.scrollToBottom}>
+            <i className="icon-down-circle"></i>
+          </a>
+        </p>
       </header>
     );
   }
