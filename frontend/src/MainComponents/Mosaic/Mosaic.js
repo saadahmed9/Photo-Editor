@@ -66,6 +66,13 @@ function Mosaic (props1) {
     }
   };
 
+    // Add a function to handle image removal
+    const handleRemoveImage = (index) => {
+        const newImageCollection = [...imageCollection];
+        newImageCollection.splice(index, 1);
+        setImageCollection(newImageCollection);
+    };
+
   const SiderImageUpload1 = (event) => {
     const file= event.target.files[0];
       if (!file || !file.type.startsWith('image/')) {
@@ -353,15 +360,17 @@ const info = () => {
           
         </div>
         <button style={{ width: "100%" }} onClick={handleClear}>Clear</button>
-        <Menu>
-          {imageCollection.map((image, index) => (
-            <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
-            <img src={image} style={{ maxWidth: '100%', height: '100%' }} draggable="true"
-              onDragStart={(e) => {
-                e.dataTransfer.setData("image/jpeg", image);
-              }} />
-          </Menu.Item>         
-          ))}
+                          <Menu>
+                              {imageCollection.map((image, index) => (
+                                  <div key={index} className="image-item">
+                                      <img src={image} className="image" draggable="true"
+                                          onDragStart={(e) => {
+                                              e.dataTransfer.setData("image/jpeg", image);
+                                          }}
+                                      />
+                                      <button className="remove-image-btn" onClick={() => handleRemoveImage(index)}>Remove</button>
+                                  </div>
+                              ))}
         </Menu>     
         </>
         )} 

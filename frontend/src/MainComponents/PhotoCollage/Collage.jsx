@@ -348,19 +348,14 @@ export const Collage = () => {
                             </button>
                         </div>
                         <button style={{ width: "100%" }} onClick={ConfirmDelete}>Clear All</button>
-                        <Menu>
+                        <div className="images-grid">
                             {imageCollection.map((image, index) => (
-                                <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
-                                    <img src={image} style={{ maxWidth: '100%', height: '100%' }} draggable="true"
-                                        onDragStart={(e) => {
-                                            e.dataTransfer.setData("image/jpeg", image);
-                                        }} />
-                                    <Button type="danger" onClick={() => handleRemoveImage(index)} style={{ backgroundColor: '#002140', color: 'white', margin: '1rem 0rem 0rem 4rem' }}>
-                                        Clear
-                                    </Button>
-                                </Menu.Item>
+                                <div key={index} className="image-item">
+                                    <img src={image} className="image" draggable="true" />
+                                    <button className="remove-image-btn" onClick={() => handleRemoveImage(index)}>Remove</button>
+                                </div>
                             ))}
-                        </Menu>
+                        </div>
                     </>
                 )}
             </Sider>

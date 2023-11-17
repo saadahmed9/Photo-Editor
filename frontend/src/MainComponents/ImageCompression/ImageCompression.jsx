@@ -324,7 +324,7 @@ function ImageCompression(props1) {
                                     <Menu.Item
                                         key={item.key}
                                         className={`format-menu-item ${selectedFormat === item.name ? 'format-menu-item-selected' : ''}`}
-                                        style={{ textAlign: 'center', backgroundColor: '#00093e' }}
+                                        style={{ textAlign: 'center' }}
                                     >
                                         {item.name}
                                     </Menu.Item>
