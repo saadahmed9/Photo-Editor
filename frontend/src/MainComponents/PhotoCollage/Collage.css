@@ -178,3 +178,98 @@
   top: 5px;
   left: 35px;
 }
+
+.collapsed-visual-cue {
+    color: white; /* Adjust color as needed */
+    font-size: 24px; /* Adjust size as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Full height of the collapsed sider */
+    cursor: pointer;
+}
+
+    /* Additional styling for the icon/image */
+    .collapsed-visual-cue i {
+        transition: transform 0.2s;
+    }
+
+    .collapsed-visual-cue:hover i {
+        transform: scale(1.1); /* Slightly enlarge the icon on hover */
+    }
+
+.collapsed-visual-cue {
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+}
+
+    .collapsed-visual-cue:hover {
+        /* Styles for hover state */
+    }
+
+
+/* This will apply to the Menu within the Sider when it is not collapsed */
+.sider-menu {
+    overflow-y: auto;
+    height: calc(100vh - 50px); /* Adjust the 50px if you have other elements inside your Sider that take up space */
+}
+
+/* Ensure the overall layout has a full height for proper scrolling behavior */
+.ant-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Add this if you don't have it yet - it prevents the page from being larger than the viewport height */
+html, body, #root, .ant-layout {
+    height: 100%;
+}
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 10px;
+    padding: 10px;
+}
+
+.image-item {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    position: relative;
+}
+
+    .image-item:hover {
+        transform: scale(1.05);
+    }
+
+.image {
+    width: 100%;
+    display: block;
+}
+
+.remove-image-btn {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 1px 2px;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+    .remove-image-btn:hover {
+        color: rgba(255, 0, 0, 0.9);
+        border-color: rgba(255, 0, 0, 0.9);
+    }

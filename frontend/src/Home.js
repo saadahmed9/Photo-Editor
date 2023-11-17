@@ -16,6 +16,8 @@ import BackgroundChange from "./Components/BackgroundChange";
 import Resize from "./Components/Resize";
 import PDF from "./Components/PDF";
 import Mosaic from "./Components/Mosaic";
+import ImageCompression from "./Components/ImageCompression";
+import VideoCompression from "./Components/VideoCompression";
 import Stats from './Components/Stats';
 
 class Home extends Component {
@@ -37,16 +39,6 @@ class Home extends Component {
       <div className="Home">
         <Header/>
         <PassportPhotoCreation />
-        <PhotoResizeAndCrop  />
-        <PhotoCollage  />
-        <NoiseRemoval  />
-        <ImageFormatter/>
-        <BackgroundChange/>
-        <BrightnessAndContrast/>
-        <Resize/>
-        <PDF/>
-        <Mosaic/>
-        <Stats/>
         <Footer  />
       </div>
     );
