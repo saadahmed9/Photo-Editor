@@ -229,11 +229,13 @@ const info = () => {
         <label style={{ color: 'white', textAlign: 'center' }}>Template:</label>
         <Menu>
           {imageCollection1.map((image, index) => (
-            <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
-            <img src={image} style={{ maxWidth: '100%', height: '100%' }} draggable="true"
+              <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
+                  <div className='image-item'>
+                  <img src={image} className='image' style={{ maxWidth: '100%', height: '100%' }} draggable="true"
               onDragStart={(e) => {
                 e.dataTransfer.setData("image/jpeg", image);
-              }} />
+                      }} />
+            </div>
               <Button onClick={()=>{setImageCollection1([]);setSelectedLayout();setDisplayUrl()}} style={{backgroundColor:'#002140',color:'white',margin:'1rem 0rem 0rem 4rem'}}>
                     Clear
                   </Button>
