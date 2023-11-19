@@ -13,7 +13,6 @@ import ResizeImage from "./MainComponents/ResizeImage/ResizeImage";
 import PdfCreator from "./MainComponents/PdfCreator/PdfCreator";
 import Mosaic from "./MainComponents/Mosaic/Mosaic";
 import ImageCompression from "./MainComponents/ImageCompression/ImageCompression";
-import VideoCompression from "./MainComponents/VideoCompression/VideoCompression";
 import { v4 as uuidv4 } from 'uuid';
 import Collage from "./MainComponents/PhotoCollage/Collage";
 import { ToastContainer } from 'react-toastify';
@@ -55,23 +54,21 @@ class App extends Component {
               <Link to="/">Home</Link>
             </li>
 
-            <div className="dropdown">
-              <button className="dropbtn">Features</button>
-              <div className="dropdown-content glass-effect">
-                  <div className="dropdown-grid">
-                  <Link to="/passport">Passport Photo</Link>
+            <div class="dropdown">
+              <button class="dropbtn">Features</button>
+                <div class="dropdown-content">
+                  <Link to="/passport">Passport-Photo</Link>
                   <Link to="/photoresizeandcrop">Crop</Link>
                   <Link to="/photocollage">Collage</Link>
-                  <Link to="/noiseremoval">Noise Removal</Link>
-                  <Link to="/imageformatconversion">Format Conversion</Link>
-                  <Link to="/backgroundchange">Background Change</Link>
-                  <Link to="/brightnessandcontrast">Brightness And Contrast</Link>
+                  <Link to="/noiseremoval">Noise-Removal</Link>
+                  <Link to="/imageformatconversion">Format-Conversion</Link>
+                  <Link to="/backgroundchange">Background-Change</Link>
+                  <Link to="/brightnessandcontrast">Brightness & Contrast</Link>
                   <Link to="/resize">Resize</Link>
                   <Link to="/mosaic">Mosaic</Link>
                   <Link to="/pdf">PDF</Link>
                   <Link to="/Imagecompression">Image Compression</Link>
-                  <Link to="/VideoCompression">Video Compression</Link>
-                  </div>
+                  <Link to="/Video">Video Compression</Link>
               </div>
 
               </div>
@@ -89,7 +86,6 @@ class App extends Component {
           <Route path="/noiseremoval" element={<NoiseRemoval uuid={this.state.uuid}/>} />
           <Route path="/imageformatconversion" element={<FormatConversion uuid={this.state.uuid}/>} />
           <Route path="/imagecompression" element={<ImageCompression uuid={this.state.uuid}/>} />
-          <Route path="/videocompression" element={<VideoCompression uuid={this.state.uuid}/>} />
           <Route path="/brightnessandcontrast" element={<BrightnessContrast uuid={this.state.uuid}/>} />
           <Route path="/backgroundchange" element={<BackgroundRemoval  uuid={this.state.uuid}/>} />
           <Route path="/resize" element={<ResizeImage  uuid={this.state.uuid}/>} />

@@ -2,8 +2,8 @@ import React, { useState, createRef, useRef, useEffect } from "react";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import "./Collage.css";
-import { Card, Upload, Button, Layout, Menu, Tooltip } from 'antd';
-import { UploadOutlined, PictureOutlined } from '@ant-design/icons';
+import { Card, Upload, Button, Layout, Menu } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import Template from './Template';
 import TemplateCol from "./TemplateCol";
 import STemplate from "./STemplate";
@@ -234,29 +234,17 @@ export const Collage = () => {
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <Sider style={{ backgroundColor: '#000524', height: '100vh' }} collapsible collapsed={collapsed} onCollapse={onCollapse}>
-                {!collapsed && (
-                    <label style={{ color: 'white', textAlign: 'center', padding: '16px' }}>Choose Template:</label>
-                )}
-                {!collapsed ? (
-                    <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524' }} className="sider-menu"
-                        onClick={(e) => handleMenuClick(e)}>
-                        {collageLayouts.map((item) => (
-                            <Menu.Item key={item.key} style={{ marginBottom: '10px', objectPosition: 'center center' }}>
-                                <img src={item.imageUrl} alt={item.name} style={{ maxWidth: '100%', height: 'auto' }} />
-                            </Menu.Item>
-                        ))}
-                    </Menu>
-                ) : (
-                    <div className="collapsed-visual-cue" style={{ textAlign: 'center', marginTop: '20px' }}>
-                        {/* Tooltip wrapper */}
-                        <Tooltip title="Choose a template">
-                            <PictureOutlined style={{ fontSize: '24px', color: '#fff' }} />
-                        </Tooltip>
-                    </div>
-                )}
+            <Sider style={{ backgroundColor: '#000524', height: '100vh'}} collapsible collapsed={collapsed} onCollapse={onCollapse}>
+                <label style={{ color: 'white', textAlign: 'center' }}>Choose Template:</label>
+                <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524' }}
+                    onClick={(e) => handleMenuClick(e)}>
+                    {collageLayouts.map((item) => (
+                        <Menu.Item key={item.key} style={{ marginBottom: '10px', objectPosition: 'center center' }}>
+                            <img src={item.imageUrl} alt={item.name} style={{ maxWidth: '100%', height: 'auto' }} />
+                        </Menu.Item>
+                    ))}
+                </Menu>
             </Sider>
-
 
             <Layout className="site-layout" style={{ width: '80%', height: '90%', overflow: 'hidden' }}>
                 <ContentSection>
@@ -317,49 +305,45 @@ export const Collage = () => {
                     }
                 </ContentSection>
             </Layout>
-
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{ height: '100vh', overflowY: 'scroll' }}>
-                {collapsed ? (
-                    <div className="collapsed-visual-cue" onClick={() => onCollapse(false)}>
-                        <Tooltip title="Upload images">
-                            <UploadOutlined style={{ fontSize: '24px', color: '#fff', cursor: 'pointer' }} />
-                        </Tooltip>
-                    </div>
-                ) : (
-                    <>
-                        <div style={{ position: "relative", width: "200px", height: '50px' }}>
-                            <button style={{ width: "100%", height: "100%", }}>
-                                <i className="fa fa-plus-circle" aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}></i>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={(e) => SiderImageUpload(e)}
-                                    style={{
-                                        position: "absolute",
-                                        width: "100%",
-                                        height: "100%",
-                                        opacity: "0",
-                                        left: "0",
-                                        top: "0",
-                                        cursor: "pointer",
-                                    }}
-                                />
-                            </button>
-                        </div>
-                        <button style={{ width: "100%" }} onClick={ConfirmDelete}>Clear All</button>
-                        <div className="images-grid">
-                            {imageCollection.map((image, index) => (
-                                <div key={index} className="image-item">
-                                    <img src={image} className="image" draggable="true" />
-                                    <button className="remove-image-btn" onClick={() => handleRemoveImage(index)}>Remove</button>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                )}
-            </Sider>
+                <label style={{ color: 'white', textAlign: 'center' }}>Images:</label>
+                <div style={{ position: "relative", width: "200px", height: '50px' }}>
+                    <button style={{ width: "100%", height: "100%", }}>
+                        <i class="fa fa-plus-circle" aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}></i>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={(e) => SiderImageUpload(e)}
+                            //onClick={(e) => e.target.value = null} 
+                            style={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "100%",
+                                opacity: "0",
+                                left: "0",
+                                top: "0",
+                                cursor: "pointer",
+                            }}
+                        />
+                    </button>
 
+                </div>
+                <button style={{ width: "100%" }} onClick={ConfirmDelete}>Clear All</button>
+                <Menu>
+                    {imageCollection.map((image, index) => (
+                        <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
+                            <img src={image} style={{ maxWidth: '100%', height: '100%' }} draggable="true"
+                                onDragStart={(e) => {
+                                    e.dataTransfer.setData("image/jpeg", image);
+                                }} />
+                            <Button type="danger" onClick={handleRemoveImage} style={{ backgroundColor: '#002140', color: 'white', margin: '1rem 0rem 0rem 4rem' }}>
+                                Clear
+                            </Button>
+                        </Menu.Item>
+                    ))}
+                </Menu>
+            </Sider>
         </Layout>
     );
 };

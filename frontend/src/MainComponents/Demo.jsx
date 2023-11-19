@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import Cropper from "react-cropper";
-import CropperCircle from "react-easy-crop";
 import "cropperjs/dist/cropper.css";
 import "./Demo.css";
 import {
@@ -12,7 +11,7 @@ import { Fade } from 'react-reveal';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import getCroppedImg from './cropImage'
+
 
 const { Sider, Content } = Layout;
 
@@ -40,34 +39,18 @@ export const Demo = (props1) => {
   const [customRatio, setCustomRatio] = useState('');
   const [numerator, setNumerator] = useState('');
   const [denominator, setDenominator] = useState('');
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-  const [croppedImage, setCroppedImage] = useState(null)
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [zoom, setZoom] = React.useState(1)
 
-  const cropperRef = useRef(null);
 
-  const onCropComplete = (croppedArea, croppedAreaPixels) => {
-    setCroppedAreaPixels(croppedAreaPixels)
-  }
-  const [cropSize, setCropSize] = useState({
-    width: 200,
-    height: 200
-  });
-  const [isCircleCrop, setIsCircleCrop] = useState(false);
+    const cropperRef = useRef(null);
 
-  
-  // Handler for toggle between normal crop and circle crop
-  const handleCropTypeToggle = () => {
-    setIsCircleCrop(!isCircleCrop);
-    setNumerator(''); // Reset custom ratio values when switching crop type
-    setDenominator('');
-    setCustomRatio('')
-  };
+    const [isCircleCrop, setIsCircleCrop] = useState(false);
 
-  const onZoomChange = (zoom) => {
-    setZoom(zoom)
-  }
+    // Handler for toggle between normal crop and circle crop
+    const handleCropTypeToggle = () => {
+        setIsCircleCrop(!isCircleCrop);
+        setNumerator(''); // Reset custom ratio values when switching crop type
+        setDenominator('');
+    };
 
   // Handler for custom ratio input change
   const handleInputChange = (e) => {
@@ -90,20 +73,20 @@ export const Demo = (props1) => {
   // Handler for aspect ratio menu item click
   const handleMenuClick = (event) => {
     const selectedAspectRatio = menuItems.find((item) => item.key === event.key)?.name;
-    if (!isCircleCrop) {
-      const [width, height] = selectedAspectRatio.split('/');
-      setAspectRatio(parseFloat(width) / parseFloat(height));
-    } else {
-      // Handle circle crop ratio differently
-      // You can set a fixed aspect ratio for the circle crop, like 1/1
-      
-      setAspectRatio(1);
-    }
+      if (!isCircleCrop) {
+          const [width, height] = selectedAspectRatio.split('/');
+          setAspectRatio(parseFloat(width) / parseFloat(height));
+      } else {
+          // Handle circle crop ratio differently
+          // You can set a fixed aspect ratio for the circle crop, like 1/1
+          setAspectRatio(1);
+      }
     setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
   };
+
+
   // Get cropped image data
-  const getCropData = async () => {
-    if(!isCircleCrop){
+  const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
       const formData = new FormData();
     formData.append('function', 'crop');
@@ -121,53 +104,7 @@ export const Demo = (props1) => {
       link.click();
       document.body.removeChild(link);
     }
-  }
-  else{
-    const cropper = cropperRef.current;
 
-  if (!cropper) {
-    return;
-  }
-
-  
-
-  try {
-    const croppedImage = await getCroppedImg(
-      imageSrc, // Replace with the path to your image
-      croppedAreaPixels,
-      0 // Assuming rotation is 0, update accordingly
-    );
-
-
-    const formData = new FormData();
-    formData.append('function', 'crop');
-    formData.append('croppedImage', croppedImage); // Assuming croppedImage is a base64 encoded string
-
-    axios.post(process.env.REACT_APP_API_URL + '/crop/', formData)
-      .then(response => {
-        // Handle successful response if needed
-        console.log('Crop data sent successfully:', response.data);
-      })
-      .catch(error => {
-        console.error('Error while sending crop data:', error);
-        toast.error("Error encountered.");
-      });
-
-
-    console.log('done', { croppedImage });
-    setCroppedImage(croppedImage);
-    const link = document.createElement("a");
-    link.download = fileName + "." + fileType;
-    link.href = croppedImage;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  } catch (error) {
-    console.error('Error while cropping:', error);
-  }
-  
-
-  }
   };
 
   // Extract image type from MIME type
@@ -264,112 +201,89 @@ export const Demo = (props1) => {
               ) : (
                   <>
                       <label style={{ color: 'white', textAlign: 'center' }}>Choose Ratio:</label>
-        <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden', textAlign: 'center' }}
-          onClick={(e) => handleMenuClick(e)}>
-                              
-            
-            
-            {isCircleCrop && (
-                <div className="custom-ratio-container">
-                <Input
-                  className="custom-ratio-input"
-                  placeholder="200"
-                  value={customRatio}
-                  onChange={(e) => setCustomRatio(e.target.value)}
-                  style={{ marginRight: '0.5em' }} 
-                />
-                <span className="multiplication-sign" >Ã—</span>
-                <Input
-                  className="custom-ratio-input"
-                  placeholder="200"
-                  value={customRatio} // Both text boxes have the same value for circle crop
-                  onChange={(e) => setCustomRatio(e.target.value)}
-                  style={{ marginLeft: '0.5em' }} 
-                />
-                </div>
+                      <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden', textAlign: 'center' }}
+                          onClick={(e) => handleMenuClick(e)}>
+                              {isCircleCrop && (
+                                  <div className="custom-ratio-container">
+                                      <Input
+                                          className="custom-ratio-input"
+                                          placeholder="Ratio"
+                                          value={customRatio}
+                                          onChange={(e) => setCustomRatio(e.target.value)}
+                                          style={{ marginRight: '0.5em' }}
+                                      />
+                                      <span className="multiplication-sign" >×</span>
+                                      <Input
+                                          className="custom-ratio-input"
+                                          placeholder="Ratio"
+                                          value={customRatio} // Both text boxes have the same value for circle crop
+                                          onChange={(e) => setCustomRatio(e.target.value)}
+                                          style={{ marginLeft: '0.5em' }}
+                                      />
+                                  </div>
 
-              )}
+                              )}
 
-                {isCircleCrop && (
-                <Button
-                  className="custom-ratio-button"
-                  onClick={() => {
-                    if (isNaN(customRatio) || customRatio == 0) {
-                      console.error('Invalid ratio!');
-                      return;
-                    }
-                    setCropSize({
-                      width: parseFloat(customRatio),
-                      height: parseFloat(customRatio)
-                    });
-                  }}
-                >
-                  Set Custom Ratio
-                </Button>
-              )}
+                              {!isCircleCrop && (
+                                  <div>
+                                      <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '10vh', overflow: 'hidden', textAlign: 'center' }}
+                                          onClick={(e) => handleMenuClick(e)}>
+                                          {menuItems.map((item) => (
+                                              <Menu.Item className="ratio-menu-item" key={item.key}>{item.name}</Menu.Item>
+                                          ))}
+                                      </Menu>
+                                  </div>
+                              )}
 
-            {!isCircleCrop && (
-                      <div>
-                        <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '10vh', overflow: 'hidden', textAlign: 'center' }}
-                                onClick={(e) => handleMenuClick(e)}>
-                                      {menuItems.map((item) => (
-                                          <Menu.Item className="ratio-menu-item" key={item.key}>{item.name}</Menu.Item>
-                                      ))}
+
+
+                              {!isCircleCrop && (
+
+                                  <div className="custom-ratio-container">
+                                      <Input
+                                          className="custom-ratio-input"
+                                          placeholder="Width"
+                                          value={numerator}
+                                          onChange={(e) => setNumerator(e.target.value)}
+                                          style={{ marginRight: '0.5em' }}
+                                      />
+                                      <span>/</span>
+                                      <Input
+                                          className="custom-ratio-input"
+                                          placeholder="Height"
+                                          value={denominator}
+                                          onChange={(e) => setDenominator(e.target.value)}
+                                          style={{ marginLeft: '0.5em' }}
+                                      />
+
+                                  </div>
+                              )}
+
+                              {!isCircleCrop && (
+                                  <Button
+                                      className="custom-ratio-button"
+                                      onClick={() => {
+                                          if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
+                                              console.error('Invalid ratio!');
+                                              return;
+                                          }
+                                          setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
+                                          setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
+                                      }}
+                                  >
+                                      Set Custom Ratio
+                                  </Button>
+                              )}
+
+
+
+                              <Button className="custom-ratio-button" onClick={() => handleCropTypeToggle()}>
+                                  {isCircleCrop ? 'Switch to Normal Crop' : 'Switch to Circle Crop'}
+                              </Button>
                       </Menu>
-                      </div>
-            )}
-
-
-
-            {!isCircleCrop && (
-              
-                <div className="custom-ratio-container">
-                  <Input
-                    className="custom-ratio-input"
-                    placeholder="Width"
-                    value={numerator}
-                    onChange={(e) => setNumerator(e.target.value)}
-                    style={{ marginRight: '0.5em' }} 
-                  />
-                  <span>/</span>
-                  <Input
-                    className="custom-ratio-input"
-                    placeholder="Height"
-                    value={denominator}
-                    onChange={(e) => setDenominator(e.target.value)}
-                    style={{ marginLeft: '0.5em' }} 
-                  />
-                  
-                  </div>
-              )}
-
-              {!isCircleCrop && (
-                <Button
-                  className="custom-ratio-button"
-                  onClick={() => {
-                    if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
-                      console.error('Invalid ratio!');
-                      return;
-                    }
-                    setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
-                    setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
-                  }}
-                >
-                  Set Custom Ratio
-                </Button>
-              )}
-
-
-
-              <Button className="custom-ratio-button" onClick={() => handleCropTypeToggle()}>
-                {isCircleCrop ? 'Switch to Normal Crop' : 'Switch to Circle Crop'}
-              </Button>
-            
-        </Menu>
                   </>
               )}
-
-      </Sider>
+          </Sider>
           <Layout className="site-layout">
               <ContentSection>
           {!imageSrc ? 
@@ -391,42 +305,14 @@ export const Demo = (props1) => {
               <Card className="passport-photo-card"
                 title="Drag and Drop Photo"
                 cover={imageSrc && (
-                  <>
-                  {isCircleCrop ? (
-                    // Your new logic for circle crop
-                    <CropperCircle
-                      image={imageSrc}
-                      crop={crop}
-                      zoom={zoom}
-                      onCropChange={setCrop}
-                      aspect={1}
-                      objectFit="contain"
-                      cropSize={cropSize}
-                      cropShape="round"
-                      zoomWithPinch={true}
-                      onCropComplete={onCropComplete}
-                      onZoomChange={onZoomChange}
-                      style={{
-                        containerStyle: {
-                          height: "400px",
-                          position: "relative",
-                          margin: "auto",
-                          width: "100%"
-                        },
-                      }}
-                    />
-                  ) : (
-                    // Your existing logic for normal crop
-                    <Cropper
-                      key={cropperKey}
-                      ref={cropperRef}
-                      src={imageSrc}
-                      aspectRatio={aspectRatio}
-                      style={{ height: 400, width: '100%' }}
-                      background={false}
-                    />
-                  )}
-                </>
+                  <Cropper
+                    key={cropperKey} // reset the Cropper component with a new key
+                    ref={cropperRef}
+                    src={imageSrc}
+                    aspectRatio={aspectRatio}
+                    style={{ height: 400, width: '100%' }}
+                    background={false}
+                  />
                 )}
                 // {imageSrc && <img className='uploaded-image' src={imageSrc} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                 extra={
@@ -464,42 +350,14 @@ export const Demo = (props1) => {
                 <Card className="passport-photo-card"
                   title="Drag and Drop Photo"
                   cover={imageSrc && (
-                    <>
-                    {isCircleCrop ? (
-                      // Your new logic for circle crop
-                      <CropperCircle
-                        image={imageSrc}
-                        crop={crop}
-                        onCropChange={setCrop}
-                        aspect={1}
-                        zoom={zoom}
-                        objectFit="contain"
-                        cropShape="round"
-                        cropSize={cropSize}
-                        onCropComplete={onCropComplete}
-                        zoomWithPinch={true}
-                        onZoomChange={onZoomChange}
-                        style={{
-                          containerStyle: {
-                            height: "400px",
-                            position: "relative",
-                            margin: "auto",
-                            width: "100%"
-                          },
-                        }}
-                      />
-                    ) : (
-                      // Your existing logic for normal crop
-                      <Cropper
-                        key={cropperKey}
-                        ref={cropperRef}
-                        src={imageSrc}
-                        aspectRatio={aspectRatio}
-                        style={{ height: 400, width: '100%' }}
-                        background={false}
-                      />
-                    )}
-                  </>
+                    <Cropper
+                      key={cropperKey} // reset the Cropper component with a new key
+                      ref={cropperRef}
+                      src={imageSrc}
+                      aspectRatio={aspectRatio}
+                      style={{ height: 400, width: '100%' }}
+                      background={false}
+                    />
                   )}
                   // {imageSrc && <img className='uploaded-image' src={imageSrc} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                   extra={
