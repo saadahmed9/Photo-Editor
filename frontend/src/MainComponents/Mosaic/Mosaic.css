@@ -1,0 +1,83 @@
+/* Mosaic.css */
+.slider-container {
+    /* Other styles for slider-container */
+}
+
+.collapsed-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.collapsed-icon {
+    font-size: 24px; /* Adjust size as needed */
+    color: #fff; /* Change color to fit your theme */
+    cursor: pointer;
+    /* Add any additional styling for the icon as needed */
+}
+
+    /* You can add a transition or animation to make it more appealing */
+    .collapsed-icon:hover {
+        color: #ccc; /* Change hover color as desired */
+        transition: color 0.3s ease;
+    }
+
+.collapsed-visual-cue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* Add any additional styling you need here */
+}
+
+/* Image Grid & Items */
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 10px;
+    padding: 10px;
+}
+
+.image-item {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    position: relative;
+    margin:3px;
+}
+
+    .image-item:hover {
+        transform: scale(1.05);
+    }
+
+.image {
+    width: 100%;
+    display: block;
+    border-radius: 3px; /* Slightly round the corners of the images */
+}
+
+/* Remove Image Button Styles */
+
+.remove-image-btn {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 1px 2px;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+    .remove-image-btn:hover {
+        color: rgba(255, 0, 0, 0.9);
+        border-color: rgba(255, 0, 0, 0.9);
+    }
+
+
