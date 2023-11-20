@@ -10,6 +10,7 @@ import { Select } from 'antd';
 import { Fade } from 'react-reveal';
 import { v4 as uuidv4 } from 'uuid';
 import { Checkbox } from 'antd';
+import countriesData from './countriesData.jsx';
 
 
 // Constants and initial configurations
@@ -35,6 +36,7 @@ const ContentSection = ({ children }) => {
 };
 
 
+
 // Main PassportPhoto component
 const PassportPhoto = (props1) => {  
 
@@ -43,7 +45,7 @@ const PassportPhoto = (props1) => {
   const [imageUrl, setImageUrl] = useState();
   const [collapsed, setCollapsed] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [aspectRatio, setAspectRatio] = useState(1);
+  const [aspectRatio, setAspectRatio] = useState(16 / 9)
   const [cropperKey, setCropperKey] = useState(0);
   const cropperRef = useRef(null);
   const [fileType, setFileType] =useState(null);
@@ -62,29 +64,29 @@ const PassportPhoto = (props1) => {
       France: 'https://www.service-public.fr/particuliers/vosdroits/F10619?lang=en',// ... add URLs for other countries
       China: 'https://www.ivisa.com/photo/blog/china-passport-visa-photo-requirements-and-size',
       France: 'https://www.service-public.fr/particuliers/vosdroits/F10619?lang=en',
-      Germany: 'https://dublin.diplo.de/ie-en/-/2380534',
-      India: 'https://www.cgisf.gov.in/docs/1553603117PHOTO_GUIDELINES.pdf',
-      Italy: 'https://it.usembassy.gov/visas/niv/photo-requirements/',
+      Germany: 'https://www.germany.info/blob/906790/6e3eee9fd4d86e16aaefe0e92d809332/dd-sample-photos-data.pdf',
+      India: 'https://visa.vfsglobal.com/one-pager/india/united-states-of-america/passport-services/pdf/photo-specifiation.pdf',
+      Italy: 'https://www.italiandualcitizenship.net/italian-passport-requirements/#:~:text=For%20passport%20renewal%2C%20you%20must,it%20has%20been%20properly%20submitted.',
       Japan:'https://www.sf.us.emb-japan.go.jp/itpr_en/e_m03_01_02.html#:~:text=Size%3A%2035mm%20x%2045mm%20(width,more%20than%2036%20mm%20high.',
       Korea: 'https://overseas.mofa.go.kr/us-losangeles-en/brd/m_4394/view.do?seq=725383&srchFr=&srchTo=&srchWord=photo&srchTp=0&multi_itm_seq=0&itm_seq_1=0&itm_seq_2=0&company_cd=&company_nm=&page=1',
-      Mexico: 'https://do.usembassy.gov/u-s-citizen-services/passports/photo-requirements-u-s-passports-visa/',
+      Mexico: 'https://www.ivisa.com/photo/blog/mexican-passport-visa-photo-requirements-and-size#:~:text=So%20what%20are%20the%20Mexican,be%20older%20than%206%20months.',
       Netherlands:'https://www.netherlandsworldwide.nl/passport-id-card/photo-requirements',
-      Russia: 'https://ru.usembassy.gov/u-s-citizen-services/passports/photos/',
+      Russia: 'https://russianagency.com/en/photo-requirements/',
       Singapore: 'https://www.mfa.gov.sg/Overseas-Mission/Phnompenh/Consular-Services/Application-for-Singapore-Passport',
       Spain:'https://es.usembassy.gov/passports/#guidelines',
       Turkey: 'https://www.timpson.co.uk/services/passport-photos/international-passport-photo-sizes/turkey',
       UK: 'https://www.gov.uk/photos-for-passports/photo-requirements#:~:text=You%20need%20to%20provide%202,version%20of%20a%20larger%20picture',
       USA: 'https://travel.state.gov/content/travel/en/passports/how-apply/photos.html',
       Saudi_Arabia: 'https://www.saudiembassy.net/guideline-accepted-photographs-saudi-visas',
-      UAE:'https://u.ae/en/information-and-services/passports-and-traveling/the-emirati-passport',
-      New_Zealand:'https://www.passports.govt.nz/passport-photos/how-to-take-a-passport-photo/',
+      UAE:'https://www.ivisa.com/photo/blog/the-united-arab-emirates-passportvisa-photo-requirements-and-size',
+      New_Zealand:'https://www.passports.govt.nz/passport-photos/check-your-photo-meets-the-technical-requirements/',
       Malaysia:'https://www.imi.gov.my/index.php/en/main-services/passport/malaysian-international-passport/',
-      Argentina: 'https://cnyor.cancilleria.gob.ar/en',
+      Argentina: 'https://photogov.com/documents-requirements/ar-passport-15x15-inch-photo/',
       South_Africa:'https://www.southafrica-usa.net/homeaffairs/pp_tourist.htm',
       Thailand:'https://thaiconsulatela.thaiembassy.org/en/publicservice/documents-required-for-renew-thai-passport-2?page=61b1064202fd6d10a962f3a4',
-      Indonesia:'https://consular.embassyofindonesia.org/page/generalinformation.html',
+      Indonesia:'https://www.ivisa.com/photo/blog/indonesian-passport-visa-photo-requirements-and-size-2',
       Vietnam:'https://vietnamconsulate-sf.org/en/2017/05/11/thu-tuc-cap-ho-chieu-lan-dau-cho-cong-dan-viet-nam-dinh-cu-tai-hoa-ky/',
-      Chile:'https://minrel.gob.cl/minrel/ministry/procedures-for-chileans/passport'
+      Chile:'https://chile-evisa.com/chile-visa-photo-requirements-and-size/'
     }
     
     // Component for displaying hint when sidebar is collapsed
@@ -95,35 +97,38 @@ const PassportPhoto = (props1) => {
         </div>
     );
 
+    
+    
+
+
 
   const menuItems = [
-    { key: '1', name: 'USA' },
-{ key: '2', name: 'Canada' },
-{ key: '3', name: 'China' },
-{ key: '4', name: 'France' },
-{ key: '5', name: 'Germany' },
-{ key: '6', name: 'India' },
-{ key: '7', name: 'Italy' },
-{ key: '8', name: 'Japan' },
-{ key: '9', name: 'Korea' },
-{ key: '10', name: 'Mexico' },
-{ key: '11', name: 'Netherlands' },
-{ key: '12', name: 'Russia' },
-{ key: '13', name: 'Singapore' },
-{ key: '15', name: 'Turkey' },
-{ key: '16', name: 'UK' },
-{ key: '17', name: 'Brazil' },
-{ key: '18', name: 'Saudi_Arabia' },
-{ key: '19', name: 'UAE' },
-{ key: '20', name: 'New_Zealand' },
-{ key: '21', name: 'Malaysia' },
-{ key: '22', name: 'Argentina' },
-{ key: '23', name: 'South_Africa' },
-{ key: '24', name: 'Thailand' },
-{ key: '25', name: 'Indonesia' },
-{ key: '26', name: 'Vietnam' },
-{ key: '27', name: 'Chile' },
-{ key: '28', name: 'Spain' },
+    { key: '1', name: 'USA', size: '51x51 (mm)' },
+{ key: '2', name: 'Canada',size: '50x70 (mm)' },
+{ key: '3', name: 'China',size: '33x48 (mm)' },
+{ key: '4', name: 'France',size: '35x45 (mm)' },
+{ key: '5', name: 'Germany',size: '35x45 (mm)' },
+{ key: '6', name: 'India',size: '51x51 (mm)' },
+{ key: '7', name: 'Italy' ,size: '51x51 (mm)' },
+{ key: '8', name: 'Japan',size: '35x45 (mm)' },
+{ key: '9', name: 'Korea',size: '35x45 (mm)' },
+{ key: '10', name: 'Mexico',size: '35x45 (mm)' },
+{ key: '11', name: 'Netherlands',size: '35x45 (mm)' },
+{ key: '12', name: 'Russia',size: '35x45 (mm)' },
+{ key: '13', name: 'Singapore',size: '35x45 (mm)' },
+{ key: '15', name: 'Turkey',size: '50x60 (mm)' },
+{ key: '16', name: 'UK',size: '35x45 (mm)' },
+{ key: '17', name: 'Brazil',size: '50x70 (mm)' },
+{ key: '18', name: 'Saudi_Arabia',size: '51x51 (mm)' },
+{ key: '19', name: 'UAE',size: '35x45 (mm)' },
+{ key: '20', name: 'New_Zealand',size: '35x45 (mm)' },
+{ key: '21', name: 'Malaysia',size: '35x50 (mm)' },
+{ key: '22', name: 'Argentina',size: '38x38 (mm)' },
+{ key: '23', name: 'South_Africa',size: '51x51 (mm)' },
+{ key: '25', name: 'Indonesia',size: '51x51 (mm)' },
+{ key: '26', name: 'Vietnam',size: '51x51 (mm)' },
+{ key: '27', name: 'Chile',size: '35x45 (mm)' },
+{ key: '28', name: 'Spain',size: '30x40 (mm)' },
 
   ];
   const [isChecked, setIsChecked] = useState(false);
@@ -134,13 +139,27 @@ const PassportPhoto = (props1) => {
   const handleMenuClick = (value) => {
     const selectedCountry = menuItems.find((item) => item.key === value)?.name;
     setSelectedCountry(selectedCountry);
-    console.log(selectedCountry)
+    let countryAspectRatio = getAspectRatioByCountry(selectedCountry);
+    setAspectRatio(countryAspectRatio);  
+    setCropperKey(cropperKey + 1);
   }; 
 
   const handleVisitWebsite = () => {
     if (selectedCountry && countryUrlMap[selectedCountry]) {
       window.open(countryUrlMap[selectedCountry], '_blank');
     }
+  };
+
+  const getAspectRatioByCountry = (selectedCountry) => {
+    let countryInfo = countriesData.find((country) => country[selectedCountry]);
+    console.log(selectedCountry);
+    console.log("in getaspectratio");
+    console.log(countryInfo[selectedCountry]);
+    if (countryInfo) {
+      let [width_frame, height_frame] = countryInfo[selectedCountry].split(',').map(Number);
+      return (parseFloat(width_frame) / parseFloat(height_frame));
+    }
+    return 1; // Default aspect ratio if country info is not found
   };
 
   const handleClear = () => {
@@ -161,6 +180,7 @@ const PassportPhoto = (props1) => {
     reader.onload = () => {
       setImageUrl(reader.result);
       setFileType(getImageTypeFromMime(reader.result));
+      setCropperKey(cropperKey + 1); 
     };
     reader.onerror = (error) => {
       console.error('Error: ', error);
@@ -332,7 +352,9 @@ const PassportPhoto = (props1) => {
                       <label style={{ color: 'white', textAlign: 'center' }}>Choose Country:</label>
                       <Select style={{ width: 180, marginLeft: '5px' }} onChange={handleMenuClick}>
                           {menuItems.map((item) => (
-                              <Option key={item.key} value={item.key}>{item.name.replace('_', ' ')}</Option>
+                              <Option key={item.key} value={item.key}>
+                                {`${item.name.replace('_', ' ')} - ${item.size}`}
+                              </Option>
                           ))}
                       </Select>
 
@@ -393,6 +415,7 @@ const PassportPhoto = (props1) => {
                          aspectRatio={aspectRatio}
                          style={{ textAlign:'center',height: 400 ,width:'50%', margin:'10px'}}
                          background={false}
+                         cropBoxResizable={false}
                        />
                      )}
                        {displayUrl && <img className='uploaded-image' style={{ height: 400 ,width:'40%', marginLeft:'30px'}} src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
@@ -450,6 +473,7 @@ const PassportPhoto = (props1) => {
                           aspectRatio={aspectRatio}
                           style={{ textAlign:'center',height: 400 ,width:'50%', margin:'10px'}}
                           background={false}
+                          cropBoxResizable={false}
                         />
                       )}
                         {displayUrl && <img className='uploaded-image' style={{ height: 400 ,width:'40%', marginLeft:'30px'}} src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
