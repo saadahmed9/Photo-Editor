@@ -52,6 +52,7 @@ function ResizeImage({ uuid }) {
     const handleClear = () => {
         setIsLoading(false);
         setImageUrl(null);
+        setDisplayUrl(null);
     };
 
     // Extract image type from data URL
