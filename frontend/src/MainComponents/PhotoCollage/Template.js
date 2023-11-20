@@ -138,7 +138,7 @@ const Template = ({ rows, columnsPerRow }) => {
   <MinusOutlined />
 </button>
              <button
-               className="remove-button"
+               className="remove-image-btn"
                onClick={removeImage(cellIndex)}
              >
                Remove
@@ -204,7 +204,7 @@ const Template = ({ rows, columnsPerRow }) => {
 
   const zoomInButtons = document.querySelectorAll(".zoom-in-button");
   const zoomOutButtons = document.querySelectorAll(".zoom-out-button");
-  const removeButtons = document.querySelectorAll(".remove-button");
+      const removeButtons = document.querySelectorAll(".remove-image-btn");
 
   // Hide buttons
   zoomInButtons.forEach((button) => (button.style.display = "none"));
