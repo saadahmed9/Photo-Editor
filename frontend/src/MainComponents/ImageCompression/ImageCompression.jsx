@@ -55,7 +55,9 @@ function ImageCompression(props1) {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedFormat, setselectedFormat] = useState(null);
   const [compressionRate, setCompressionRate] = useState(50);
+  const [input1, setInput1] = useState(null);
   
+  const handleInputChange1 = (event) => setInput1(event.target.value);
   const [isLoading,setIsLoading]= useState(false);
     const [fileName, setfileName] = useState(null);
 
@@ -185,27 +187,48 @@ function ImageCompression(props1) {
 
 
   // Download the processed image  
-  function downloadImage(url1,type) {
+  // function downloadImage(url1,type) {
+  //   fetch(url1)
+  //     .then(response => response.blob())
+  //     .then(blob => {
+  //       //const url = window.URL.createObjectURL(blob);
+  //       const reader = new FileReader();
+  //       reader.onload = () => {
+  //         const imageDataUrl = reader.result;
+  //         setIsLoading(false);
+  //         const link = document.createElement('a');
+  //       link.href = imageDataUrl;
+  //       link.setAttribute('download', fileName+"."+selectedFormat.toLowerCase());
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       link.remove();
+  //         //setDisplayUrl(imageDataUrl);
+  //       };
+  //       reader.readAsDataURL(blob);
+  //     })
+  //     .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
+  // }
+
+
+  function downloadImage(url1) {
     fetch(url1)
-      .then(response => response.blob())
-      .then(blob => {
-        //const url = window.URL.createObjectURL(blob);
-        const reader = new FileReader();
-        reader.onload = () => {
-          const imageDataUrl = reader.result;
-          setIsLoading(false);
-          const link = document.createElement('a');
-        link.href = imageDataUrl;
-        link.setAttribute('download', fileName+"."+selectedFormat.toLowerCase());
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-          //setDisplayUrl(imageDataUrl);
-        };
-        reader.readAsDataURL(blob);
-      })
-      .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
-  }
+        .then(response => response.blob())
+        .then(blob => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const imageDataUrl = reader.result;
+                setIsLoading(false);
+                setDisplayUrl(reader.result);
+            };
+            reader.readAsDataURL(blob);
+        })
+        .catch(error => {
+            console.log(error);
+            toast.error("Error encountered.");
+            setIsLoading(false);
+        });
+}
+
 
 
   // Handle preview button click
@@ -226,6 +249,7 @@ function ImageCompression(props1) {
     formData.append('output_format', selectedFormat.toLowerCase());
     formData.append('compression_rate', compressionRate);
     formData.append('function', 'image_compression');
+    formData.append('custom_rate', input1);
     axios.post(process.env.REACT_APP_API_URL+'/image_compression/', formData)
       .then(response => {
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
@@ -238,14 +262,14 @@ function ImageCompression(props1) {
 
 
   // Download the displayed image
-  // function handleDownload () {
-  //       const link = document.createElement('a');
-  //       link.href = displayUrl;
-  //       link.setAttribute('download', 'image.'+selectedFormat.toLowerCase());
-  //       document.body.appendChild(link);
-  //       link.click();
-  //       link.remove();
-  // };
+  function handleDownload () {
+        const link = document.createElement('a');
+        link.href = displayUrl;
+        link.setAttribute('download', 'image.'+selectedFormat.toLowerCase());
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+  };
 
 
   // Prevent default drag over for custom drag and drop
@@ -312,7 +336,10 @@ function ImageCompression(props1) {
                                     <span>{compressionRate}</span>
                                 </div>
                             )}
-
+                            <div className="input-container">
+                                <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in MB):</label>
+                                    <input type="text" value={input1} onChange={handleInputChange1} placeholder="e.g. 300" />
+                                </div>
                             <label className="format-menu-label">Compress As:</label>
                             <Menu
                                 theme="dark"
@@ -320,7 +347,7 @@ function ImageCompression(props1) {
                                 style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden' }}
                                 onClick={handleMenuClick}
                             >
-                                {menuItems.map((item) => (
+                                {/* {menuItems.map((item) => (
                                     <Menu.Item
                                         key={item.key}
                                         className={`format-menu-item ${selectedFormat === item.name ? 'format-menu-item-selected' : ''}`}
@@ -328,8 +355,23 @@ function ImageCompression(props1) {
                                     >
                                         {item.name}
                                     </Menu.Item>
+                                ))} */}
+                                {menuItems.map((item) => (
+                                  <Menu.Item
+                                    key={item.key}
+                                    className="format-menu-item"
+                                    style={{
+                                      textAlign: 'center',
+                                      backgroundColor: selectedFormat === item.name ? '#3750ed' : '#00093e', // Red if selected, else default color
+                                      color: selectedFormat === item.name ? '#FFFFFF' : '#B4C2D3', // Text color for selected and non-selected items
+                                    }}
+                                  >
+                                    {item.name}
+                                  </Menu.Item>
                                 ))}
+                                
                                 </Menu>
+                                
                             </div>
                 </>
                 )}
@@ -351,7 +393,8 @@ function ImageCompression(props1) {
 
                                         <li>Download: Grab your compressed image in its fresh format.</li>
 </ol>
-</div>  </Fade>
+        </div>  
+        </Fade>
             <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
               <div style={{flexGrow: '1'}}>
                   <Card className="passport-photo-card"
@@ -384,18 +427,18 @@ function ImageCompression(props1) {
                     )}
                     {imageUrl && (
                      <Button type="primary" onClick={handlePreview} style={{ margin: '10px' }}>
-                        Download Photo
+                        Download hoto
                       </Button>
                     )}
-                    {/* {displayUrl && (
+                    {displayUrl && (
                      <Button type="success" onClick={handleDownload} style={{ margin: '10px' }}>
                         Download Photo
                       </Button>
-                    )} */}
+                    )}
                 </Card>
               </div>
             </div>
-          </div> :  
+          </div> : 
           <div className="passport-photo-container">
             <div className="center-card-container">
               <div style={{flexGrow: '1'}}>
@@ -418,7 +461,7 @@ function ImageCompression(props1) {
                     >
                     <Upload {...props} className="my-upload">
                       <p>
-                                                <UploadOutlined /> Drag & drop or tap to introduce your image
+                         <UploadOutlined /> Drag & drop or tap to introduce your image
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>
@@ -428,7 +471,12 @@ function ImageCompression(props1) {
                       </Button>                     
                     )}
                     {imageUrl && (
-                     <Button type="primary" onClick={handlePreview} style={{ margin: '10px' }}>
+                      <Button type="primary" onClick={handlePreview} style={{ margin: '10px' }}>
+                          Preview Photo
+                      </Button>
+                      )}
+                    {displayUrl && (
+                     <Button type="primary" onClick={handleDownload} style={{ margin: '10px' }}>
                         Download Photo
                       </Button>
                     )}

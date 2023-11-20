@@ -52,6 +52,7 @@ function ResizeImage({ uuid }) {
     const handleClear = () => {
         setIsLoading(false);
         setImageUrl(null);
+        setDisplayUrl(null);
     };
 
     // Extract image type from data URL
@@ -73,6 +74,7 @@ function ResizeImage({ uuid }) {
         reader.onerror = (error) => console.error('Error:', error);
 
         reader.readAsDataURL(file);
+        
     };
 
     // Handle file drop
@@ -80,6 +82,7 @@ function ResizeImage({ uuid }) {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         handleUpload(file);
+       
     };
 
     // Document event listeners
@@ -147,17 +150,34 @@ function ResizeImage({ uuid }) {
         toast.success("Image Resize Successfully Completed");
     };
 
+    let defaultWidth;
 
+// Function to set the default width
+    
     // Preview the processed image
     async function handlePreview() {
         setIsLoading(true);
+        
         const formData = new FormData();
         formData.append('myfile', dataURLtoFile(imageUrl, fileName + "." + fileType));
         formData.append('resize', `${input1},${input2}`);
         formData.append('function', 'resize');
 
         axios.post(`${process.env.REACT_APP_API_URL}/resize/`, formData)
-            .then(response => downloadImage(response.data.imageUrl))
+        .then(response => {
+            downloadImage(response.data.imageUrl);
+            //adjustContainerWidth();
+            const previewImage = new Image();
+            previewImage.src = response.data.imageUrl;
+            previewImage.onload = () => {
+                const additionalWidth = previewImage.width;  // Add any desired padding
+                const container = document.querySelector('.center-card-container');
+                defaultWidth = container.offsetWidth;
+                console.log(`${additionalWidth}`);
+                container.style.width = `${defaultWidth+100}px`
+                setIsLoading(false);
+            }; // Call the function to adjust width
+        })
             .catch(error => {
                 console.log(error);
                 toast.error("Error encountered.");
@@ -188,6 +208,7 @@ function ResizeImage({ uuid }) {
                     </ol>
                 </div>
             ),
+            
             onOk() { },
             width: 600
         });
@@ -238,7 +259,7 @@ function ResizeImage({ uuid }) {
                                         {
                                             <div style={{ display: 'flex' }}>
                                                 {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                                                {displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                                                {displayUrl && <img className='uploaded-image' src={displayUrl}  onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                                             </div>
                                         }
                                         extra={
@@ -284,8 +305,8 @@ function ResizeImage({ uuid }) {
                                         cover=
                                         {
                                             <div style={{ display: 'flex' }}>
-                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                                                {displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{ width: '300px',paddingLeft: '20px'}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                                                {displayUrl && <img className='uploaded-image' src={displayUrl} style={{ width: '300px',paddingLeft: '20px'}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                                             </div>
                                         }
                                         extra={
