@@ -1,0 +1,21 @@
+version: '2.1'
+networks:
+  UB_Network:
+    external: true
+services:
+  photo_editor :
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    image : arjun3816/photo_editor_api_img:0.3
+    networks:
+      - "UB_Network"
+    ports:
+      - "8011:8011"
+    depends_on:
+      - photo_editor_Service
+    volumes:
+    - "./media/output:/var/opt/media/output"
+    - "./media/uploads:/var/opt/media/uploads"
+    - "./media/datasets:/var/opt/media/datasets"
+    - "./media/models:/var/opt/media/models"
