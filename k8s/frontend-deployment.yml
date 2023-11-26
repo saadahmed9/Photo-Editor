@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: saad12ah/image2
+        image: saad12ah/frontend
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
