@@ -1,0 +1,12 @@
+{
+    "passport_photo_size": 0,
+    "background_change": 0,
+    "photo_collage": 0,
+    "noise_removal": 0,
+    "format_change": 0,
+    "resize": 0,
+    "pdf_maker": 0,
+    "mosaic_maker": 0,
+    "crop": 0,
+    "brightness_contrast": 0
+}
