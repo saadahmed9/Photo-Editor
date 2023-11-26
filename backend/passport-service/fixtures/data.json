@@ -1,0 +1,72 @@
+[
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 1,
+  "fields": {
+    "function_name": "passport_photo_size"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 2,
+  "fields": {
+    "function_name": "background_change"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 3,
+  "fields": {
+    "function_name": "photo_collage"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 4,
+  "fields": {
+    "function_name": "noise_removal"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 5,
+  "fields": {
+    "function_name": "format_change"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 6,
+  "fields": {
+    "function_name": "resize"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 7,
+  "fields": {
+    "function_name": "pdf_maker"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 8,
+  "fields": {
+    "function_name": "mosaic_maker"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 9,
+  "fields": {
+    "function_name": "crop"
+  }
+},
+{
+  "model": "photo_editing_app.functionactivity",
+  "pk": 10,
+  "fields": {
+    "function_name": "brightness_contrast"
+  }
+}
+]
