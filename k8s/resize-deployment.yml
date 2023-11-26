@@ -34,5 +34,6 @@ spec:
   ports:
   - name: my-app
     port: 8011
+    nodePort: 30011
     targetPort: 8011
 
