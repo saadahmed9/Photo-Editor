@@ -86,7 +86,7 @@ const handleUpload = useCallback((file) => {
     if (!imageUrl) return;
     const formData = new FormData();
     formData.append('function', 'brightness_contrast');
-      axios.post(process.env.REACT_APP_API_URL+'/brightness_contrast/', formData)
+      axios.post(process.env.REACT_APP_BRIGHTNESS_CONSTRAST_API_URL+'/brightness_contrast/', formData)
       .then(response => {
       }
       )
