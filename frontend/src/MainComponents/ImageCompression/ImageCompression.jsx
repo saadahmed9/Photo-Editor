@@ -250,7 +250,7 @@ function ImageCompression(props1) {
     formData.append('compression_rate', compressionRate);
     formData.append('function', 'image_compression');
     formData.append('custom_rate', input1);
-    axios.post(process.env.REACT_APP_API_URL+'/image_compression/', formData)
+    axios.post(process.env.REACT_APP_IMAGE_COMPRESSION_API_URL+'/image_compression/', formData)
       .then(response => {
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
       }
