@@ -41,18 +41,18 @@ function BrightnessContrast(props1) {
 
 
   // Handler for image upload
-const handleUpload = useCallback((file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file); let uniqueId = uuidv4();
-    reader.readAsDataURL(file);
-    setfileName(file.name);
-    reader.onload = () => {
-      setImageUrl(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.error('Error: ', error);
-    };
-}, [setfileName, setImageUrl]); // Here you should include any dependencies this function relies on
+    const handleUpload = useCallback((file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file); // Only one read operation
+        setfileName(file.name);
+        reader.onload = () => {
+            setImageUrl(reader.result);
+        };
+        reader.onerror = (error) => {
+            console.error('Error: ', error);
+        };
+    }, [setfileName, setImageUrl]);
+ // Here you should include any dependencies this function relies on
 
   // Upload properties
   const props = {
