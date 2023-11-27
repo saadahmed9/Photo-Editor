@@ -190,7 +190,7 @@ export const PdfCreator = () => {
             formData.append('myfile', file);
         }
         formData.append('function', 'pdf_maker');
-        axios.post(process.env.REACT_APP_API_URL + '/pdf_maker/', formData)
+        axios.post(process.env.REACT_APP_PDF_API_URL + '/pdf_maker/', formData)
             .then(response => {
                 setIsLoading(false);
                 setpdfUrl(response.data['imageUrl']);
