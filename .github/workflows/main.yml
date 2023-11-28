@@ -26,9 +26,9 @@ jobs:
           - name: ‘Build and Tag Docker Image’
             run: |
               cd frontend
-              docker build . --tag ghcr.io/${OWNER_GHRC}/example_image:${{ github.sha }}
-              docker tag ghcr.io/${OWNER_GHRC}/example_image:${{ github.sha }} ghcr.io/${OWNER_GHRC}/example_image:latest
+              docker build . --tag ghcr.io/${OWNER_GHRC}/frontend_image:${{ github.sha }}
+              docker tag ghcr.io/${OWNER_GHRC}/frontend_image:${{ github.sha }} ghcr.io/${OWNER_GHRC}/frontend_image:latest
           - name: ‘Push Image to GHCR’
             run: |
-              docker push ghcr.io/${OWNER_GHRC}/example_image:${{ github.sha }}
-              docker push ghcr.io/${OWNER_GHRC}/example_image:latest
+              docker push ghcr.io/${OWNER_GHRC}/frontend_image:${{ github.sha }}
+              docker push ghcr.io/${OWNER_GHRC}/frontend_image:latest
