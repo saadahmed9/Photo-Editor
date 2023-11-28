@@ -1,6 +1,8 @@
 name: Push Images to GHCR
 on:
   push:
+    paths:
+      - 'frontend/**'
     branches:
       - main # Adjust to the branch that trigger the workflow on
 jobs:
