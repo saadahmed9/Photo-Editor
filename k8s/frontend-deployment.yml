@@ -12,9 +12,11 @@ spec:
       labels:
         app: photoeditor-frontend-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: frontend
-        image: saad12ah/frontend
+        image: ghcr.io/xlab-classes/frontend_image:latest
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
