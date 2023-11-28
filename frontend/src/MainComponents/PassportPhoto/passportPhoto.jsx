@@ -514,13 +514,21 @@ const PassportPhoto = (props1) => {
               ) : (
                   <>
                       <label style={{ color: 'white', textAlign: 'center' }}>Choose Country:</label>
-                      <Select style={{ width: 180, marginLeft: '5px' }} onChange={handleMenuClick}>
-                          {menuItems.map((item) => (
-                              <Option key={item.key} value={item.key}>
-                                {`${item.name.replace('_', ' ')} - ${item.size}`}
-                              </Option>
-                          ))}
-                      </Select>
+                          <Select
+                              showSearch
+                              style={{ width: 180, marginLeft: '5px' }}
+                              onChange={handleMenuClick}
+                              filterOption={(input, option) =>
+                                  new RegExp(`^${input}`, 'i').test(option.children)
+                              }
+                          >
+                              {menuItems.map((item) => (
+                                  <Option key={item.key} value={item.key}>
+                                      {`${item.name.replace('_', ' ')} - ${item.size}`}
+                                  </Option>
+                              ))}
+                          </Select>
+
 
                           {/* Display text and a button to visit the website under the "Choose Country" dropdown */}
                           {selectedCountry && countryUrlMap[selectedCountry] && (
@@ -540,7 +548,7 @@ const PassportPhoto = (props1) => {
                                   onChange={(e) => handleCheckboxChange(e)}
                                   className="modern-checkbox"
                               />
-                              &nbsp; Apply high end features.
+                              &nbsp; Apply White Background.
                           </label>
                   </>
               )}
