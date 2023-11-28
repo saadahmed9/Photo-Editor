@@ -12,9 +12,11 @@ spec:
       labels:
         app: photoeditor-passport-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: passport
-        image: saad12ah/passport-service
+        image: ghcr.io/xlab-classes/passport-image:latest
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
