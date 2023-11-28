@@ -34,5 +34,6 @@ spec:
   ports:
   - name: my-app
     port: 3000
+    nodePort: 31110
     targetPort: 3000
 
