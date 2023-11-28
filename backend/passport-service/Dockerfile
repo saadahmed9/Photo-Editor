@@ -4,6 +4,7 @@ FROM python:3.11.2
 ENV CE_PORT 8010
 
 RUN mkdir -p /tmp/my-dir
+RUN mkdir /root/.u2net/
 ENV NUMBA_CACHE_DIR /tmp/my-dir 
 # Working Directory
 WORKDIR /var/opt
