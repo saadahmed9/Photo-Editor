@@ -166,7 +166,8 @@ function Mosaic (props1) {
       formData.append('myfile_folder', file);
     }
     formData.append('function', 'mosaic_maker');
-    axios.post(process.env.REACT_APP_MOSAIC_API_URL+'/mosaic_maker/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30015/mosaic_maker/", formData)
+    //axios.post(process.env.REACT_APP_MOSAIC_API_URL+'/mosaic_maker/', formData)
         .then(response => {
           downloadImage(response.data.imageUrl);
         })

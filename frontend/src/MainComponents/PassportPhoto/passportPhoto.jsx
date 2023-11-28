@@ -441,8 +441,10 @@ const PassportPhoto = (props1) => {
       }else{
         formData.append('background_req', 'no');
       }
-      axios.post(process.env.REACT_APP_API_URL+'/passport_photo_size/', formData)
-        .then(response => {
+    //  axios.post(process.env.REACT_APP_API_URL+'/passport_photo_size/', formData)
+      axios.post("http://xlabk8s3.cse.buffalo.edu:30010/passport_photo_size/", formData)
+    
+      .then(response => {
           console.log(response)
           if(response.data['face detection'].includes("No")){
             setIsLoading(false);

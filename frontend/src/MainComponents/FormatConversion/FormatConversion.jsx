@@ -225,7 +225,8 @@ function FormatConversion(props1) {
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+ getImageTypeFromMime(imageUrl)));
     formData.append('format_change', selectedFormat.toLowerCase());
     formData.append('function', 'format_change');
-    axios.post(process.env.REACT_APP_API_URL+'/format_change/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30012/format_change/", formData)
+    //axios.post(process.env.REACT_APP_API_URL+'/format_change/', formData)
       .then(response => {
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
       }
@@ -271,7 +272,7 @@ function FormatConversion(props1) {
 <ol>
                   <li>Upload: Drag & drop or select the image you're aiming to convert.</li>
 
-                  <li>Format Choice: Decide on your new format—JPEG, PNG, or JPG.</li>
+                  <li>Format Choice: Decide on your new formatï¿½JPEG, PNG, or JPG.</li>
 
                   <li>Finish: Download your image, redefined and ready.</li>
 </ol>
