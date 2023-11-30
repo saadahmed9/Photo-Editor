@@ -264,7 +264,12 @@ export const PdfCreator = () => {
 
             <div style={{ marginLeft: '12%', marginTop: '10px', textAlign: 'center' }}>
 
-                <Button type="primary" onClick={getDataOnUpload} style={{ margin: '10px', backgroundColor: '#000524', border: 'none', padding: '6px 16px' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#333"} onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#000524"}>Create PDF</Button>
+                <Button
+                    className="button-stylish"
+                    onClick={getDataOnUpload}
+                >
+                    Create PDF
+                </Button>
 
 
                 {isLoading && <Spin indicator={antIcon} style={{

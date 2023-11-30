@@ -226,24 +226,6 @@ function VideoCompression(props1) {
     // Component render
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <Sider
-                collapsible
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)} // Assuming you have a setter function for the collapsed state
-                style={{ backgroundColor: '#000524' }}
-            >
-                {/* When sidebar is collapsed, show only the visual cue */}
-                {collapsed ? (
-                    <div className="visual-cue-container">
-                        <Tooltip title="">
-                            <span className="visual-cue">&#x1F50D;</span> {/* Example using a magnifying glass emoji */}
-                        </Tooltip>
-                    </div>
-                ) : (
-                <>
-                </>
-                )}
-            </Sider>
       <Layout className="site-layout">
         <ContentSection>
           

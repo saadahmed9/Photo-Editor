@@ -160,15 +160,33 @@
         border-color: rgba(255, 0, 0, 0.9);
     }
 
-/* Button Styles */
+/* Stylish Button with Centered Text */
 
-Button[type="primary"] {
-    background-color: #000524;
-    border: none;
-    transition: background-color 0.3s, transform 0.3s;
+.button-stylish {
+    background-color: #4a90e2; /* Bright blue background */
+    color: white; /* White text */
+    font-size: 1.6rem; /* Increase font size for better visibility */
+    line-height: 0.9; /* Adjust line height for vertical centering */
+    font-weight: bold; /* Bold font for prominence */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px 20px; /* Appropriate padding for button size */
+    border: 2px solid transparent; /* Transparent border for smooth transition */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+    cursor: pointer; /* Cursor change to pointer */
+    display: inline-block; /* Inline-block for better control */
+    margin: 10px; /* Margin to prevent collision with other elements */
+    text-align: center; /* Ensure text is centered horizontally */
 }
 
-    Button[type="primary"]:hover {
-        background-color: #333;
-        transform: scale(1.05);
+    .button-stylish:hover {
+        background-color: #357abd; /* Slightly darker blue on hover */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
     }
+
+    .button-stylish:active {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Reduced shadow on active click */
+    }
+
+
+
