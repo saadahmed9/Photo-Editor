@@ -55,7 +55,7 @@ class PassportPhotoCreation extends Component {
                 </div>
                 <div className="home__feature">
                 <Link to="/imageformatconversion">
-                    <img src="/formatConversion.png" alt="Format Conversion" />
+                    <img src="/formatconversion.png" alt="Format Conversion" />
                     <br></br>
                     <h3>Image Format Conversion</h3>
                     <p>Convert images into the desired format, such as JPEG, PNG, and more.</p>
