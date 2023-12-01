@@ -178,7 +178,9 @@ function VideoCompression(props1) {
     formData.append('myfile', dataURLtoFile(videoUrl,fileName+"."+ getVideoTypeFromMime(videoUrl)));
     // formData.append('format_change', selectedFormat.toLowerCase());
     formData.append('function', 'video_compression');
-    axios.post(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL+'/video_compression/', formData)
+    // axios.post(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL+'/video_compression/', formData)
+    console.log(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL)
+    axios.post('http://xlabk8s3.cse.buffalo.edu:30021/video_compression/', formData)
       .then(response => {
         setInputSize(response.data.input_file_size);
         setOutputSize(response.data.output_file_size);

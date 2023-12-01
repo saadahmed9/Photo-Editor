@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: videocompression
-        image: saad12ah/videocompression
+        image: ghcr.io/xlab-classes/video-compression-image:latest
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
