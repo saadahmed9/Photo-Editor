@@ -38,7 +38,8 @@ function Mosaic (props1) {
   const [imageCollection1, setImageCollection1] = useState([]);
   const [displayUrl, setDisplayUrl] = useState();
   const [isLoading,setIsLoading]= useState(false);
-
+  const [selectedPixel, setSelectedPixel] = useState(30);
+  
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   };
@@ -165,6 +166,7 @@ function Mosaic (props1) {
       let file = dataURItoFile(imageCollection[i], 'example'+(i+1)+'.jpg');
       formData.append('myfile_folder', file);
     }
+    formData.append('selectedPixel', parseInt(selectedPixel, 10));
     formData.append('function', 'mosaic_maker');
     axios.post("http://xlabk8s3.cse.buffalo.edu:30015/mosaic_maker/", formData)
     //axios.post(process.env.REACT_APP_MOSAIC_API_URL+'/mosaic_maker/', formData)
@@ -174,7 +176,9 @@ function Mosaic (props1) {
         .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
       }
   
-  
+    const handleSliderChange = (e) => {
+        setSelectedPixel(e.target.value);
+      };
 
   function handleDownload () {
     const link = document.createElement('a');
@@ -228,6 +232,7 @@ const info = () => {
                         <>
                         
         <label style={{ color: 'white', textAlign: 'center' }}>Template:</label>
+        
         <Menu>
           {imageCollection1.map((image, index) => (
               <Menu.Item key={index} style={{ marginBottom: '10px', objectPosition: 'center center', height: '100%' }}>
@@ -263,8 +268,20 @@ const info = () => {
               }}
             />
           </button>
+          
         </div>}
+        <label style={{ color: 'white', textAlign: 'center' }}>Choose Pixel Size</label>
         
+        <input
+            type="range"
+            min="10"
+            max="100"
+            defaultValue="30"
+            style={{ width: "80%"}}
+            onChange={handleSliderChange}
+          />
+        <span id="sliderValue">{selectedPixel}</span>
+                  
         </>
         )}
         </div>

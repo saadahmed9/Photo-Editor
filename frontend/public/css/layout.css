@@ -1106,7 +1106,7 @@ footer .social-links li:first-child { margin-left: 0; }
 	.dropdown .dropdown-content a {
 		color: #fff;
 		text-decoration: none;
-		display: block;
+		display: flex;
 		text-align: center;
 		padding: 12px 20px; /* More padding for better spacing */
 		border-radius: 5px; /* Rounded corners for links */
