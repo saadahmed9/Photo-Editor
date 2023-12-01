@@ -166,8 +166,8 @@
   top: 5px;
   left: 5px;
   z-index: 10;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: none;
+  background-color: rgba(3, 7, 33, 0.73);
+  border: black;
   cursor: pointer;
   padding: 2px 4px;
   border-radius: 3px;
@@ -258,7 +258,7 @@ html, body, #root, .ant-layout {
 .remove-image-btn {
     position: absolute;
     bottom: 2px;
-    left: 50%;
+    left: 65px;
     transform: translateX(-50%);
     background-color: transparent;
     color: white;
