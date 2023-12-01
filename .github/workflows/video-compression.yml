@@ -27,7 +27,7 @@ jobs:
               password: ${{secrets.GITHUB_TOKEN}}
           - name: ‘Build and Tag Docker Image’
             run: |
-              cd backend/passport-service
+              cd backend/video_compression
               docker build . --tag ghcr.io/${OWNER_GHRC}/video-compression-image:${{ github.sha }}
               docker tag ghcr.io/${OWNER_GHRC}/video-compression-image:${{ github.sha }} ghcr.io/${OWNER_GHRC}/video-compression-image:latest
           - name: ‘Push Image to GHCR’
