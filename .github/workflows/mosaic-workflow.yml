@@ -1,4 +1,4 @@
-name: Push Video Compression Image to GHCR
+name: Push Mosaic Creation Image to GHCR
 on:
   push:
     paths:
