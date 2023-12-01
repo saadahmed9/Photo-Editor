@@ -12,9 +12,11 @@ spec:
       labels:
         app: photoeditor-mosaic-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: mosaic
-        image: saad12ah/mosaic
+        image: ghcr.io/xlab-classes/mosaic-image:latest
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
