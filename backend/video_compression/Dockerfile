@@ -1,7 +1,7 @@
 FROM python:3.11.2
 
 # Setting env variable
-ENV CE_PORT 8011
+ENV CE_PORT 8018
 
 RUN mkdir -p /tmp/my-dir
 ENV NUMBA_CACHE_DIR /tmp/my-dir 
@@ -18,6 +18,7 @@ RUN apt-get update && \
 
 RUN python -m pip install --upgrade pip
  # Copying requirements.txt
+RUN pip install ffmpeg
 COPY requirements.txt /var/opt/
 
 RUN pip install -r requirements.txt
@@ -30,6 +31,6 @@ RUN dos2unix start.sh
 RUN chmod +x /var/opt/start.sh
 
 # Expose port
-EXPOSE 8011
+EXPOSE 8018
 
 CMD ["./start.sh"]
