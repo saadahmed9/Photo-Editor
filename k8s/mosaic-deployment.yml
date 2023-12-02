@@ -35,7 +35,7 @@ spec:
     app: photoeditor-mosaic-app
   ports:
   - name: my-app
-    port: 8015
-    nodePort: 30015
-    targetPort: 8015
+    port: 8016
+    nodePort: 30016
+    targetPort: 8016
 

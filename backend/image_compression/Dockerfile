@@ -1,4 +1,4 @@
-FROM python:3.11.2
+FROM python:3.11.2-slim
 
 # Setting env variable
 ENV CE_PORT 8017
@@ -11,16 +11,14 @@ WORKDIR /var/opt
 
 RUN apt-get update && \
     apt-get -y install nginx build-essential cmake  vim && \
-    apt-get install ffmpeg libsm6 libxext6  -y &&\
     apt-get install dos2unix
-
 
 
 RUN python -m pip install --upgrade pip
  # Copying requirements.txt
 COPY requirements.txt /var/opt/
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /var/opt
 

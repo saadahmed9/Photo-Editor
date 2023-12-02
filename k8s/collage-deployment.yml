@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: collage
-        image: saad12ah/collage
+        image: ghcr.io/xlab-classes/collage-image:latest
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
@@ -33,7 +33,6 @@ spec:
     app: photoeditor-collage-app
   ports:
   - name: my-app
-    port: 8014
-    nodePort: 30014
-    targetPort: 8014
-
+    port: 8012
+    nodePort: 30012
+    targetPort: 8012
