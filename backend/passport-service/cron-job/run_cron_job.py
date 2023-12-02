@@ -30,18 +30,6 @@ def remove_img():
         if difference.total_seconds() / 60 > 10:
             os.remove(image_path)
 
-    #path1 = "media/Mosaic_input"
-    path1 = absolute_path.replace("cron-job", "") + "media/Mosaic_input/"
-    files1 = os.listdir(path1)
-    for file in files1:
-        image_path = path1 + file
-        last_forder_update_timestamp = os.stat(image_path).st_mtime
-        last_folder_update_datetime = datetime.datetime.fromtimestamp(last_forder_update_timestamp)
-        current_datetime = datetime.datetime.now()
-        difference = current_datetime - last_folder_update_datetime
-        if difference.total_seconds() / 60 > 10:
-            os.remove(image_path)
-
 
 def info():
     print("Running cron job")

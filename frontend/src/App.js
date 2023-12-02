@@ -59,18 +59,18 @@ class App extends Component {
               <button className="dropbtn">Features</button>
               <div className="dropdown-content glass-effect">
                   <div className="dropdown-grid">
-                  <Link to="/passport">Passport Photo</Link>
-                  <Link to="/photoresizeandcrop">Crop</Link>
-                  <Link to="/photocollage">Collage</Link>
-                  <Link to="/noiseremoval">Noise Removal</Link>
-                  <Link to="/imageformatconversion">Format Conversion</Link>
-                  <Link to="/backgroundchange">Background Change</Link>
-                  <Link to="/brightnessandcontrast">Brightness And Contrast</Link>
-                  <Link to="/resize">Resize</Link>
-                  <Link to="/mosaic">Mosaic</Link>
-                  <Link to="/pdf">PDF</Link>
-                  <Link to="/Imagecompression">Image Compression</Link>
-                  <Link to="/VideoCompression">Video Compression</Link>
+                  <a href="/passport">Passport Photo</a>
+                  <a href="/photoresizeandcrop">Crop</a>
+                  <a href="/photocollage">Collage</a>
+                  <a href="/noiseremoval">Noise Removal</a>
+                  <a href="/imageformatconversion">Format Conversion</a>
+                  <a href="/backgroundchange">Background Change</a>
+                  <a href="/brightnessandcontrast">Brightness And Contrast</a>
+                  <a href="/resize">Resize</a>
+                  <a href="/mosaic">Mosaic</a>
+                  <a href="/pdf">PDF</a>
+                  <a href="/Imagecompression">Image Compression</a>
+                  <a href="/VideoCompression">Video Compression</a>
                   </div>
               </div>
 

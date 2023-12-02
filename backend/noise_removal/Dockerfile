@@ -1,7 +1,7 @@
 FROM python:3.11.2
 
 # Setting env variable
-ENV CE_PORT 8011
+ENV CE_PORT 8013
 
 RUN mkdir -p /tmp/my-dir
 ENV NUMBA_CACHE_DIR /tmp/my-dir 
@@ -12,7 +12,8 @@ WORKDIR /var/opt
 RUN apt-get update && \
     apt-get -y install nginx build-essential cmake  vim && \
     apt-get install ffmpeg libsm6 libxext6  -y &&\
-    apt-get install dos2unix
+    apt-get install dos2unix &&\
+    apt-get install lsof
 
 
 
@@ -30,6 +31,6 @@ RUN dos2unix start.sh
 RUN chmod +x /var/opt/start.sh
 
 # Expose port
-EXPOSE 8011
+EXPOSE 8013
 
 CMD ["./start.sh"]

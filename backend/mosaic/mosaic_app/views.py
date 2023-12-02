@@ -39,6 +39,7 @@ def initial_checks(request):
     verify_function_passed(request)
     if request.method == 'POST' and request.FILES['myfile']:
         function_name = request.POST['function']
+        pixel_size = int(request.POST['selectedPixel'])
         myfile = request.FILES['myfile']
         myfile.name = myfile.name.replace(" ", "")
         img_dir = "\\".join(BASE_DIR.split("\\"))
@@ -61,7 +62,7 @@ def initial_checks(request):
             print("Inside exception")
             raise SuspiciousOperation("only image files are accepted as input")
     #ABC call a function for below as below
-    return image_url, output_url, api_root, myfile
+    return image_url, output_url, api_root, myfile, pixel_size
 
 @api_view(('POST',))
 @csrf_exempt
@@ -112,7 +113,8 @@ def get_mosaic_files_list(request):
 def mosaic_maker(request):
     return_dict = {}
     try:
-        image_url, output_url, api_root, myfile = initial_checks(request)
+        image_url, output_url, api_root, myfile, pixel_size = initial_checks(request)
+        #logger.info("Pixel Size " + pixel_size)
         stats_onj = read_stats()
         val = stats_onj["mosaic_maker"]
         crop_count = val + 1
@@ -125,7 +127,8 @@ def mosaic_maker(request):
         # logger.info("Number of images selected are ", images_count)
         #folder_path = r"E:\Career\University at Buffalo\Semester 2\CSE_611\project\cse611-spring2023-team-photo-editing\backend\photo_editing_api\media\Mosaic-input\\"
         #request.FILES.getlist('myfile')
-        mosaicmaker(image_url, output_url, images_list, 30)
+        
+        mosaicmaker(image_url, output_url, images_list, pixel_size)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
         with open(output_url, 'rb') as f:
             image_data = f.read()

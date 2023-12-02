@@ -263,11 +263,13 @@ const STemplate = ({ columns, rowsPerColumn }) => {
         setIsDownloading(true);
         const formData = new FormData();
     formData.append('function', 'photo_collage');
-      axios.post(process.env.REACT_APP_API_URL+'/photo_collage/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30014/photo_collage/", formData)  
+    //axios.post(process.env.REACT_APP_API_URL+'/photo_collage/', formData)
       .then(response => {
       }
       )
-      .catch(error => {console.log(error); toast.error("Error encountered.");}); 
+      //.catch(error => {console.log(error); toast.error("Error encountered.");}); 
+      .catch(error => {console.log(error);}); 
 
     const zoomInButtons = document.querySelectorAll(".zoom-in-button");
     const zoomOutButtons = document.querySelectorAll(".zoom-out-button");

@@ -12,16 +12,18 @@ spec:
       labels:
         app: photoeditor-mosaic-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: mosaic
-        image: saad12ah/mosaic
+        image: ghcr.io/xlab-classes/mosaic-image:latest
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
-            memory: "1000Mi" # Limit the pod to use a maximum of 512 megabytes of memory
+            memory: "100Mi" # Limit the pod to use a maximum of 512 megabytes of memory
           requests:
             cpu: "0.2" # Request at least 0.2 CPU cores for the pod
-            memory: "1000Mi"
+            memory: "100Mi"
 ---
 apiVersion: v1
 kind: Service
@@ -33,7 +35,7 @@ spec:
     app: photoeditor-mosaic-app
   ports:
   - name: my-app
-    port: 8018
-    nodePort: 30018
-    targetPort: 8018
+    port: 8015
+    nodePort: 30015
+    targetPort: 8015
 
