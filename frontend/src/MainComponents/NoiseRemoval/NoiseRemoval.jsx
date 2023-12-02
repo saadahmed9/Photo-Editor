@@ -147,7 +147,7 @@ function NoiseRemoval(props1) {
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+fileType));
     formData.append('function', 'noise_removal');
     axios.post("http://xlabk8s3.cse.buffalo.edu:30013/noise_removal/", formData)
-    //axios.post(process.env.REACT_APP_API_URL+'/noise_removal/', formData)
+    // axios.post(process.env.REACT_APP_PDF_NOISE_BRIGHT_API_URL+'/noise_removal/', formData)
       .then(response => {
         downloadImage(response.data.imageUrl)
       }
