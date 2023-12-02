@@ -86,7 +86,7 @@ function BrightnessContrast(props1) {
     if (!imageUrl) return;
     const formData = new FormData();
     formData.append('function', 'brightness_contrast');
-      axios.post(process.env.REACT_APP_BRIGHTNESS_CONSTRAST_API_URL+'/brightness_contrast/', formData)
+      axios.post(process.env.REACT_APP_PDF_NOISE_BRIGHT_API_URL +'/brightness_contrast/', formData)
       .then(response => {
       }
       )
