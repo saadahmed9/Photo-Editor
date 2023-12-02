@@ -172,11 +172,6 @@ function ResizeImage({ uuid }) {
             const previewImage = new Image();
             previewImage.src = response.data.imageUrl;
             previewImage.onload = () => {
-                const additionalWidth = previewImage.width;  // Add any desired padding
-                const container = document.querySelector('.center-card-container');
-                defaultWidth = container.offsetWidth;
-                console.log(`${additionalWidth}`);
-                container.style.width = `${defaultWidth+100}px`
                 setIsLoading(false);
             }; // Call the function to adjust width
         })
@@ -259,7 +254,7 @@ function ResizeImage({ uuid }) {
                                         }
                                         cover=
                                         {
-                                            <div style={{ display: 'flex' }}>
+                                            <div>
                                                 {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                                                 {displayUrl && <img className='uploaded-image' src={displayUrl}  onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                                             </div>
@@ -307,9 +302,18 @@ function ResizeImage({ uuid }) {
                                         cover=
                                         {
                                             <div style={{ display: 'flex' }}>
-                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{ width: '300px',paddingLeft: '20px'}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                                                {displayUrl && <img className='uploaded-image' src={displayUrl} style={{ width: '300px',paddingLeft: '20px'}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                                            </div>
+                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{marginRight: '25px',marginLeft: '15px',maxWidth: displayUrl ? '250px' : '100%', maxHeight: '100%',}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                                                
+                                                {displayUrl && (
+                                                <div className="scrollable-container">
+             <div className="image-item">
+            <img src={displayUrl} className="image1" draggable="true" />
+            </div>
+            </div>
+        )}
+                                                
+                                                
+                                            ;</div>
                                         }
                                         extra={
                                             <Tooltip title="More Info">

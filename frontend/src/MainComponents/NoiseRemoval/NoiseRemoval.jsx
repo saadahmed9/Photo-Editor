@@ -259,7 +259,7 @@ function NoiseRemoval(props1) {
         :
 
         <div className="passport-photo-container">
-            <div className="center-card-container">
+            <div className="center-card-container" style={{width: '65%'}}>
               <div style={{flexGrow: '1'}}>
                 <Card className="passport-photo-card"
                      title={
@@ -268,8 +268,8 @@ function NoiseRemoval(props1) {
                     cover=
                       {
                         <div style={{ display: 'flex' }}>
-                          {imageUrl && <img className='uploaded-image' src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                          {displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                          {imageUrl && <img className='uploaded-image' style={{marginRight: '35px',marginLeft: '25px',maxWidth: displayUrl ? '300px' : '100%', maxHeight: '100%',}} src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                          {displayUrl && <img className='uploaded-image' src={displayUrl} style={{ maxWidth: '300px', maxHeight: '100%' }} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                         </div>  
                       }
                       extra={

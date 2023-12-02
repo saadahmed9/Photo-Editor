@@ -108,3 +108,16 @@ body {
         border-color: #d94373;
         transform: translateY(-2px);
     }
+
+    .scrollable-container {
+        width: 300px;
+        height: 170px;
+        overflow: scroll;
+        margin-top: 65px;
+      }
+      
+      .image-item {
+        width: 100%;
+      }
+    
+      
