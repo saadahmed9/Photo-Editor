@@ -12,6 +12,8 @@ spec:
       labels:
         app: photoeditor-pdf-noise-brightness-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: pdf-noise-brightness
         image: ghcr.io/xlab-classes/pdf_noise_brightness-image:latest
