@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backgroundChange
-        image: saad12ah/backgroundChange
+        image: ghcr.io/xlab-classes/background-change-image:latest
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores

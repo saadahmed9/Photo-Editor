@@ -116,7 +116,8 @@ export const Demo = (props1) => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
       const formData = new FormData();
     formData.append('function', 'crop');
-      axios.post(process.env.REACT_APP_API_URL+'/crop/', formData)
+      // axios.post(process.env.REACT_APP_CROP_RESIZE_API_URL+'/crop/', formData)
+      axios.post("http://xlabk8s3.cse.buffalo.edu:30011/crop/", formData)
       .then(response => {
       }
       )

@@ -163,7 +163,7 @@ function ResizeImage({ uuid }) {
         formData.append('resize', `${input1},${input2}`);
         formData.append('function', 'resize');
 
-        //axios.post(`${process.env.REACT_APP_API_URL}/resize/`, formData)
+        //axios.post(`${process.env.REACT_APP_CROP_RESIZE_API_URL}/resize/`, formData)
         axios.post("http://xlabk8s3.cse.buffalo.edu:30011/resize/", formData)
       
         .then(response => {

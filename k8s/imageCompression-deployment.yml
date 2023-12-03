@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: imagecompression
-        image: saad12ah/image_compression
+        image: ghcr.io/xlab-classes/image-compression-image:latest
         resources:
           limits:
             cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores

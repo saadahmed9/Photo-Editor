@@ -1,4 +1,4 @@
-FROM python:3.11.2
+FROM python:3.11.2-slim
 
 # Setting env variable
 ENV CE_PORT 8018
@@ -21,7 +21,7 @@ RUN python -m pip install --upgrade pip
 RUN pip install ffmpeg
 COPY requirements.txt /var/opt/
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /var/opt
 

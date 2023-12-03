@@ -33,7 +33,7 @@ spec:
     app: photoeditor-videocompression-app
   ports:
   - name: my-app
-    port: 8021
-    nodePort: 30021
-    targetPort: 8021
+    port: 8018
+    nodePort: 30018
+    targetPort: 8018
 

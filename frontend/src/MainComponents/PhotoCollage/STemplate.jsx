@@ -263,8 +263,8 @@ const STemplate = ({ columns, rowsPerColumn }) => {
         setIsDownloading(true);
         const formData = new FormData();
     formData.append('function', 'photo_collage');
-    axios.post("http://xlabk8s3.cse.buffalo.edu:30014/photo_collage/", formData)  
-    //axios.post(process.env.REACT_APP_API_URL+'/photo_collage/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30012/photo_collage/", formData)  
+    //axios.post(process.env.REACT_APP_COLLAGE_API_URL+'/photo_collage/', formData)
       .then(response => {
       }
       )
