@@ -12,6 +12,8 @@ spec:
       labels:
         app: photoeditor-backgroundChange-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: backgroundChange
         image: ghcr.io/xlab-classes/background-change-image:latest
