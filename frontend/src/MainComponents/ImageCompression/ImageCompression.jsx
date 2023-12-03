@@ -55,11 +55,18 @@ function ImageCompression(props1) {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedFormat, setselectedFormat] = useState(null);
   const [compressionRate, setCompressionRate] = useState(50);
-  const [input1, setInput1] = useState(null);
+  const [target_size, setTarget_size] = useState(null);
   
-  const handleInputChange1 = (event) => setInput1(event.target.value);
+  //const handleInputChange1 = (event) => setTarget_size(event.target.value);
+  const handleInputChange1 = (event) => {
+    const inputValue = event.target.value;
+
+    // If the input is empty, set the value to 0; otherwise, update with the input value
+    setTarget_size(inputValue === null ? null : inputValue);
+  };
+
   const [isLoading,setIsLoading]= useState(false);
-    const [fileName, setfileName] = useState(null);
+  const [fileName, setfileName] = useState(null);
 
     // Event handler for Sider collapse
   const onCollapse = (collapsed) => {
@@ -210,7 +217,7 @@ function ImageCompression(props1) {
   // }
 
 
-  function downloadImage(url1) {
+  function downloadImage(url1, format) {
     fetch(url1)
         .then(response => response.blob())
         .then(blob => {
@@ -224,6 +231,7 @@ function ImageCompression(props1) {
         })
         .catch(error => {
             console.log(error);
+            console.log("the reason is -------------------")
             toast.error("Error encountered.");
             setIsLoading(false);
         });
@@ -249,7 +257,8 @@ function ImageCompression(props1) {
     formData.append('output_format', selectedFormat.toLowerCase());
     formData.append('compression_rate', compressionRate);
     formData.append('function', 'image_compression');
-    formData.append('custom_rate', input1);
+
+    formData.append('custom_rate', target_size);
     axios.post("http://xlabk8s3.cse.buffalo.edu:30017/image_compression/", formData)
     
     //axios.post(process.env.REACT_APP_IMAGE_COMPRESSION_API_URL+'/image_compression/', formData)
@@ -257,7 +266,7 @@ function ImageCompression(props1) {
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
       }
       )
-      .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
+      .catch(error => {console.log(error); toast.error("Error encountered in handlePreview."); setIsLoading(false)});     
   }
 
 
@@ -339,8 +348,8 @@ function ImageCompression(props1) {
                                 </div>
                             )}
                             <div className="input-container">
-                                <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in MB):</label>
-                                    <input type="text" value={input1} onChange={handleInputChange1} placeholder="e.g. 300" />
+                                <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in KB):</label>
+                                    <input type="text" value={target_size} onChange={handleInputChange1} placeholder="e.g. 300" />
                                 </div>
                             <label className="format-menu-label">Compress As:</label>
                             <Menu

@@ -27,7 +27,7 @@ import base64
 import logging
 import pillow_heif
 from photo_editing_app.contollers.video_compression import compress_video
-from photo_editing_app.contollers.image_compression import compress_image
+from photo_editing_app.contollers.image_compression import ImageCompressClass as ICC
 
 # Create your views here.
 
@@ -742,8 +742,7 @@ def video_compression(request):
     return Response(return_dict)
 
 import numpy as np
-from django.core.files.base import ContentFile
-from django.http import JsonResponse
+import random
 
 @api_view(('POST',))
 @csrf_exempt
@@ -751,41 +750,79 @@ def image_compression(request):
     logger.info("image compression endpoint!")
     return_dict = {}
     if request.method == 'POST':
+        logger.info("entered POST!")
         try:
             verify_upload_file_passed(request)
             verify_functionality_passed(request)
+
             image_file = request.FILES.get('myfile')
             image_file.name = image_file.name.replace(" ", "")
             compression_rate = int(request.POST.get('compression_rate'))
+            compression_rate = random.randint(10, 25)
+            target_size = request.POST.get('custom_rate')
+            
+            logger.info("verification done")
+            target_size = request.POST.get('custom_rate')
             logger.info(compression_rate)
+            logger.info(target_size)
             output_format = request.POST.get('output_format')
+
             # Read the image using OpenCV
             image = cv2.imdecode(np.frombuffer(image_file.read(), np.uint8), 1)
 
+            if target_size == 'null':
             # Determine compression parameter based on output format
-            compression_param = None
-            if output_format.lower() == 'jpeg':
-                compression_param = [cv2.IMWRITE_JPEG_QUALITY, compression_rate]
-            elif output_format.lower() == 'jpg':
-                compression_param = [cv2.IMWRITE_JPEG_QUALITY, compression_rate]
-            elif output_format.lower() == 'png':
-                compression_param = [cv2.IMWRITE_PNG_COMPRESSION, compression_rate]
-            elif output_format.lower() == 'tiff':
-                compression_param = [cv2.IMWRITE_TIFF_COMPRESSION, compression_rate]
+                compression_param = None
+                if output_format.lower() == 'jpeg':
+                    compression_param = [cv2.IMWRITE_JPEG_QUALITY, compression_rate]
+                elif output_format.lower() == 'jpg':
+                    compression_param = [cv2.IMWRITE_JPEG_QUALITY, compression_rate]
+                elif output_format.lower() == 'png':
+                    compression_param = [cv2.IMWRITE_PNG_COMPRESSION, compression_rate]
+                elif output_format.lower() == 'tiff':
+                    compression_param = [cv2.IMWRITE_TIFF_COMPRESSION, compression_rate]
 
-            if compression_param:
-                compressed_image_base64 = compress_image(output_format, image, compression_param)
+                if compression_param:
+                    compressed_image_base64 = ICC.compress_image(output_format, image, compression_param)
 
-                # Add relevant information to the return dictionary
+                    # Add relevant information to the return dictionary
+                    return_dict['imageUrl'] = f"data:image/{output_format};base64,{compressed_image_base64}"
+                    return_dict['format'] = output_format
+                    return_dict['error'] = False
+                    return_dict['message'] = "Successfully processed image"
+                    return_dict['status'] = 200
+                else:
+                    return_dict['error'] = True
+                    return_dict['message'] = 'Unsupported output format'
+                    return_dict['status'] = 400
+            
+            elif target_size != 'null':
+                target_size_temp = int(target_size)
+                logger.info("custom compression under progress")
+                compression_param = None
+                compression_rate = 100
+                temp = image_file.size
+
+                while temp/1024 > target_size_temp and compression_rate > 0:
+                    logger.info("enetred while loop")
+                    compression_rate -= 10
+                    logger.info(compression_rate)
+                    if output_format.lower() == 'jpeg' or output_format.lower() == 'jpg':
+                        compression_param = [cv2.IMWRITE_JPEG_QUALITY, compression_rate]
+                    elif output_format.lower() == 'png':
+                        compression_param = [cv2.IMWRITE_PNG_COMPRESSION, compression_rate]
+                    elif output_format.lower() == 'tiff':
+                        compression_param = [cv2.IMWRITE_TIFF_COMPRESSION, compression_rate]
+                    compressed_image_base64 = ICC.compress_image(output_format, image, compression_param)
+                    temp = len(compressed_image_base64)
+                    logger.info(temp)
+
+                logger.info("custom compression completed in views")
                 return_dict['imageUrl'] = f"data:image/{output_format};base64,{compressed_image_base64}"
                 return_dict['format'] = output_format
                 return_dict['error'] = False
                 return_dict['message'] = "Successfully processed image"
                 return_dict['status'] = 200
-            else:
-                return_dict['error'] = True
-                return_dict['message'] = 'Unsupported output format'
-                return_dict['status'] = 400
 
         except Exception as e:
             return_dict['error'] = True
