@@ -360,7 +360,9 @@ const PassportPhoto = (props1) => {
         setIsLoading(false);
         setImageUrl(null);
         setDisplayUrl(null);
+        setIsPreviewActive(false); // Reset the preview state
     };
+
 
     function getImageTypeFromMime(dataUrl) {
         return dataUrl.split(',')[0].split(':')[1].split(';')[0].split('/')[1];
@@ -453,6 +455,7 @@ const PassportPhoto = (props1) => {
 
     const handlePreview = async () => {
         setIsLoading(true);
+        setIsPreviewActive(true); // Set the preview state to true
         if (selectedCountry == null) {
             setIsLoading(false);
             toast.error("Please select country");
