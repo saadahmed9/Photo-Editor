@@ -79,6 +79,15 @@ export const Demo = (props1) => {
     setCollapsed(collapsed);
     };
 
+
+    // Tooltip content for predefined ratios
+    const ratioDescriptions = {
+        '16/9': 'Common for widescreen displays (e.g., TV, computer monitors)',
+        '1/1': 'Square format, used in platforms like Instagram',
+        '4/3': 'Traditional format for TV broadcasts and computer monitors',
+        '3/4': 'Vertical counterpart of 4/3, suitable for portrait images'
+    };
+
   // Aspect ratio menu items
   const menuItems = [
     { key: '1', name: '16/9' },
@@ -100,14 +109,15 @@ export const Demo = (props1) => {
       setAspectRatio(1);
     }
     setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
-  };
+    };
   // Get cropped image data
   const getCropData = async () => {
     if(!isCircleCrop){
     if (typeof cropperRef.current?.cropper !== "undefined") {
       const formData = new FormData();
     formData.append('function', 'crop');
-      axios.post(process.env.REACT_APP_API_URL+'/crop/', formData)
+      // axios.post(process.env.REACT_APP_CROP_RESIZE_API_URL+'/crop/', formData)
+      axios.post("http://xlabk8s3.cse.buffalo.edu:30011/crop/", formData)
       .then(response => {
       }
       )
@@ -310,58 +320,58 @@ export const Demo = (props1) => {
 
             {!isCircleCrop && (
                       <div>
-                        <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '10vh', overflow: 'hidden', textAlign: 'center' }}
-                                onClick={(e) => handleMenuClick(e)}>
-                                      {menuItems.map((item) => (
-                                          <Menu.Item className="ratio-menu-item" key={item.key}>{item.name}</Menu.Item>
-                                      ))}
-                      </Menu>
+                                      <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '10vh', overflow: 'hidden', textAlign: 'center' }} onClick={(e) => handleMenuClick(e)}>
+                                          {menuItems.map((item) => (
+                                              <Menu.Item className="ratio-menu-item" key={item.key} title={ratioDescriptions[item.name]}>
+                                                  {item.name}
+                                              </Menu.Item>
+                                          ))}
+                                      </Menu>
+
                       </div>
             )}
 
 
 
-            {!isCircleCrop && (
-              
-                <div className="custom-ratio-container">
-                  <Input
-                    className="custom-ratio-input"
-                    placeholder="Width"
-                    value={numerator}
-                    onChange={(e) => setNumerator(e.target.value)}
-                    style={{ marginRight: '0.5em' }} 
-                  />
-                  <span>/</span>
-                  <Input
-                    className="custom-ratio-input"
-                    placeholder="Height"
-                    value={denominator}
-                    onChange={(e) => setDenominator(e.target.value)}
-                    style={{ marginLeft: '0.5em' }} 
-                  />
-                  
-                  </div>
-              )}
-
-              {!isCircleCrop && (
-                <Button
-                  className="custom-ratio-button"
-                  onClick={() => {
-                    if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
-                      console.error('Invalid ratio!');
-                      return;
-                    }
-                    setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
-                    setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
-                  }}
-                >
-                  Set Custom Ratio
-                </Button>
-              )}
+                              {!isCircleCrop && (
+                                  <div className="custom-ratio-section">
+                                      <div className="custom-ratio-heading">Choose Custom Aspect Ratio:</div>
+                                      <div className="custom-ratio-container">
+                                          <Input
+                                              className="custom-ratio-input"
+                                              placeholder="Width"
+                                              value={numerator}
+                                              onChange={(e) => setNumerator(e.target.value)}
+                                              style={{ marginRight: '0.5em' }}
+                                          />
+                                          <span>/</span>
+                                          <Input
+                                              className="custom-ratio-input"
+                                              placeholder="Height"
+                                              value={denominator}
+                                              onChange={(e) => setDenominator(e.target.value)}
+                                              style={{ marginLeft: '0.5em' }}
+                                          />
+                                      </div>
+                                      <Button
+                                          className="custom-ratio-button"
+                                          onClick={() => {
+                                              if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
+                                                  console.error('Invalid ratio!');
+                                                  return;
+                                              }
+                                              setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
+                                              setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
+                                          }}
+                                      >
+                                          Set Custom Ratio
+                                      </Button>
+                                  </div>
+                              )}
 
 
 
-              <Button className="custom-ratio-button" onClick={() => handleCropTypeToggle()}>
+              <Button className="custom-circle-button" onClick={() => handleCropTypeToggle()}>
                 {isCircleCrop ? 'Switch to Normal Crop' : 'Switch to Circle Crop'}
               </Button>
             

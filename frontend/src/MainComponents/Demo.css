@@ -45,6 +45,15 @@
 
 /* ---- Sidebar Menu styles ---- */
 
+/* Styling for the aspect ratio menu items */
+.ratio-menu-item {
+    font-size: 16px; /* Slightly larger font size */
+    font-weight: 500; /* Medium font weight for prominence */
+    color: #e6e6e6; /* Light gray color for text */
+    letter-spacing: 0.5px; /* Spacing between letters for better readability */
+    text-transform: uppercase; /* Uppercase letters for a modern look */
+    margin: 5px 0; /* Margin for spacing between items */
+}
 /* Style applied to the menu item during hover in the sidebar */
 .ratio-menu-item:hover {
     background-color: #292f4c !important;
@@ -61,31 +70,66 @@
     padding: 0 20px; /* Added padding to ensure there's a gap from the border */
 }
 
-/* Styling for each individual ratio input */
+/* Styling for Each Individual Ratio Input */
 .custom-ratio-input {
-    width: calc(20% - 20px); /* Adjusted width to be half of the container width minus some space for margin */
-    margin: 0 5px;
+    width: calc(50% - 20px); /* Adjust width */
+    margin: 0 10px;
     text-align: center;
 }
 
 /* ---- Custom Ratio Button styles ---- */
 
-/* Base styles for the custom ratio button */
+/* Styling for the Custom Ratio Button */
 .custom-ratio-button {
+    display: block;
+    margin: 20px auto 30px; /* Added margin at the bottom */
+    padding: 8px 20px; /* Adjust padding */
+    background-color: #28a745; /* Distinct green color */
+    border-color: #28a745;
+    color: white;
+    font-weight: bold; /* Bold text */
+    font-size: 14px; /* Adjusted font size */
+    width: 70%; /* Adjust width */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Subtle shadow */
+}
+
+    /* Hover effect for the custom ratio button */
+    .custom-ratio-button:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+/* Styling for the Custom Circle Button */
+.custom-circle-button {
     display: block;
     margin: 10px auto;
     background-color: #007acc;
     border-color: #007acc;
     color: white;
-    width: 80%; /* Restrict width to ensure it fits within the sider */
+    width: 80%;
 }
 
-    /* Hover effect for the custom ratio button */
-    .custom-ratio-button:hover {
+    /* Hover effect for the custom circle button */
+    .custom-circle-button:hover {
         background-color: #005ea8;
         border-color: #005ea8;
     }
+
 .multiplication-sign {
-    font-size: 15px; /* Adjust the size as needed */
-    /* Add some spacing around the sign */
+    margin: 0 5px;
+}
+
+
+/* Custom Ratio Section Styling */
+.custom-ratio-section {
+    margin: 15px 0;
+    text-align: center;
+}
+
+/* Heading for Custom Ratio Section */
+.custom-ratio-heading {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: white;
 }

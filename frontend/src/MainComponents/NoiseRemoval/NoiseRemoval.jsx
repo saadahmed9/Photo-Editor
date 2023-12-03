@@ -146,7 +146,8 @@ function NoiseRemoval(props1) {
     const formData = new FormData();
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+fileType));
     formData.append('function', 'noise_removal');
-    axios.post(process.env.REACT_APP_API_URL+'/noise_removal/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30013/noise_removal/", formData)
+    // axios.post(process.env.REACT_APP_PDF_NOISE_BRIGHT_API_URL+'/noise_removal/', formData)
       .then(response => {
         downloadImage(response.data.imageUrl)
       }
@@ -258,7 +259,7 @@ function NoiseRemoval(props1) {
         :
 
         <div className="passport-photo-container">
-            <div className="center-card-container">
+            <div className="center-card-container" style={{width: '65%'}}>
               <div style={{flexGrow: '1'}}>
                 <Card className="passport-photo-card"
                      title={
@@ -267,8 +268,8 @@ function NoiseRemoval(props1) {
                     cover=
                       {
                         <div style={{ display: 'flex' }}>
-                          {imageUrl && <img className='uploaded-image' src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                          {displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                          {imageUrl && <img className='uploaded-image' style={{marginRight: '35px',marginLeft: '25px',maxWidth: displayUrl ? '300px' : '100%', maxHeight: '100%',}} src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                          {displayUrl && <img className='uploaded-image' src={displayUrl} style={{ maxWidth: '300px', maxHeight: '100%' }} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                         </div>  
                       }
                       extra={

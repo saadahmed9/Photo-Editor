@@ -41,18 +41,18 @@ function BrightnessContrast(props1) {
 
 
   // Handler for image upload
-const handleUpload = useCallback((file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file); let uniqueId = uuidv4();
-    reader.readAsDataURL(file);
-    setfileName(file.name);
-    reader.onload = () => {
-      setImageUrl(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.error('Error: ', error);
-    };
-}, [setfileName, setImageUrl]); // Here you should include any dependencies this function relies on
+    const handleUpload = useCallback((file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file); // Only one read operation
+        setfileName(file.name);
+        reader.onload = () => {
+            setImageUrl(reader.result);
+        };
+        reader.onerror = (error) => {
+            console.error('Error: ', error);
+        };
+    }, [setfileName, setImageUrl]);
+ // Here you should include any dependencies this function relies on
 
   // Upload properties
   const props = {
@@ -86,7 +86,8 @@ const handleUpload = useCallback((file) => {
     if (!imageUrl) return;
     const formData = new FormData();
     formData.append('function', 'brightness_contrast');
-      axios.post(process.env.REACT_APP_API_URL+'/brightness_contrast/', formData)
+      // axios.post(process.env.REACT_APP_PDF_NOISE_BRIGHT_API_URL +'/brightness_contrast/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30013/brightness_contrast/", formData)
       .then(response => {
       }
       )

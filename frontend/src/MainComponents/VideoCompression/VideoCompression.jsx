@@ -51,7 +51,9 @@ function VideoCompression(props1) {
   const [collapsed, setCollapsed] = useState(false);
 //   const [selectedFormat, setselectedFormat] = useState(null);
   const [isLoading,setIsLoading]= useState(false);
-    const [fileName, setfileName] = useState(null);
+  const [fileName, setfileName] = useState(null);
+  const [inputSize, setInputSize] = useState();
+  const [outputSize, setOutputSize] = useState();
 
     // Event handler for Sider collapse
   const onCollapse = (collapsed) => {
@@ -63,6 +65,8 @@ function VideoCompression(props1) {
     setIsLoading(false);
     setVideoUrl(null);    
     setDisplayUrl(null);
+    setInputSize(null);
+    setOutputSize(null);
   };
 
 
@@ -174,8 +178,12 @@ function VideoCompression(props1) {
     formData.append('myfile', dataURLtoFile(videoUrl,fileName+"."+ getVideoTypeFromMime(videoUrl)));
     // formData.append('format_change', selectedFormat.toLowerCase());
     formData.append('function', 'video_compression');
-    axios.post(process.env.REACT_APP_API_URL+'/video_compression/', formData)
+    // axios.post(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL+'/video_compression/', formData)
+    console.log(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL)
+    axios.post('http://xlabk8s3.cse.buffalo.edu:30018/video_compression/', formData)
       .then(response => {
+        setInputSize(response.data.input_file_size);
+        setOutputSize(response.data.output_file_size);
         downloadVideo(response.data.videoUrl)
       }
       )
@@ -220,24 +228,6 @@ function VideoCompression(props1) {
     // Component render
     return (
         <Layout style={{ minHeight: "100vh" }}>
-            <Sider
-                collapsible
-                collapsed={collapsed}
-                onCollapse={(value) => setCollapsed(value)} // Assuming you have a setter function for the collapsed state
-                style={{ backgroundColor: '#000524' }}
-            >
-                {/* When sidebar is collapsed, show only the visual cue */}
-                {collapsed ? (
-                    <div className="visual-cue-container">
-                        <Tooltip title="">
-                            <span className="visual-cue">&#x1F50D;</span> {/* Example using a magnifying glass emoji */}
-                        </Tooltip>
-                    </div>
-                ) : (
-                <>
-                </>
-                )}
-            </Sider>
       <Layout className="site-layout">
         <ContentSection>
           
@@ -279,6 +269,10 @@ function VideoCompression(props1) {
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>
+                    
+                    {inputSize && outputSize && (
+                      <p> <b>Input File Size:</b> {inputSize} &emsp; &emsp; &emsp; <b>Output File Size:</b> {outputSize} </p>
+                    )}
                     {videoUrl && (
                       <Button type="danger" onClick={handleClear} style={{ margin: '10px' }}>
                         Clear Video
@@ -324,6 +318,10 @@ function VideoCompression(props1) {
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>
+
+                    {inputSize && outputSize && (
+                      <p> <b>Input File Size:</b> {inputSize} &emsp; &emsp; &emsp; <b>Output File Size:</b> {outputSize} </p>
+                    )}
                     {videoUrl && (
                       <Button type="danger" onClick={handleClear} style={{ margin: '10px' }}>
                         Clear Video

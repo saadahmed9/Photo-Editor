@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phototeditor-crop-resize-depl
+spec:
+  selector:
+    matchLabels:
+      app: photoeditor-crop-resize-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: photoeditor-crop-resize-app
+    spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
+      containers:
+      - name: resize
+        image: ghcr.io/xlab-classes/crop-resize-image:latest
+        resources:
+          limits:
+            cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
+            memory: "1000Mi" # Limit the pod to use a maximum of 512 megabytes of memory
+          requests:
+            cpu: "0.2" # Request at least 0.2 CPU cores for the pod
+            memory: "1000Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: crop-resize-servc
+spec: 
+  type: NodePort
+  selector: 
+    app: photoeditor-crop-resize-app
+  ports:
+  - name: my-app
+    port: 8011
+    nodePort: 30011
+    targetPort: 8011
+

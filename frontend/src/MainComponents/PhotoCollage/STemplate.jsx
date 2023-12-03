@@ -144,7 +144,7 @@ const STemplate = ({ columns, rowsPerColumn }) => {
                     <MinusOutlined />
                   </button>
                                     <button
-                                        className="remove-button"
+                                        className="remove-image-btn"
                                         onClick={removeImage(cellIndex)}
                                     >
                                         Remove
@@ -240,7 +240,7 @@ const STemplate = ({ columns, rowsPerColumn }) => {
                     <MinusOutlined />
                   </button>
                                 <button
-                                    className="remove-button"
+                                    className="remove-image-btn"
                                     onClick={
                                         removeImage(cellIndex)}>
                                     Remove
@@ -263,15 +263,17 @@ const STemplate = ({ columns, rowsPerColumn }) => {
         setIsDownloading(true);
         const formData = new FormData();
     formData.append('function', 'photo_collage');
-      axios.post(process.env.REACT_APP_API_URL+'/photo_collage/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30012/photo_collage/", formData)  
+    //axios.post(process.env.REACT_APP_COLLAGE_API_URL+'/photo_collage/', formData)
       .then(response => {
       }
       )
-      .catch(error => {console.log(error); toast.error("Error encountered.");}); 
+      //.catch(error => {console.log(error); toast.error("Error encountered.");}); 
+      .catch(error => {console.log(error);}); 
 
     const zoomInButtons = document.querySelectorAll(".zoom-in-button");
     const zoomOutButtons = document.querySelectorAll(".zoom-out-button");
-    const removeButtons = document.querySelectorAll(".remove-button");
+        const removeButtons = document.querySelectorAll(".remove-image-btn");
 
     // Hide buttons
     zoomInButtons.forEach((button) => (button.style.display = "none"));

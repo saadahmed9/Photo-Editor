@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phototeditor-backgroundChange-depl
+spec:
+  selector:
+    matchLabels:
+      app: photoeditor-backgroundChange-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: photoeditor-backgroundChange-app
+    spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
+      containers:
+      - name: backgroundChange
+        image: ghcr.io/xlab-classes/background-change-image:latest
+        resources:
+          limits:
+            cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
+            memory: "1000Mi" # Limit the pod to use a maximum of 512 megabytes of memory
+          requests:
+            cpu: "0.2" # Request at least 0.2 CPU cores for the pod
+            memory: "1000Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backgroundChange-servc
+spec: 
+  type: NodePort
+  selector: 
+    app: photoeditor-backgroundChange-app
+  ports:
+  - name: my-app
+    port: 8015
+    nodePort: 30015
+    targetPort: 8015
+

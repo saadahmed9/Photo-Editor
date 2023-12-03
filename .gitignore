@@ -7,3 +7,4 @@ backend/photo_editing_api/media/Mosaic_input
 backend/photo_editing_api/media/datasets/stats.json
 frontend/package-lock.json
 *.pyc
+*venv

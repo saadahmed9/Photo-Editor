@@ -127,18 +127,23 @@
     z-index: 0; /* Add this line */
   }
 
-  .remove-button {
+.remove-button {
     position: absolute;
     top: 5px;
     right: 5px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 3px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
     cursor: pointer;
-    padding: 2px 5px;
-    font-size: 14px;
-    display: none;
-  }
+    padding: 1px 2px;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.remove-button:hover {
+    color: rgba(255, 0, 0, 0.9);
+    border-color: rgba(255, 0, 0, 0.9);
+}
   
   .image-container:hover .remove-button {
     display: block;

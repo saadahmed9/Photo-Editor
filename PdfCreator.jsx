@@ -191,7 +191,8 @@ function ConfirmDelete()
       formData.append('myfile', file);
     }
     formData.append('function', 'pdf_maker');
-    axios.post(process.env.REACT_APP_API_URL+'/pdf_maker/', formData)
+    // axios.post(process.env.REACT_APP_PDF_NOISE_BRIGHT_API_URL+'/pdf_maker/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30013/pdf_maker/", formData)
         .then(response => {
           setIsLoading(false);
           setpdfUrl(response.data['imageUrl']);

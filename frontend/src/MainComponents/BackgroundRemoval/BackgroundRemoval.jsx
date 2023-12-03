@@ -162,7 +162,9 @@ function BackgroundRemoval (props1) {
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+fileType));
     formData.append('background_change', color);
     formData.append('function', 'background_change');
-    axios.post(process.env.REACT_APP_API_URL+'/background_change/', formData)
+    //axios.post(process.env.REACT_APP_BACKGROUND_CHANGE_API_URL+'/background_change/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30015/background_change/", formData)
+    
       .then(response => {
         downloadImage(response.data.imageUrl)
       }
@@ -292,7 +294,7 @@ function BackgroundRemoval (props1) {
        </div>
         :
         <div className="passport-photo-container">
-            <div className="center-card-container">
+            <div className="center-card-container" style={{width: '65%'}}>
               <div style={{flexGrow: '1'}}>
               <Card className="passport-photo-card"
                       title={
@@ -301,8 +303,10 @@ function BackgroundRemoval (props1) {
                       cover=
                       {
                         <div style={{ display: 'flex' }}>
-                          {imageUrl && <img className='uploaded-image' src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                          {displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                          {imageUrl && <img className='uploaded-image' src={imageUrl} style={{marginRight: '25px',marginLeft: '15px',maxWidth: displayUrl ? '250px' : '100%', maxHeight: '100%',
+        }} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                          
+                          {displayUrl && <img className='uploaded-image' src={displayUrl}  style={{ maxWidth: '250px', maxHeight: '100%' }} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                         </div>  
                       }
                       extra={

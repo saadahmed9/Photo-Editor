@@ -42,7 +42,7 @@ class PassportPhotoCreation extends Component {
                     <img src="/photoCollage.png" alt="Collage" />
                     <br></br>
                     <h3>Photo Collage</h3>
-                    <p>Multiple photos arranged in a creative layout to create a single visual representation.</p>
+                    <p>Multiple photos arranged in a creative layout to create a single representation.</p>
                 </Link>
                 </div>
                 <div className="home__feature">
@@ -55,10 +55,10 @@ class PassportPhotoCreation extends Component {
                 </div>
                 <div className="home__feature">
                 <Link to="/imageformatconversion">
-                    <img src="/formatConversion.png" alt="Format Conversion" />
+                    <img src="/formatconversion.png" alt="Format Conversion" />
                     <br></br>
                     <h3>Image Format Conversion</h3>
-                    <p>Users can convert their images into the desired format, such as JPEG, PNG, and more.</p>
+                    <p>Convert images into the desired format, such as JPEG, PNG, and more.</p>
                   </Link>
                 </div>
                 <div className="home__feature">
@@ -106,7 +106,7 @@ class PassportPhotoCreation extends Component {
                     <img src="/imageCompression.png" alt="Image Compression" />
                     <br></br>
                     <h3>Image Compression</h3>
-                    <p>Users can compress their images into the desired format, such as JPEG, PNG, and more.</p>
+                    <p>Compress images into the desired format, such as JPEG, PNG, and more.</p>
                   </Link>
                 </div>
                 <div className="home__feature">

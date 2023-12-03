@@ -108,3 +108,43 @@ body {
         border-color: #d94373;
         transform: translateY(-2px);
     }
+
+    .scrollable-container {
+        width: 300px;
+        height: 190px;
+        overflow: scroll;
+        margin-top: 65px;
+      }
+      
+      .image-item {
+        width: 100%;
+      }
+ 
+     /* Customizing scrollbars */
+.scrollable-container::-webkit-scrollbar {
+    width: 7px;
+
+  }
+  
+  .scrollable-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  
+  .scrollable-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  /* Customizing horizontal scrollbar */
+  .scrollable-container::-webkit-scrollbar:horizontal {
+    height:7px;
+  }
+.scrollable-container::-webkit-scrollbar-thumb:horizontal {
+    background-color: #888;
+    border-radius: 100px;
+  }
+  
+  .scrollable-container::-webkit-scrollbar-track:horizontal {
+    background-color: #f1f1f1;
+  }
+
+  

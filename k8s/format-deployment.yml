@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phototeditor-format-depl
+spec:
+  selector:
+    matchLabels:
+      app: photoeditor-format-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: photoeditor-format-app
+    spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
+      containers:
+      - name: format
+        image: ghcr.io/xlab-classes/format-image:latest
+        resources:
+          limits:
+            cpu: "0.5" # Limit the pod to use a maximum of 0.5 CPU cores
+            memory: "500Mi" # Limit the pod to use a maximum of 512 megabytes of memory
+          requests:
+            cpu: "0.2" # Request at least 0.2 CPU cores for the pod
+            memory: "500Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: format-servc
+spec: 
+  type: NodePort
+  selector: 
+    app: photoeditor-format-app
+  ports:
+  - name: my-app
+    port: 8014
+    nodePort: 30014
+    targetPort: 8014
+

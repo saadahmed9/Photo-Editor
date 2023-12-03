@@ -190,7 +190,8 @@ export const PdfCreator = () => {
             formData.append('myfile', file);
         }
         formData.append('function', 'pdf_maker');
-        axios.post(process.env.REACT_APP_API_URL + '/pdf_maker/', formData)
+        // axios.post(process.env.REACT_APP_PDF_NOISE_BRIGHT_API_URL + '/pdf_maker/', formData)
+        axios.post("http://xlabk8s3.cse.buffalo.edu:30013/pdf_maker/", formData)
             .then(response => {
                 setIsLoading(false);
                 setpdfUrl(response.data['imageUrl']);
@@ -264,7 +265,12 @@ export const PdfCreator = () => {
 
             <div style={{ marginLeft: '12%', marginTop: '10px', textAlign: 'center' }}>
 
-                <Button type="primary" onClick={getDataOnUpload} style={{ margin: '10px', backgroundColor: '#000524', border: 'none', padding: '6px 16px' }} onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#333"} onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#000524"}>Create PDF</Button>
+                <Button
+                    className="button-stylish"
+                    onClick={getDataOnUpload}
+                >
+                    Create PDF
+                </Button>
 
 
                 {isLoading && <Spin indicator={antIcon} style={{

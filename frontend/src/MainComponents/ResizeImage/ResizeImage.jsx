@@ -52,6 +52,7 @@ function ResizeImage({ uuid }) {
     const handleClear = () => {
         setIsLoading(false);
         setImageUrl(null);
+        setDisplayUrl(null);
     };
 
     // Extract image type from data URL
@@ -73,6 +74,7 @@ function ResizeImage({ uuid }) {
         reader.onerror = (error) => console.error('Error:', error);
 
         reader.readAsDataURL(file);
+        
     };
 
     // Handle file drop
@@ -80,6 +82,7 @@ function ResizeImage({ uuid }) {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         handleUpload(file);
+       
     };
 
     // Document event listeners
@@ -147,17 +150,40 @@ function ResizeImage({ uuid }) {
         toast.success("Image Resize Successfully Completed");
     };
 
+    let defaultWidth;
 
+// Function to set the default width
+    
     // Preview the processed image
     async function handlePreview() {
+        if (!input1) {
+            toast.error("Please enter width");
+            return;
+        }
+    
+        if (!input2) {
+            toast.error("Please enter height");
+            return;
+        }
         setIsLoading(true);
+        
         const formData = new FormData();
         formData.append('myfile', dataURLtoFile(imageUrl, fileName + "." + fileType));
         formData.append('resize', `${input1},${input2}`);
         formData.append('function', 'resize');
 
-        axios.post(`${process.env.REACT_APP_API_URL}/resize/`, formData)
-            .then(response => downloadImage(response.data.imageUrl))
+        //axios.post(`${process.env.REACT_APP_API_URL}/resize/`, formData)
+        axios.post("http://xlabk8s3.cse.buffalo.edu:30011/resize/", formData)
+      
+        .then(response => {
+            downloadImage(response.data.imageUrl);
+            //adjustContainerWidth();
+            const previewImage = new Image();
+            previewImage.src = response.data.imageUrl;
+            previewImage.onload = () => {
+                setIsLoading(false);
+            }; // Call the function to adjust width
+        })
             .catch(error => {
                 console.log(error);
                 toast.error("Error encountered.");
@@ -188,6 +214,7 @@ function ResizeImage({ uuid }) {
                     </ol>
                 </div>
             ),
+            
             onOk() { },
             width: 600
         });
@@ -228,7 +255,7 @@ function ResizeImage({ uuid }) {
                                         <li>Preview: Check the final look & download.</li>
                                     </ol>
                                 </div>  </Fade>
-                            <div className="center-card-container" style={{ position: 'relative', top: '50px', left: '180px' }}>
+                            <div className="center-card-container" style={{ position: 'relative', top: '50px', left: '180px'}}>
                                 <div style={{ flexGrow: '1' }}>
                                     <Card className="passport-photo-card"
                                         title={
@@ -236,9 +263,9 @@ function ResizeImage({ uuid }) {
                                         }
                                         cover=
                                         {
-                                            <div style={{ display: 'flex' }}>
+                                            <div>
                                                 {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                                                {displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                                                {displayUrl && <img className='uploaded-image' src={displayUrl}  onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                                             </div>
                                         }
                                         extra={
@@ -284,9 +311,18 @@ function ResizeImage({ uuid }) {
                                         cover=
                                         {
                                             <div style={{ display: 'flex' }}>
-                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                                                {displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                                            </div>
+                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{marginRight: '25px',marginLeft: '15px',marginTop: '65px',maxWidth: displayUrl ? '250px' : '100%', maxHeight: displayUrl ? '190px' : '100%'}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                                                
+                                                {displayUrl && (
+                                                <div className="scrollable-container">
+             <div className="image-item">
+            <img src={displayUrl} className="image1" draggable="true" />
+            </div>
+            </div>
+        )}
+                                                
+                                                
+                                            ;</div>
                                         }
                                         extra={
                                             <Tooltip title="More Info">
