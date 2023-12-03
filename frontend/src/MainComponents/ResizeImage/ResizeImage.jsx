@@ -156,6 +156,15 @@ function ResizeImage({ uuid }) {
     
     // Preview the processed image
     async function handlePreview() {
+        if (!input1) {
+            toast.error("Please enter width");
+            return;
+        }
+    
+        if (!input2) {
+            toast.error("Please enter height");
+            return;
+        }
         setIsLoading(true);
         
         const formData = new FormData();
@@ -163,7 +172,7 @@ function ResizeImage({ uuid }) {
         formData.append('resize', `${input1},${input2}`);
         formData.append('function', 'resize');
 
-        //axios.post(`${process.env.REACT_APP_CROP_RESIZE_API_URL}/resize/`, formData)
+        //axios.post(`${process.env.REACT_APP_API_URL}/resize/`, formData)
         axios.post("http://xlabk8s3.cse.buffalo.edu:30011/resize/", formData)
       
         .then(response => {
@@ -246,7 +255,7 @@ function ResizeImage({ uuid }) {
                                         <li>Preview: Check the final look & download.</li>
                                     </ol>
                                 </div>  </Fade>
-                            <div className="center-card-container" style={{ position: 'relative', top: '50px', left: '180px' }}>
+                            <div className="center-card-container" style={{ position: 'relative', top: '50px', left: '180px'}}>
                                 <div style={{ flexGrow: '1' }}>
                                     <Card className="passport-photo-card"
                                         title={
@@ -302,7 +311,7 @@ function ResizeImage({ uuid }) {
                                         cover=
                                         {
                                             <div style={{ display: 'flex' }}>
-                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{marginRight: '25px',marginLeft: '15px',maxWidth: displayUrl ? '250px' : '100%', maxHeight: '100%',}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{marginRight: '25px',marginLeft: '15px',marginTop: '65px',maxWidth: displayUrl ? '250px' : '100%', maxHeight: displayUrl ? '190px' : '100%'}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                                                 
                                                 {displayUrl && (
                                                 <div className="scrollable-container">
