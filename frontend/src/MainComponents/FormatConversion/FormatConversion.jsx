@@ -225,8 +225,8 @@ function FormatConversion(props1) {
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+ getImageTypeFromMime(imageUrl)));
     formData.append('format_change', selectedFormat.toLowerCase());
     formData.append('function', 'format_change');
-    axios.post("http://xlabk8s3.cse.buffalo.edu:30012/format_change/", formData)
-    //axios.post(process.env.REACT_APP_API_URL+'/format_change/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30014/format_change/", formData)
+    //axios.post(process.env.REACT_APP_FORMAT_API_URL+'/format_change/', formData)
       .then(response => {
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
       }

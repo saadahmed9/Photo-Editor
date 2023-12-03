@@ -441,6 +441,7 @@ const PassportPhoto = (props1) => {
       }else{
         formData.append('background_req', 'no');
       }
+      console.log(process.env.REACT_APP_PASSPORT_API_URL)
     //  axios.post(process.env.REACT_APP_API_URL+'/passport_photo_size/', formData)
       axios.post("http://xlabk8s3.cse.buffalo.edu:30010/passport_photo_size/", formData)
     
