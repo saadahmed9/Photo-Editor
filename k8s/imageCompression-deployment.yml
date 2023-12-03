@@ -12,6 +12,8 @@ spec:
       labels:
         app: photoeditor-imagecompression-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: imagecompression
         image: ghcr.io/xlab-classes/image-compression-image:latest
