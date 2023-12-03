@@ -139,3 +139,34 @@
     background-color: #000524;
     border-color: #000524;
 }
+
+/* Style for zoom control container */
+.zoom-controls {
+    position: absolute;
+    top: 10px; /* Adjust as necessary */
+    right: 10px; /* Adjust as necessary */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style for individual zoom buttons */
+.zoom-button {
+    margin-bottom: 5px;
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent for visibility */
+    border: 1px solid #000524; /* Add border for clarity */
+    color: #000524; /* Text color */
+    font-size: 16px; /* Adjust font size as needed */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+    /* Hover and Active states for buttons */
+    .zoom-button:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+        transform: scale(1.1);
+    }
+
+    .zoom-button:active {
+        background-color: rgba(255, 255, 255, 1);
+        transform: scale(0.9);
+    }
