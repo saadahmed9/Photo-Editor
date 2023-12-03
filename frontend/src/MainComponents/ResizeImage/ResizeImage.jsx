@@ -310,8 +310,8 @@ function ResizeImage({ uuid }) {
                                         }
                                         cover=
                                         {
-                                            <div style={{ display: 'flex' }}>
-                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{marginRight: '25px',marginLeft: '15px',marginTop: '65px',maxWidth: displayUrl ? '250px' : '100%', maxHeight: displayUrl ? '190px' : '100%'}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                                            <div style={{ display: 'flex', justifyContent: displayUrl ? 'space-between' : 'center'}}>
+                                                {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{marginRight: displayUrl ? '25px' : 'auto', marginLeft: displayUrl ? '15px' : 'auto',marginTop: '65px',maxWidth: displayUrl ? '250px' : '400px', maxHeight: displayUrl ? '190px' : '100%'}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                                                 
                                                 {displayUrl && (
                                                 <div className="scrollable-container">
