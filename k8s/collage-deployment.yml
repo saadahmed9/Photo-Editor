@@ -12,6 +12,8 @@ spec:
       labels:
         app: photoeditor-collage-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: collage
         image: ghcr.io/xlab-classes/collage-image:latest
