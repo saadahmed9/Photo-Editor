@@ -153,7 +153,7 @@ export const Demo = (props1) => {
     formData.append('function', 'crop');
     formData.append('croppedImage', croppedImage); // Assuming croppedImage is a base64 encoded string
 
-    axios.post(process.env.REACT_APP_API_URL + '/crop/', formData)
+    axios.post("http://xlabk8s3.cse.buffalo.edu:30011/crop/", formData)
       .then(response => {
         // Handle successful response if needed
         console.log('Crop data sent successfully:', response.data);
