@@ -11,6 +11,7 @@ WORKDIR /var/opt
 
 RUN apt-get update && \
     apt-get -y install nginx build-essential cmake  vim && \
+    apt-get install libsm6 libxext6 libgl1 libglib2.0-0 libxrender1 -y && \
     apt-get install dos2unix
 
 RUN python -m pip install --upgrade pip

@@ -12,6 +12,8 @@ spec:
       labels:
         app: photoeditor-crop-resize-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: resize
         image: ghcr.io/xlab-classes/crop-resize-image:latest
