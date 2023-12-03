@@ -1,4 +1,4 @@
-name: Push Images to GHCR
+name: Push Passport Images to GHCR
 on:
   push:
     paths:
