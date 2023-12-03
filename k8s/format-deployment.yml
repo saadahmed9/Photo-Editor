@@ -12,6 +12,8 @@ spec:
       labels:
         app: photoeditor-format-app
     spec:
+      imagePullSecrets:
+      - name: ghcr-login-secret
       containers:
       - name: format
         image: ghcr.io/xlab-classes/format-image:latest
