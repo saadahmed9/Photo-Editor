@@ -16,7 +16,6 @@ import logging
 from mosaic_app.contollers.mosaic_maker import mosaicmaker
 # Create your views here.
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 logging.basicConfig(format= '[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -42,15 +41,15 @@ def initial_checks(request):
         pixel_size = int(request.POST['selectedPixel'])
         myfile = request.FILES['myfile']
         myfile.name = myfile.name.replace(" ", "")
-        img_dir = "\\".join(BASE_DIR.split("\\"))
-        Path(img_dir+r"\media\uploads").mkdir(parents=True, exist_ok=True)
-        Path(img_dir+r"\media\output").mkdir(parents=True, exist_ok=True)
-        Path(img_dir+r"\media\Mosaic_input").mkdir(parents=True, exist_ok=True)
-        image_url = img_dir+r"\media\uploads\\"+myfile.name
-        output_url = img_dir+r"\media\output\\"+myfile.name
-        f = open(image_url,"wb")
-        for chunk in request.FILES['myfile'].chunks():
-            f.write(chunk)
+        image_url = "media/uploads/"+myfile.name
+        output_url = "media/output/"+myfile.name
+        try:
+            f = open(image_url,"wb")
+        except OSError:
+            logger.error("could not open " + image_url)
+        with f:    
+            for chunk in request.FILES['myfile'].chunks():
+                f.write(chunk)
         f.close()
         api_root = reverse_lazy('stats',request = request)
         api_root = api_root[:-7]
@@ -94,16 +93,19 @@ def get_mosaic_files_list(request):
         myfile_list = []
         myfile_name_list = []
         image_url_list = []
-        img_dir = "\\".join(BASE_DIR.split("\\"))
         for file in request.FILES.getlist('myfile_folder'):
             count = count + 1
             myfile_list.append(file)
             myfile_name_list.append(file.name.replace(" ", ""))
-            full_path = img_dir + r"\media\Mosaic_input\\" + file.name.replace(" ", "")
+            full_path = "media/Mosaic_input/" + file.name.replace(" ", "")
             image_url_list.append(full_path)
-            f = open(full_path, "wb")
-            for chunk in file.chunks():
-                f.write(chunk)
+            try:
+                f = open(full_path, "wb")
+            except OSError:
+                logger.error("could not open " + full_path)
+            with f:    
+                for chunk in file.chunks():
+                    f.write(chunk)
             f.close()
         logger.info("get_mosaic_files_list function complete")
     return image_url_list, count
@@ -130,8 +132,11 @@ def mosaic_maker(request):
         
         mosaicmaker(image_url, output_url, images_list, pixel_size)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
-        with open(output_url, 'rb') as f:
-            image_data = f.read()
+        try:
+            with open(output_url, 'rb') as f:
+                image_data = f.read()
+        except IOError:
+            logger.error("unable to read output file " + output_url)
         image_base64 = base64.b64encode(image_data).decode('utf-8')
         return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"
         return_dict['error'] = False
