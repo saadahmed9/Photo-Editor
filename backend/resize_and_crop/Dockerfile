@@ -22,6 +22,10 @@ RUN pip install -r requirements.txt
 
 COPY . /var/opt
 
+# Create uploads and output folders
+RUN mkdir -p /var/opt/media/uploads
+RUN mkdir -p /var/opt/media/output
+
 RUN dos2unix start.sh
 # COPY deeplab.py /usr/local/lib/python3.11/site-packages/pixellib/semantic/
 
