@@ -1,10 +1,8 @@
 import cv2
-from matplotlib import colors
 import os
 import logging
 import rembg
 from PIL import Image
-import numpy
 
 logging.basicConfig(format= '[%(asctime)s] %(message)s')
 logger = logging.getLogger(__name__)
