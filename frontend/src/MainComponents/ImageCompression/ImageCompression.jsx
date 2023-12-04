@@ -56,6 +56,7 @@ function ImageCompression(props1) {
   const [selectedFormat, setselectedFormat] = useState(null);
   const [compressionRate, setCompressionRate] = useState(50);
   const [target_size, setTarget_size] = useState(null);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
   
   //const handleInputChange1 = (event) => setTarget_size(event.target.value);
   const handleInputChange1 = (event) => {
@@ -242,8 +243,10 @@ function ImageCompression(props1) {
   // Handle preview button click
   function handlePreview () {
     setIsLoading(true);
+    setIsButtonClicked(true); // Set button click state to true
     if(selectedFormat==null) {
       setIsLoading(false);
+      setIsButtonClicked(false); // Reset button click state
       toast.error("Select image format");
       return;
     }
@@ -266,7 +269,9 @@ function ImageCompression(props1) {
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
       }
       )
-      .catch(error => {console.log(error); toast.error("Error encountered in handlePreview."); setIsLoading(false)});     
+      .catch(error => {console.log(error); toast.error("Error encountered in handlePreview."); setIsLoading(false)
+      setIsButtonClicked(false); });
+      
   }
 
 
@@ -438,7 +443,7 @@ function ImageCompression(props1) {
                     )}
                     {imageUrl && (
                      <Button type="primary" onClick={handlePreview} style={{ margin: '10px' }}>
-                        Download hoto
+                        Download Photo
                       </Button>
                     )}
                     {displayUrl && (
@@ -482,7 +487,10 @@ function ImageCompression(props1) {
                       </Button>                     
                     )}
                     {imageUrl && (
-                      <Button type="primary" onClick={handlePreview} style={{ margin: '10px' }}>
+                      <Button type="primary" onClick={handlePreview} style={{
+                        margin: '10px',
+                        backgroundColor: isButtonClicked ? 'red' : null, // Change color to red if button is clicked
+                    }}>
                           Preview Photo
                       </Button>
                       )}
