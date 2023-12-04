@@ -19,6 +19,10 @@ class Header extends Component {
             <hr />
             
           </div>
+          <Fade>
+          <p>Your Privacy Matters</p>
+          <p>We do not retain any user information on our servers. We do not retain any of your images on our servers, and failing to download your edited image may result in the loss of your work.</p>
+          </Fade>
         </div>
 
       </header>
