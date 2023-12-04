@@ -675,27 +675,44 @@ const PassportPhoto = (props1) => {
                                 <div style={{ flexGrow: '1' }}>
                                     <Card className="passport-photo-card"
                                         title="Passport Photo"
-                                        cover=
-                                        {
-                                            <div style={{ position: 'relative' }}>
-                                                {!isPreviewActive && (
-                                                    <div className="zoom-controls">
-                                                        <Button className="zoom-button" onClick={zoomIn}>+</Button>
-                                                        <Button className="zoom-button" onClick={zoomOut}>-</Button>
-                                                    </div>
-                                                )}
-                                                {imageUrl && (
-                                                    <Cropper
-                                                        key={cropperKey}
-                                                        ref={cropperRef}
-                                                        src={imageUrl}
-                                                        aspectRatio={aspectRatio}
-                                                        style={{ textAlign: 'center', height: 400, width: '50%', margin: '10px' }}
-                                                        background={false}
-                                                        cropBoxResizable={false}
+                                        cover={
+                                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '10px' }}>
+                                                <div style={{ width: '45%' }}>
+                                                    {imageUrl && (
+                                                        <div style={{ marginBottom: '10px' }}>
+                                                            {/* Zoom Controls Section */}
+                                                            {!isPreviewActive && (
+                                                                <div className="zoom-controls">
+                                                                    <p style={{ textAlign: 'center', marginBottom: '5px', color: 'white' }}>Zoom Options</p>
+                                                                    <Tooltip title="Zoom In">
+                                                                        <Button className="zoom-button" onClick={zoomIn}>+</Button>
+                                                                    </Tooltip>
+                                                                    <Tooltip title="Zoom Out">
+                                                                        <Button className="zoom-button" onClick={zoomOut}>-</Button>
+                                                                    </Tooltip>
+                                                                </div>
+                                                            )}
+
+                                                            <Cropper
+                                                                key={cropperKey}
+                                                                ref={cropperRef}
+                                                                src={imageUrl}
+                                                                aspectRatio={aspectRatio}
+                                                                style={{ height: 400 }}
+                                                                background={false}
+                                                                cropBoxResizable={false}
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                {displayUrl && (
+                                                    <img className='uploaded-image'
+                                                        style={{ height: 400, maxWidth: '45%', objectFit: 'contain', marginLeft: '10px' }}
+                                                        src={displayUrl}
+                                                        onDragOver={(e) => e.preventDefault()}
+                                                        onDrop={(e) => handleDrop(e)}
                                                     />
                                                 )}
-                                                {displayUrl && <img className='uploaded-image' style={{ height: 400, width: '40%', marginLeft: '30px' }} src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                                             </div>
                                         }
                                         extra={

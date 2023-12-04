@@ -143,11 +143,16 @@
 /* Style for zoom control container */
 .zoom-controls {
     position: absolute;
-    top: 10px; /* Adjust as necessary */
-    right: 10px; /* Adjust as necessary */
+    top: 250px; /* Adjusted to move down */
+    left: 80px; /* Adjusted to move towards left */
     display: flex;
     flex-direction: column;
+    align-items: center; /* Center align the items */
+    background-color: rgba(0, 0, 0, 0.5); /* Add a background for better visibility */
+    padding: 5px;
+    border-radius: 5px;
 }
+
 
 /* Style for individual zoom buttons */
 .zoom-button {
@@ -184,6 +189,6 @@
 .cropper-point {
     border-radius: 50%;
     background-color: #4a90e2;
-    width: 10px; /* Handle size */
-    height: 10px;
+    width: 12px; /* Slightly increased handle size */
+    height: 12px;
 }
