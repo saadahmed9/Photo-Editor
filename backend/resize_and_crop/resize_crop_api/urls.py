@@ -5,7 +5,6 @@ from resize_crop_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/', views.upload, name='upload'),
 
     path('resize/', views.resize, name='resize'),
     path('crop/', views.crop_image, name='crop'),
