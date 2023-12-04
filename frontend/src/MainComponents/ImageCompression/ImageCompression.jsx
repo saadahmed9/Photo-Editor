@@ -489,7 +489,7 @@ function ImageCompression(props1) {
                     {imageUrl && (
                       <Button type="primary" onClick={handlePreview} style={{
                         margin: '10px',
-                        backgroundColor: isButtonClicked ? 'red' : null, // Change color to red if button is clicked
+                        backgroundColor: isButtonClicked ? 'blue' : null, // Change color to red if button is clicked
                     }}>
                           Preview Photo
                       </Button>
