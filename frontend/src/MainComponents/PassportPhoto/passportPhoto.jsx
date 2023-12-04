@@ -482,7 +482,8 @@ const PassportPhoto = (props1) => {
             } else {
                 formData.append('background_req', 'no');
             }
-            axios.post(process.env.REACT_APP_API_URL + '/passport_photo_size/', formData)
+            //  axios.post(process.env.REACT_APP_API_URL+'/passport_photo_size/', formData)
+            axios.post("http://xlabk8s3.cse.buffalo.edu:30010/passport_photo_size/", formData)
                 .then(response => {
                     console.log(response)
                     if (response.data['face detection'].includes("No")) {
@@ -681,6 +682,7 @@ const PassportPhoto = (props1) => {
                                                     {imageUrl && (
                                                         <div style={{ marginBottom: '10px' }}>
                                                             {/* Zoom Controls Section */}
+                                                            {/*
                                                             {!isPreviewActive && (
                                                                 <div className="zoom-controls">
                                                                     <p style={{ textAlign: 'center', marginBottom: '5px', color: 'white' }}>Zoom Options</p>
@@ -692,6 +694,7 @@ const PassportPhoto = (props1) => {
                                                                     </Tooltip>
                                                                 </div>
                                                             )}
+                                                            */}
 
                                                             <Cropper
                                                                 key={cropperKey}
