@@ -43,15 +43,16 @@ def initial_checks(request):
         function_name = request.POST['function']
         myfile = request.FILES['myfile']
         myfile.name = myfile.name.replace(" ", "")
-        img_dir = "\\".join(BASE_DIR.split("\\"))
-        Path(img_dir+r"\media\uploads").mkdir(parents=True, exist_ok=True)
-        Path(img_dir+r"\media\output").mkdir(parents=True, exist_ok=True)
-        image_url = img_dir+r"\media\uploads\\"+myfile.name
-        output_url = img_dir+r"\media\output\\"+myfile.name
-        f = open(image_url,"wb")
-        for chunk in request.FILES['myfile'].chunks():
-            f.write(chunk)
-        f.close()
+        image_url = "media/uploads/"+myfile.name
+        output_url = "media/output/"+myfile.name
+        try:
+            f = open(image_url,"wb")
+        except OSError:
+            logger.error("could not open " + image_url)
+        with f:    
+            for chunk in request.FILES['myfile'].chunks():
+                f.write(chunk)
+            f.close()
         api_root = reverse_lazy('stats')
         api_root = api_root[:-7]
         logger.info(api_root)
@@ -103,8 +104,7 @@ def format_change(request):
         required_format = request.POST['format_change']
         part1, part2 = myfile.name.split('.')
 
-        img_dir = "\\".join(BASE_DIR.split("\\"))
-        output_url = img_dir + r"\media\output\\" + part1+"."+required_format
+        output_url = "media/output/" + part1+"."+required_format
         file_name = os.path.splitext(output_url)
         logger.info("converting image to {}".format(required_format))
         match required_format:
@@ -130,8 +130,11 @@ def format_change(request):
 
         logger.info("Format change functionality completed")
         return_dict['output_url'] = api_root+r"static/"+part1+"."+required_format
-        with open(output_url, 'rb') as f:
-            image_data = f.read()
+        try:
+            with open(output_url, 'rb') as f:
+                image_data = f.read()
+        except IOError:
+            logger.error("unable to read output file " + output_url)
         image_base64 = base64.b64encode(image_data).decode('utf-8')
         return_dict['imageUrl']=f"data:image/{required_format};base64,{image_base64}"   
         return_dict['error'] = False
