@@ -5,7 +5,6 @@ from collage_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/', views.upload, name='upload'),
 
     path('photo_collage/', views.photo_collage, name='photo_collage'),
     

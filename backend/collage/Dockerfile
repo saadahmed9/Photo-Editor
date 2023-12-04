@@ -22,6 +22,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /var/opt
 
+# Create uploads and output folders
+RUN mkdir -p /var/opt/media/uploads
+RUN mkdir -p /var/opt/media/output
+
 RUN dos2unix start.sh
 
 # Change to executeable mode

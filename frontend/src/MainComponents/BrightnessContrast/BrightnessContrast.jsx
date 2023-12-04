@@ -260,16 +260,16 @@ function BrightnessContrast(props1) {
           
         <div className="passport-photo-container">
             <div className="center-card-container">
-              <div style={{flexGrow: '1'}}>
+              <div style={{flexGrow: '1',width:'600px'}}>
                 <Card className="passport-photo-card"
                      title={
                       imageUrl ? "Uploaded Image and Result":"Drag and Drop Photo"
                     }
                     cover=
                       {
-                        <div style={{ display: 'flex' }}>
-                            {imageUrl && <img className='uploaded-image' src={imageUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} alt="Uploaded" />}
-                            {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{ filter: `brightness(${brightness}%) contrast(${contrast}%)` }} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} alt="Adjusted Brightness and Contrast" />}
+                        <div style={{ display:'flex' ,width:'550px'}}>
+                            {imageUrl && <img className='uploaded-image' src={imageUrl}  style={{marginRight: '25px',marginLeft: '20px',width: '240px', height: '200px',}} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} alt="Uploaded" />}
+                            {imageUrl && <img className='uploaded-image' id="image" src={imageUrl} style={{ width: '240px', height: '200px', filter: `brightness(${brightness}%) contrast(${contrast}%)` }} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} alt="Adjusted Brightness and Contrast" />}
                         </div>  
   
  

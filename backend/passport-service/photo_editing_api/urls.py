@@ -19,9 +19,9 @@ from photo_editing_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/', views.upload, name='upload'),
-    #ABC add new urls here
+
     path('passport_photo_size/', views.passport_photo_size, name='passport_photo_size'),
+    
     path('stats/', views.get_db_stat, name='stats'),
     
 ]   

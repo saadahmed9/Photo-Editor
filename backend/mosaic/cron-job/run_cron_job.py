@@ -14,7 +14,7 @@ def remove_img():
         last_folder_update_datetime = datetime.datetime.fromtimestamp(last_forder_update_timestamp)
         current_datetime = datetime.datetime.now()
         difference = current_datetime - last_folder_update_datetime
-        if difference.total_seconds() / 60 > 10:
+        if difference.total_seconds() / 60 > 1:
             os.remove(image_path)
 
     #path1 = "media/uploads"
@@ -27,7 +27,7 @@ def remove_img():
         last_folder_update_datetime = datetime.datetime.fromtimestamp(last_forder_update_timestamp)
         current_datetime = datetime.datetime.now()
         difference = current_datetime - last_folder_update_datetime
-        if difference.total_seconds() / 60 > 10:
+        if difference.total_seconds() / 60 > 1:
             os.remove(image_path)
 
     #path1 = "media/Mosaic_input"
@@ -39,7 +39,7 @@ def remove_img():
         last_folder_update_datetime = datetime.datetime.fromtimestamp(last_forder_update_timestamp)
         current_datetime = datetime.datetime.now()
         difference = current_datetime - last_folder_update_datetime
-        if difference.total_seconds() / 60 > 10:
+        if difference.total_seconds() / 60 > 1:
             os.remove(image_path)
 
 

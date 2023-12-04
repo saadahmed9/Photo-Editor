@@ -54,15 +54,16 @@ def video_compression(request):
         if request.method == 'POST' and request.FILES['myfile']:
             myfile = request.FILES['myfile']
             myfile.name = myfile.name.replace(" ", "")
-            video_folder = "\\".join(BASE_DIR.split("\\"))
-            Path(video_folder +r"\media\uploads").mkdir(parents=True, exist_ok=True)
-            Path(video_folder +r"\media\output").mkdir(parents=True, exist_ok=True)
-            video_url = video_folder+r"\media\uploads\\"+myfile.name
-            output_url = video_folder+r"\media\output\\"+myfile.name
-            f = open(video_url,"wb")
-            for chunk in request.FILES['myfile'].chunks():
-                f.write(chunk)
-            f.close()
+            video_url = "media/uploads/"+myfile.name
+            output_url = "media/output/"+myfile.name
+            try:
+                f = open(video_url,"wb")
+            except OSError:
+                logger.error("could not open " + video_url)
+            with f:    
+                for chunk in request.FILES['myfile'].chunks():
+                    f.write(chunk)
+                f.close()
             api_root = reverse_lazy('stats',request = request)
             api_root = api_root[:-7]
             logger.info(api_root)
@@ -72,8 +73,11 @@ def video_compression(request):
                 raise Exception("failed compressing the video file")
             input_file_size = "{:.2f}".format(os.path.getsize(video_url) / (1024 * 1024))
             output_file_size = "{:.2f}".format(os.path.getsize(output_url) / (1024 * 1024))
-        with open(output_url, 'rb') as f:
-            output_video_data = f.read()
+        try:
+            with open(output_url, 'rb') as f:
+                output_video_data = f.read()
+        except IOError:
+            logger.error("unable to read output file " + output_url)
         video_base64 = base64.b64encode(output_video_data).decode('utf-8')
         return_dict['videoUrl']=f"data:video/mp4;base64,{video_base64}"   
         return_dict['input_file_size'] = input_file_size + "MB"

@@ -40,15 +40,16 @@ def initial_checks(request):
         function_name = request.POST['function']
         myfile = request.FILES['myfile']
         myfile.name = myfile.name.replace(" ", "")
-        img_dir = "\\".join(BASE_DIR.split("\\"))
-        Path(img_dir+r"\media\uploads").mkdir(parents=True, exist_ok=True)
-        Path(img_dir+r"\media\output").mkdir(parents=True, exist_ok=True)
-        image_url = img_dir+r"\media\uploads\\"+myfile.name
-        output_url = img_dir+r"\media\output\\"+myfile.name
-        f = open(image_url,"wb")
-        for chunk in request.FILES['myfile'].chunks():
-            f.write(chunk)
-        f.close()
+        image_url = "media/uploads/"+myfile.name
+        output_url = "media/output/"+myfile.name
+        try:
+            f = open(image_url,"wb")
+        except OSError:
+            logger.error("could not open " + image_url)
+        with f:    
+            for chunk in request.FILES['myfile'].chunks():
+                f.write(chunk)
+            f.close()
         api_root = reverse_lazy('stats',request = request)
         api_root = api_root[:-7]
         print("File check is", is_image(myfile.name))
@@ -101,8 +102,11 @@ def background_change(request):
         colour_code = ImageColor.getcolor(hexa_code, "RGBA")
         color_bg_and_add_border(image_url,output_url,colour_code)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
-        with open(output_url, 'rb') as f:
-            image_data = f.read()
+        try:
+            with open(output_url, 'rb') as f:
+                image_data = f.read()
+        except IOError:
+            logger.error("unable to read output file " + output_url)
         image_base64 = base64.b64encode(image_data).decode('utf-8')
         return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"   
         return_dict['error'] = False

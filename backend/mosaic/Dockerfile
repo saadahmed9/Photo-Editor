@@ -20,7 +20,13 @@ COPY requirements.txt /var/opt/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+
 COPY . /var/opt
+
+# Create uploads and output folders
+RUN mkdir -p /var/opt/media/uploads
+RUN mkdir -p /var/opt/media/output
+RUN mkdir -p /var/opt/media/Mosaic_input
 
 RUN dos2unix start.sh
 

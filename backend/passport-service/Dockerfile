@@ -27,6 +27,7 @@ COPY . /var/opt
 # Create uploads and output folders
 RUN mkdir -p /var/opt/media/uploads
 RUN mkdir -p /var/opt/media/output
+RUN mkdir -p /var/opt/media/models
 
 RUN curl -LJO https://github.com/italojs/facial-landmarks-recognition/raw/master/shape_predictor_68_face_landmarks.dat \
     && mv shape_predictor_68_face_landmarks.dat /var/opt/media/models/
