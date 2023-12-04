@@ -40,15 +40,16 @@ def initial_checks(request):
         function_name = request.POST['function']
         myfile = request.FILES['myfile']
         myfile.name = myfile.name.replace(" ", "")
-        img_dir = "\\".join(BASE_DIR.split("\\"))
-        Path(img_dir+r"\media\uploads").mkdir(parents=True, exist_ok=True)
-        Path(img_dir+r"\media\output").mkdir(parents=True, exist_ok=True)
-        image_url = img_dir+r"\media\uploads\\"+myfile.name
-        output_url = img_dir+r"\media\output\\"+myfile.name
-        f = open(image_url,"wb")
-        for chunk in request.FILES['myfile'].chunks():
-            f.write(chunk)
-        f.close()
+        image_url = "media/uploads/"+myfile.name
+        output_url = "media/output/"+myfile.name
+        try:
+            f = open(image_url,"wb")
+        except OSError:
+            logger.error("could not open " + image_url)
+        with f:    
+            for chunk in request.FILES['myfile'].chunks():
+                f.write(chunk)
+            f.close()
         api_root = reverse_lazy('stats',request = request)
         api_root = api_root[:-7]
         print("File check is", is_image(myfile.name))
@@ -95,19 +96,20 @@ def initial_checks_multi_files(request):
         myfile_list = []
         myfile_name_list = []
         image_url_list = []
-        img_dir = "\\".join(BASE_DIR.split("\\"))
-        Path(img_dir+r"\media\uploads").mkdir(parents=True, exist_ok=True)
-        Path(img_dir+r"\media\output").mkdir(parents=True, exist_ok=True)
         for file in request.FILES.getlist('myfile'):
             myfile_list.append(file)
             myfile_name_list.append(file.name.replace(" ", ""))
-            full_path = img_dir + r"\media\uploads\\" + file.name.replace(" ", "")
+            full_path = "media/uploads/" + file.name.replace(" ", "")
             image_url_list.append(full_path)
-            f = open(full_path, "wb")
-            for chunk in file.chunks():
-                f.write(chunk)
+            try:
+                f = open(full_path, "wb")
+            except OSError:
+                logger.error("could not open " + full_path)
+            with f:    
+                for chunk in file.chunks():
+                    f.write(chunk)
             f.close()
-        output_url = img_dir + r"\media\output\\" + myfile_list[0].name.split('.')[0] + ".pdf"
+        output_url = "media/output/" + myfile_list[0].name.split('.')[0] + ".pdf"
 
         api_root = reverse_lazy('stats',request = request)
         print("Just before calling the function")
@@ -141,10 +143,12 @@ def pdf_maker(request):
         convert_images_to_pdf(image_url_list, output_url)
         logger.info("Image conversion to pdf is done")
         return_dict['output_url'] = api_root+r"static/"+ myfile_list[0].name.split('.')[0] + ".pdf"
-        #return_dict['output_url'] = api_root + r"static/" + "output.pdf"
-        with open("\\".join(BASE_DIR.split("\\")) + r"\media\output\\" + myfile_list[0].name.split('.')[0] + ".pdf",
-                  'rb') as pdf_file:
-            pdf_data = pdf_file.read()
+        #return_dict['output_url'] = api_root + r"static/" + "output.pdf" 
+        try:
+            with open("media/output/" + myfile_list[0].name.split('.')[0] + ".pdf",'rb') as pdf_file:
+                pdf_data = pdf_file.read()
+        except IOError:
+            logger.error("unable to read output file " + output_url)
         pdf_data_base64 = base64.b64encode(pdf_data).decode('utf-8')
         return_dict['imageUrl'] = f"data:application/pdf;base64,{pdf_data_base64}"
         return_dict['error'] = False
@@ -172,8 +176,11 @@ def noise_removal(request):
         write_stats(newData)
         noiseremoval(image_url, output_url)
         return_dict['output_url'] = api_root+r"static/"+ myfile.name
-        with open(output_url, 'rb') as f:
-            image_data = f.read()
+        try:
+            with open(output_url, 'rb') as f:
+                image_data = f.read()
+        except IOError:
+            logger.error("unable to read output file " + output_url)
         image_base64 = base64.b64encode(image_data).decode('utf-8')
         return_dict['imageUrl']=f"data:image/jpeg;base64,{image_base64}"
         return_dict['error'] = False
