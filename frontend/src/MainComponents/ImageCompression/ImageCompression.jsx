@@ -57,6 +57,10 @@ function ImageCompression(props1) {
   const [compressionRate, setCompressionRate] = useState(50);
   const [target_size, setTarget_size] = useState(null);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [compressionMethod, setCompressionMethod] = useState('rate');
+  const [isLoading,setIsLoading]= useState(false);
+  const [fileName, setfileName] = useState(null);
+  
   
   //const handleInputChange1 = (event) => setTarget_size(event.target.value);
   const handleInputChange1 = (event) => {
@@ -65,9 +69,6 @@ function ImageCompression(props1) {
     // If the input is empty, set the value to 0; otherwise, update with the input value
     setTarget_size(inputValue === null ? null : inputValue);
   };
-
-  const [isLoading,setIsLoading]= useState(false);
-  const [fileName, setfileName] = useState(null);
 
     // Event handler for Sider collapse
   const onCollapse = (collapsed) => {
@@ -88,6 +89,21 @@ function ImageCompression(props1) {
     const selectedFormat = menuItems.find((item) => item.key === event.key)?.name;
     setselectedFormat(selectedFormat);
     console.log(selectedFormat)
+  }; 
+
+  const handleMethodClick = (event) => {
+    const selectedMethod = event.key;
+    setCompressionMethod(selectedMethod);
+    console.log(selectedMethod)
+
+    if (selectedMethod === 'rate') {
+      // Reset custom compression input value
+      setTarget_size(null);
+    } else if (selectedMethod === 'custom') {
+      // Reset compression rate slider value
+      setCompressionRate(50); // You can set it to your default value
+    }
+
   }; 
 
   // Handle the compression rate change
@@ -348,16 +364,44 @@ function ImageCompression(props1) {
                             <div className="sidebar-content">
                             {!collapsed && (
                                 <div className="compression-rate-slider-container">
-                                    <label className="compression-rate-label">Compression Rate:</label>
-                                    <Slider value={compressionRate} min={1}  max={100} onChange={handleSliderChange} />
-                                    <span>{compressionRate}</span>
+                                    {compressionMethod === 'rate' && (
+                                        <>
+                                          <label className="compression-rate-label">Compression Rate:</label>
+                                          {/* Assume you have a Slider component */}
+                                          <Slider value={compressionRate} min={1} max={100} onChange={handleSliderChange} />
+                                          <span>{compressionRate}</span>
+                                        </>
+                                      )}
+                                      {compressionMethod === 'custom' && (
+                                        <div className="input-container">
+                                          <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in KB):</label>
+                                          <input type="text" value={target_size} onChange={handleInputChange1} placeholder="e.g. 300" />
+                                        </div>
+                                      )}
                                 </div>
                             )}
-                            <div className="input-container">
+                            {/* <div className="input-container">
                                 <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in KB):</label>
                                     <input type="text" value={target_size} onChange={handleInputChange1} placeholder="e.g. 300" />
-                                </div>
+                                </div> */}
+                                <Menu
+                                theme="dark"
+                                mode="inline"
+                                style={{ backgroundColor: '#000524', minHeight: '15vh', overflow: 'hidden' }}
+                                onClick={handleMethodClick}
+                                defaultSelectedKeys={['rate']} 
+                                >
+                                <Menu.Item key="rate" className="format-menu-item" style={{ textAlign: 'center', backgroundColor: compressionMethod === 'rate' ? '#3750ed' : '#00093e', color: '#FFFFFF' }}>
+                                  Compression Rate
+                                </Menu.Item>
+                                <Menu.Item key="custom" className="format-menu-item" style={{ textAlign: 'center', backgroundColor: compressionMethod === 'custom' ? '#3750ed' : '#00093e', color: '#FFFFFF' }}>
+                                  Custom Compression
+                                </Menu.Item>
+                                </Menu>
+
+
                             <label className="format-menu-label">Compress As:</label>
+                            
                             <Menu
                                 theme="dark"
                                 mode="inline"
@@ -379,7 +423,7 @@ function ImageCompression(props1) {
                                     className="format-menu-item"
                                     style={{
                                       textAlign: 'center',
-                                      backgroundColor: selectedFormat === item.name ? '#3750ed' : '#00093e', // Red if selected, else default color
+                                      backgroundColor: selectedFormat === item.name ? '#3750ed' : '#00093e', // Blue if selected, else default color
                                       color: selectedFormat === item.name ? '#FFFFFF' : '#B4C2D3', // Text color for selected and non-selected items
                                     }}
                                   >
