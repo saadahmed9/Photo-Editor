@@ -269,7 +269,7 @@ function ImageCompression(props1) {
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
       }
       )
-      .catch(error => {console.log(error); toast.error("Error encountered in handlePreview."); setIsLoading(false)
+      .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)
       setIsButtonClicked(false); });
       
   }
