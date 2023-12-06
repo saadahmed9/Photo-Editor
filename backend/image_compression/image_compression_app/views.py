@@ -84,6 +84,11 @@ def get_db_stat(request):
         return_dict['status'] = 400
     return Response(return_dict)
 
+import numpy as np
+import random
+import sys
+import math
+
 @api_view(('POST',))
 @csrf_exempt
 def image_compression(request):
@@ -94,6 +99,7 @@ def image_compression(request):
         try:
             verify_upload_file_passed(request)
             verify_functionality_passed(request)
+
             image_file = request.FILES.get('myfile')
             image_file.name = image_file.name.replace(" ", "")
             compression_rate = int(request.POST.get('compression_rate'))
