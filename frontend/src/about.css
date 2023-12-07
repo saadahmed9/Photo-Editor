@@ -1,0 +1,89 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+}
+
+.about-section {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+    .about-section h1 {
+        margin-bottom: 40px;
+        color: #6A5ACD; /* Slate Blue color for headings */
+    }
+
+.team-members, .mentors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.member, .mentor {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .member img, .mentor img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 3px solid #ddd;
+        margin-bottom: 10px;
+        object-fit: cover;
+    }
+
+    .member h2, .mentor h2 {
+        color: #4682B4; /* Steel Blue color */
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        margin-bottom: 5px;
+    }
+
+    .member p, .mentor p {
+        margin: 4px 0;
+        color: #333;
+        font-size: 0.85em;
+    }
+
+.mentor-heading {
+    margin-top: 70px;
+    text-align: center;
+    color: #6A5ACD;
+}
+
+.member:hover, .mentor:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transform: translateY(-5px);
+}
+
+.member p.role, .mentor p.role {
+    color: #2E8B57; /* Sea Green color */
+    font-style: italic;
+    font-weight: bold;
+}
+
+.member p.department, .mentor p.department {
+    color: #DAA520; /* Goldenrod color */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.member p.email, .mentor p.email {
+    color: #8B4513; /* Saddle Brown color */
+    font-size: 0.8em;
+    font-weight: bold;
+    text-decoration: none;
+}

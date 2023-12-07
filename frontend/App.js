@@ -18,6 +18,8 @@ import { v4 as uuidv4 } from 'uuid';
 import Collage from "./MainComponents/PhotoCollage/Collage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import About from "./About.js"; // Path to your About component
+
 
 class App extends Component {
   constructor(props) {
@@ -80,6 +82,7 @@ class App extends Component {
           </ul>
         </nav>
         <Routes>
+          <Route path="/about" element={<About />} />
           <Route path="/" element={<Home />} />
           <Route path="/passport" element={<PassportPhoto uuid={this.state.uuid} />} />
           <Route path="/photoresizeandcrop" element={<Demo uuid={this.state.uuid}/>} />
