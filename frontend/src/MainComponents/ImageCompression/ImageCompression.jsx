@@ -60,6 +60,8 @@ function ImageCompression(props1) {
   const [compressionMethod, setCompressionMethod] = useState('rate');
   const [isLoading,setIsLoading]= useState(false);
   const [fileName, setfileName] = useState(null);
+  const [inputSize, setInputSize] = useState();
+  const [outputSize, setOutputSize] = useState();
   
   
   //const handleInputChange1 = (event) => setTarget_size(event.target.value);
@@ -118,6 +120,8 @@ function ImageCompression(props1) {
     setIsButtonClicked(false);
     setImageUrl(null);    
     setDisplayUrl(null);
+    setInputSize(null);
+    setOutputSize(null);
   };
 
 
@@ -210,31 +214,6 @@ function ImageCompression(props1) {
   //   return extension;
   // }
 
-
-  // Download the processed image  
-  // function downloadImage(url1,type) {
-  //   fetch(url1)
-  //     .then(response => response.blob())
-  //     .then(blob => {
-  //       //const url = window.URL.createObjectURL(blob);
-  //       const reader = new FileReader();
-  //       reader.onload = () => {
-  //         const imageDataUrl = reader.result;
-  //         setIsLoading(false);
-  //         const link = document.createElement('a');
-  //       link.href = imageDataUrl;
-  //       link.setAttribute('download', fileName+"."+selectedFormat.toLowerCase());
-  //       document.body.appendChild(link);
-  //       link.click();
-  //       link.remove();
-  //         //setDisplayUrl(imageDataUrl);
-  //       };
-  //       reader.readAsDataURL(blob);
-  //     })
-  //     .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
-  // }
-
-
   function downloadImage(url1, format) {
     fetch(url1)
         .then(response => response.blob())
@@ -283,6 +262,8 @@ function ImageCompression(props1) {
     
     //axios.post(process.env.REACT_APP_API_URL+'/image_compression/', formData)
       .then(response => {
+        setInputSize(response.data.input_image_size);
+        setOutputSize(response.data.output_image_size);
         downloadImage(response.data.imageUrl, selectedFormat.toLowerCase())
       }
       )
@@ -374,16 +355,13 @@ function ImageCompression(props1) {
                                       )}
                                       {compressionMethod === 'custom' && (
                                         <div className="input-container">
-                                          <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in KB):</label>
+                                          <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Compress Below (in KB):</label>
                                           <input type="text" value={target_size} onChange={handleInputChange1} placeholder="e.g. 300" />
                                         </div>
                                       )}
                                 </div>
                             )}
-                            {/* <div className="input-container">
-                                <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in KB):</label>
-                                    <input type="text" value={target_size} onChange={handleInputChange1} placeholder="e.g. 300" />
-                                </div> */}
+                            
                                 <Menu
                                 theme="dark"
                                 mode="inline"
@@ -408,15 +386,7 @@ function ImageCompression(props1) {
                                 style={{ backgroundColor: '#000524', minHeight: '100vh', overflow: 'hidden' }}
                                 onClick={handleMenuClick}
                             >
-                                {/* {menuItems.map((item) => (
-                                    <Menu.Item
-                                        key={item.key}
-                                        className={`format-menu-item ${selectedFormat === item.name ? 'format-menu-item-selected' : ''}`}
-                                        style={{ textAlign: 'center' }}
-                                    >
-                                        {item.name}
-                                    </Menu.Item>
-                                ))} */}
+                                
                                 {menuItems.map((item) => (
                                   <Menu.Item
                                     key={item.key}
@@ -481,6 +451,9 @@ function ImageCompression(props1) {
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>
+                    {inputSize && outputSize && (
+                      <p> <b>Input File Size:</b> {inputSize} &emsp; &emsp; &emsp; <b>Output File Size:</b> {outputSize} </p>
+                    )}
                     {imageUrl && (
                       <Button type="danger" onClick={handleClear} style={{ margin: '10px' }}>
                         Clear Photo
@@ -526,6 +499,9 @@ function ImageCompression(props1) {
                       </p>
                       {isLoading && <Spin indicator={antIcon} />}
                     </Upload><br></br>
+                    {inputSize && outputSize && (
+                      <p> <b>Input File Size:</b> {inputSize} &emsp; &emsp; &emsp; <b>Output File Size:</b> {outputSize} </p>
+                    )}
                     {imageUrl && (
                       <Button type="danger" onClick={handleClear} style={{ margin: '10px' }}>
                         Clear Photo
@@ -544,11 +520,7 @@ function ImageCompression(props1) {
                         Download Photo
                       </Button>
                     )}
-                    {/* {displayUrl && (
-                     <Button type="success" onClick={handleDownload} style={{ margin: '10px' }}>
-                        Download Photo
-                      </Button>
-                    )} */}
+                    
                 </Card>
               </div>
             </div>
