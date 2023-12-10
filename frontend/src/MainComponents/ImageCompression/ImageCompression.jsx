@@ -246,6 +246,15 @@ function ImageCompression(props1) {
       toast.error("Select image format");
       return;
     }
+
+    const uploadedImageType = getImageTypeFromMime(imageUrl);
+    if(selectedFormat.toLowerCase() === 'png' && uploadedImageType !== 'image/png') {
+      setIsLoading(false);
+      setIsButtonClicked(false); // Reset button click state
+      toast.error("PNG output requires a PNG input. Please upload a PNG file.");
+      return;
+  }
+
     // if(selectedFormat.toLowerCase() === getImageTypeFromMime(imageUrl)){
     //   setIsLoading(false);
     //   toast.error("Uploaded Image is already in the same format")
