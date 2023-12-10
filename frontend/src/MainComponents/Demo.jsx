@@ -44,7 +44,7 @@ export const Demo = (props1) => {
   const [croppedImage, setCroppedImage] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = React.useState(1)
-
+  const [disabledMenuItems, setDisabledMenuItems] = useState([]);
   const cropperRef = useRef(null);
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
@@ -56,7 +56,20 @@ export const Demo = (props1) => {
   });
   const [isCircleCrop, setIsCircleCrop] = useState(false);
 
-  
+  const handleNumeratorChange = (e) => {
+    setNumerator(e.target.value);
+    // Enable menu items if numerator is empty
+    if (!e.target.value.trim() && denominator.trim()) {
+      setDisabledMenuItems([]);
+    }
+  };
+  const handleDenominatorChange = (e) => {
+    setDenominator(e.target.value);
+    // Enable menu items if denominator is empty
+    if (!e.target.value.trim() && numerator.trim()) {
+      setDisabledMenuItems([]);
+    }
+  };
   // Handler for toggle between normal crop and circle crop
   const handleCropTypeToggle = () => {
     setIsCircleCrop(!isCircleCrop);
@@ -79,6 +92,16 @@ export const Demo = (props1) => {
     setCollapsed(collapsed);
     };
 
+  {useEffect(() => {
+    if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
+      console.error('Invalid ratio!');
+      return;
+    }
+    setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
+    const disabledItems = menuItems.map((item) => item.key);
+    setDisabledMenuItems(disabledItems);
+    setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
+  }, [numerator, denominator])}
 
     // Tooltip content for predefined ratios
     const ratioDescriptions = {
@@ -254,6 +277,7 @@ export const Demo = (props1) => {
   
   <li>Choose Ratio: Select the desired aspect ratio from the left panel.</li>
   <li>Set Custom Ratio by entering values.</li>
+  <li>Easily Switch between rectangle and circle crop with the of the switch button.</li>
   <li>Preview and Download: Preview and download the cropped photo.</li>
   </ol>
         </div>
@@ -285,7 +309,15 @@ export const Demo = (props1) => {
                   className="custom-ratio-input"
                   placeholder="200"
                   value={customRatio}
-                  onChange={(e) => setCustomRatio(e.target.value)}
+                  onChange={(e) => {
+                    const newRatio = e.target.value.trim(); // Trim leading and trailing spaces
+                
+                    setCustomRatio(newRatio);
+                    setCropSize({
+                      width: parseFloat(newRatio) || 0,
+                      height: parseFloat(newRatio) || 0
+                    });
+                  }}
                   style={{ marginRight: '0.5em' }} 
                 />
                 <span className="multiplication-sign" >×</span>
@@ -293,36 +325,30 @@ export const Demo = (props1) => {
                   className="custom-ratio-input"
                   placeholder="200"
                   value={customRatio} // Both text boxes have the same value for circle crop
-                  onChange={(e) => setCustomRatio(e.target.value)}
+                  onChange={(e) => {
+                    const newRatio = e.target.value.trim(); // Trim leading and trailing spaces
+                
+                    setCustomRatio(newRatio);
+                    setCropSize({
+                      width: parseFloat(newRatio) || 0,
+                      height: parseFloat(newRatio) || 0
+                    });
+                  }}
                   style={{ marginLeft: '0.5em' }} 
                 />
                 </div>
 
               )}
 
-                {isCircleCrop && (
-                <Button
-                  className="custom-ratio-button"
-                  onClick={() => {
-                    if (isNaN(customRatio) || customRatio == 0) {
-                      console.error('Invalid ratio!');
-                      return;
-                    }
-                    setCropSize({
-                      width: parseFloat(customRatio),
-                      height: parseFloat(customRatio)
-                    });
-                  }}
-                >
-                  Set Custom Ratio
-                </Button>
-              )}
+                
 
             {!isCircleCrop && (
                       <div>
                                       <Menu theme="dark" mode="inline" style={{ backgroundColor: '#000524', minHeight: '10vh', overflow: 'hidden', textAlign: 'center' }} onClick={(e) => handleMenuClick(e)}>
                                           {menuItems.map((item) => (
-                                              <Menu.Item className="ratio-menu-item" key={item.key} title={ratioDescriptions[item.name]}>
+                                              <Menu.Item className="ratio-menu-item" key={item.key} title={ratioDescriptions[item.name]}
+                                              disabled={disabledMenuItems.includes(item.key)}
+                                              >
                                                   {item.name}
                                               </Menu.Item>
                                           ))}
@@ -341,7 +367,7 @@ export const Demo = (props1) => {
                                               className="custom-ratio-input"
                                               placeholder="Width"
                                               value={numerator}
-                                              onChange={(e) => setNumerator(e.target.value)}
+                                              onChange={handleNumeratorChange}
                                               style={{ marginRight: '0.5em' }}
                                           />
                                           <span>/</span>
@@ -349,23 +375,11 @@ export const Demo = (props1) => {
                                               className="custom-ratio-input"
                                               placeholder="Height"
                                               value={denominator}
-                                              onChange={(e) => setDenominator(e.target.value)}
+                                              onChange={handleDenominatorChange}
                                               style={{ marginLeft: '0.5em' }}
                                           />
                                       </div>
-                                      <Button
-                                          className="custom-ratio-button"
-                                          onClick={() => {
-                                              if (isNaN(numerator) || isNaN(denominator) || denominator == 0) {
-                                                  console.error('Invalid ratio!');
-                                                  return;
-                                              }
-                                              setAspectRatio(parseFloat(numerator) / parseFloat(denominator));
-                                              setCropperKey(cropperKey + 1); // reset the Cropper component with a new key
-                                          }}
-                                      >
-                                          Set Custom Ratio
-                                      </Button>
+                                      
                                   </div>
                               )}
 
@@ -385,18 +399,19 @@ export const Demo = (props1) => {
           {!imageSrc ? 
          <div className="passport-photo-container" style={{display:'block'}}>
          <Fade>
-            <div style={{position:'relative', left:'180px',top:'5rem'}}>
+            <div style={{position:'relative', left:'180px',top:'1rem'}}>
   <b>Photo Crop</b> involves removing unwanted areas and keeping the desired elements.
   <ol>
   <li>Input Image: Start by drag & drop or upload the image file.</li>
   
   <li>Choose Ratio: Select the desired aspect ratio from the left panel.</li>
   <li>Set Custom Ratio by entering values.</li>
+  <li>Easily Switch between rectangle and circle crop with the help of the switch button.</li>
   
   <li>Preview and Download: Preview and download the cropped photo.</li>
   </ol>
   </div>  </Fade>
-              <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
+              <div className="center-card-container" style={{position:'relative', top:'10px', left:'180px'}}>
             <div style={{ flexGrow: '1' }}>
               <Card className="passport-photo-card"
                 title="Drag and Drop Photo"
@@ -524,11 +539,11 @@ export const Demo = (props1) => {
                     </p>
                   </Upload><br></br>
                   {imageSrc && (
-                  <div style={{ width: '50%', marginTop: '10px' , marginLeft:'130px'}}>
+                  <div style={{ display: 'flex',justifyContent: 'space-between',width: '50%', marginTop: '10px' , marginLeft:'110px'}}>
                   <Button type="danger" onClick={() => setImageSrc(null)}>
                     Clear Photo
                   </Button>
-                  <Button type="primary" style={{margin: '10px' }} onClick={() => getCropData()}>
+                  <Button type="primary" style={{ marginLeft: '10px' }} onClick={() => getCropData()}>
                     Download Photo
                   </Button>
                 </div>
