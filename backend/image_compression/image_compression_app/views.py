@@ -13,6 +13,7 @@ import logging
 
 import cv2
 import numpy as np
+import sys
 from image_compression_app.contollers.image_compression import ImageCompressClass as ICC
 # Create your views here.
 
@@ -53,10 +54,6 @@ def get_db_stat(request):
         return_dict['status'] = 400
     return Response(return_dict)
 
-import numpy as np
-import random
-import sys
-import math
 
 @api_view(('POST',))
 @csrf_exempt
@@ -72,7 +69,8 @@ def image_compression(request):
             image_file = request.FILES.get('myfile')
             image_file.name = image_file.name.replace(" ", "")
             compression_rate = int(request.POST.get('compression_rate'))
-            compression_rate = random.randint(10, 25)
+            logger.info(compression_rate)
+            compression_rate = int(compression_rate/4)
             target_size = request.POST.get('custom_rate')
             input_image_size = image_file.size
             input_image_size_temp = image_file.size
@@ -103,8 +101,8 @@ def image_compression(request):
                     output_image_size = sys.getsizeof(compressed_image_bytes)
                     # Add relevant information to the return dictionary
                     return_dict['imageUrl'] = f"data:image/{output_format};base64,{compressed_image_base64}"
-                    return_dict['input_image_size'] = f"{math.ceil(input_image_size/1024)} KB"
-                    return_dict['output_image_size'] = f"{math.ceil(output_image_size/1024)} KB"
+                    return_dict['input_image_size'] = f"{int(input_image_size/1024)} KB"
+                    return_dict['output_image_size'] = f"{int(output_image_size/1024)} KB"
                     return_dict['format'] = output_format
                     return_dict['error'] = False
                     return_dict['message'] = "Successfully processed image"
@@ -136,8 +134,8 @@ def image_compression(request):
                 output_image_size = sys.getsizeof(compressed_image_bytes)
                 logger.info("custom compression completed in views")
                 return_dict['imageUrl'] = f"data:image/{output_format};base64,{compressed_image_base64}"
-                return_dict['input_image_size'] = f"{math.ceil(input_image_size/1024)} KB"
-                return_dict['output_image_size'] = f"{math.ceil(output_image_size/1024)} KB"
+                return_dict['input_image_size'] = f"{int(input_image_size/1024)} KB"
+                return_dict['output_image_size'] = f"{int(output_image_size/1024)} KB"
                 return_dict['format'] = output_format
                 return_dict['error'] = False
                 return_dict['message'] = "Successfully processed image"
