@@ -175,7 +175,7 @@ function BrightnessContrast(props1) {
                         </div>
                     ) : (
                         <>
-                            <div style={{ margin: 12 }}>Brightness</div>
+                            <div style={{ margin: 12,fontWeight:"bold", color:"white"}}>Brightness</div>
                             <Slider
                                 value={brightness}
                                 min={0}
@@ -183,7 +183,7 @@ function BrightnessContrast(props1) {
                                 onChange={handleBrightnessChange}
                                 style={{ width: 175, margin: 12 }}
                             />
-                            <div style={{ margin: 12 }}>Contrast</div>
+                            <div style={{ margin: 12,fontWeight:"bold", color:"white" }}>Contrast</div>
                             <Slider
                                 value={contrast}
                                 min={0}
