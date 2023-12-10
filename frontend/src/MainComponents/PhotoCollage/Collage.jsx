@@ -87,11 +87,7 @@ export const Collage = () => {
             name: 'Layout 3',
             imageUrl: '/Layouts/3-1.png'
         },
-        {
-            key: 'layout4',
-            name: 'Layout 4',
-            imageUrl: '/Layouts/3-2.png'
-        },
+        
         {
             key: 'layout5',
             name: 'Layout 5',
@@ -112,11 +108,7 @@ export const Collage = () => {
             name: 'Layout 8',
             imageUrl: '/Layouts/4-3.png'
         },
-        {
-            key: 'layout9',
-            name: 'Layout 9',
-            imageUrl: '/Layouts/4-4.png'
-        },
+        
         {
             key: 'layout10',
             name: 'Layout 10',
@@ -127,21 +119,13 @@ export const Collage = () => {
             name: 'Layout 11',
             imageUrl: '/Layouts/5-2.png'
         },
-        {
-            key: 'layout12',
-            name: 'Layout 12',
-            imageUrl: '/Layouts/5-3.png'
-        },
+        
         {
             key: 'layout13',
             name: 'Layout 13',
             imageUrl: '/Layouts/5-4.png'
         },
-        {
-            key: 'layout14',
-            name: 'Layout 14',
-            imageUrl: '/Layouts/static.png'
-        },
+        
 
 
         // Add more layout objects as needed
@@ -263,58 +247,50 @@ export const Collage = () => {
                     {!selectedLayout && <Fade>
                         {/* Users can convert their images into the desired format, such as JPEG, PNG, and more.
           Please select the format and upload the image in box below. */}
-                        <div style={{ position: 'relative', left: '70px', marginTop: '20rem' }}>
+                        <div style={{ position: 'relative', left: '10px', marginTop: '10rem',textAlign:"justify" }}>
                             <b>Collage Maker</b> involves creating photo collages by combining multiple images into a single composition using our intuitive collage maker.
-                            <ol>
-                                <li>Choose Template : Select any template from the left panel to create the collage.</li>
-                                <li>Images : Upload images using the right panel.</li>
-                                <li>Input Image: Start by drag & drop or upload the image file from the images panel or directly from local into the layout.</li>
-
-                                <li>Output Image: Save the image data into a file to the local using the download photo option.</li>
+                            <ol style={{textAlign:'justify' }}>
+                                <li>Take control of your composition by choosing from a variety of templates, then dive into customization with the power of splitting and merging rows.</li>
+                                <li>Add or delete columns with a simple click, giving you the flexibility to design a collage that perfectly fits your vision.</li>
+                                <li>Upload your images seamlessly, arranging them with precision on the layout.</li>
+                                <li>When your collage reaches perfection, save it with the download photo option. It's not just about combining images; it's about curating your moments in a way that's uniquely yours.</li>
+                                
                             </ol>
                         </div>  </Fade>}
                     {selectedLayout === 'layout1' &&
-                        <Template rows={1} columnsPerRow={[2]} />
+                        <Template rows={1} initialColumnsPerRow={[2]} />
                     }
 
                     {selectedLayout === 'layout2' &&
-                        <Template rows={2} columnsPerRow={[1, 1]} />}
+                        <Template rows={2} initialColumnsPerRow={[1, 1]} />}
                     {selectedLayout === 'layout3' &&
-                        <Template rows={1} columnsPerRow={[3]} />
+                        <Template rows={1} initialColumnsPerRow={[3]} />
                     }
-                    {selectedLayout === 'layout4' &&
-                        <TemplateCol columns={2} rowsPerColumn={[1, 2]} />
-                    }
+                    
                     {selectedLayout === 'layout5' &&
-                        <Template rows={2} columnsPerRow={[1, 2]} />
+                        <Template rows={2} initialColumnsPerRow={[1, 2]} />
                     }
                     {selectedLayout === 'layout6' &&
-                        <Template rows={1} columnsPerRow={[4]} />
+                        <Template rows={1} initialColumnsPerRow={[4]} />
                     }
                     {selectedLayout === 'layout7' &&
-                        <Template rows={4} columnsPerRow={[1, 1, 1, 1]} />
+                        <Template rows={4} initialColumnsPerRow={[1, 1, 1, 1]} />
                     }
                     {selectedLayout === 'layout8' &&
-                        <Template rows={2} columnsPerRow={[2, 2]} />
+                        <Template rows={2} initialColumnsPerRow={[2, 2]} />
                     }
-                    {selectedLayout === 'layout9' &&
-                        <TemplateCol columns={2} rowsPerColumn={[1, 3]} />
-                    }
+                    
                     {selectedLayout === 'layout10' &&
-                        <Template rows={3} columnsPerRow={[1, 2, 2]} />
+                        <Template rows={3} initialColumnsPerRow={[1, 2, 2]} />
                     }
                     {selectedLayout === 'layout11' &&
-                        <Template rows={2} columnsPerRow={[2, 3]} />
+                        <Template rows={2} initialColumnsPerRow={[2, 3]} />
                     }
-                    {selectedLayout === 'layout12' &&
-                        <TemplateCol columns={3} rowsPerColumn={[1, 2, 2]} />
-                    }
+                    
                     {selectedLayout === 'layout13' &&
-                        <Template rows={3} columnsPerRow={[2, 1, 2]} />
+                        <Template rows={3} initialColumnsPerRow={[2, 1, 2]} />
                     }
-                    {selectedLayout === 'layout14' &&
-                        <STemplate columns={2} rowsPerColumn={[1, 3]} />
-                    }
+                    
                 </ContentSection>
             </Layout>
 
@@ -327,34 +303,18 @@ export const Collage = () => {
                     </div>
                 ) : (
                     <>
-                        <div style={{ position: "relative", width: "200px", height: '50px' }}>
-                            <button style={{ width: "100%", height: "100%", }}>
-                                <i className="fa fa-plus-circle" aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}></i>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={(e) => SiderImageUpload(e)}
-                                    style={{
-                                        position: "absolute",
-                                        width: "100%",
-                                        height: "100%",
-                                        opacity: "0",
-                                        left: "0",
-                                        top: "0",
-                                        cursor: "pointer",
-                                    }}
-                                />
-                            </button>
-                        </div>
-                        <button style={{ width: "100%" }} onClick={ConfirmDelete}>Clear All</button>
+                        
                         <div className="images-grid">
-                            {imageCollection.map((image, index) => (
-                                <div key={index} className="image-item">
-                                    <img src={image} className="image" draggable="true" />
-                                    <button className="remove-image-btn" onClick={() => handleRemoveImage(index)}>Remove</button>
-                                </div>
-                            ))}
+                        <ol style={{ color: 'gray',textAlign:"justify",marginLeft:"8px",marginRight:"5px"}}>
+                        <h5 style={{ color: 'white', fontWeight: 'bold' }}>Steps:</h5>
+
+                                <li>Choose the Template : Select any template from the left panel to create the collage.</li>
+                                <li>Use the +/- at the top left corner of first cell to add/delete columns.</li>
+                                <li>Use the split button to split current cell.</li>
+                                <li>Input Image: Start by drag & drop or upload the image file into the layout.</li>
+                                <li>To remove the image from the cell, click Remove at the bottom left corner of the uploaded image.</li>
+                                <li>Click Download button below for downloading the collage.</li>
+                            </ol>
                         </div>
                     </>
                 )}

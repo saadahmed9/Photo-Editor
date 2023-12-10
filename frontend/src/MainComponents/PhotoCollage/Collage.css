@@ -47,7 +47,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height:600px;
+    height:500px;
     margin: 40px 0px 0px 20px;
     /* margin-top: 2rem;
     margin-left:14rem; */
@@ -91,7 +91,7 @@
     position: relative;
     overflow: hidden;
     padding-top: 100%; /* 1:1 aspect ratio */
-    border: 1px solid #ccc;
+    border: 1px solid #e43c3c;
     flex-grow: 1;
     background-color: #f0f0f0;
   }
@@ -160,9 +160,11 @@
     background-color: black;
     color: white;
     text-align: center;
-    font-size: 16px;
+    font-size: 12px;
     cursor: pointer;
-    height:4rem
+    height:4rem;
+    float: right;
+    
   }
 
 .zoom-in-button,
@@ -177,6 +179,7 @@
   padding: 2px 4px;
   border-radius: 3px;
   font-size: 16px;
+  width: 25px;
 }
 
 .zoom-out-button {
@@ -277,4 +280,18 @@ html, body, #root, .ant-layout {
     .remove-image-btn:hover {
         color: rgba(255, 0, 0, 0.9);
         border-color: rgba(255, 0, 0, 0.9);
+    }
+
+    .bordered-div {
+      border-top: 2px solid #00ffdd;
+      border-left: 2px solid #FF0000; /* You can change #FF0000 to the color of your choice */
+       /* Optional: Add padding for better visualization */
+    }
+    
+    .button-split {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+
+      
     }
