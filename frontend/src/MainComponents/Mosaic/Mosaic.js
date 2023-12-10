@@ -280,7 +280,8 @@ const info = () => {
             style={{ width: "80%"}}
             onChange={handleSliderChange}
           />
-        <span id="sliderValue">{selectedPixel}</span>
+        <span style={{ fontWeight: 'bold', color: 'white' }}>{selectedPixel}</span>
+
                   
         </>
         )}
@@ -292,14 +293,14 @@ const info = () => {
         <Fade>
            {/* Users can convert their images into the desired format, such as JPEG, PNG, and more.
            Please select the format and upload the image in box below. */}
-           <div style={{position:'relative', left:'160px',top:'5rem'}}>
+           <div style={{position:'relative', left:'10px',top:'5rem',textAlign:"justify"}}>
  <b>Mosaic</b> involves creating mosaic image by using multiple images.
  <ol>
- <li>Choose Template: Upload template using the left panel.</li>
- <li>Choose Images: Upload more than 6 images using right panel.</li>
+ <li>Select Template: Begin by choosing a base template for your from the left panel. This template forms the foundation of your artwork.</li>
+ <li>Upload Images: Populate your mosaic with life by uploading more than six images using the right panel. These images will become the tiny pixels that collectively shape your final creation.</li>
+ <li>Adjust Pixel Size: Fine-tune the details of your mosaic by adjusting the pixel size. Use the adjuster to control how these images blend and contribute to the overall aesthetic.</li>
+ <li>Preview and Download: Take a sneak peek at your mosaic with the preview feature. Once satisfied, hit the download button to capture and own your unique visual masterpiece. Share, print, or marvel at your personalized creation!</li>  
 
-   
-   <li>Preview and Download: Preview and download the mosaic.</li>
  </ol>
  </div>  </Fade>
              <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
