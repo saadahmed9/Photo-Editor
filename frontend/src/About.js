@@ -27,7 +27,7 @@ const About = () => {
 
                 {/* Member 3 */}
                 <div className="member">
-                    <img src="rohit.jpeg" alt="Taraka Rohit Adusumilli" />
+                    <img src="Rohit.jpg" alt="Taraka Rohit Adusumilli" />
                     <h2>Taraka Rohit Adusumilli</h2>
                     <p className="role">Graduate Student</p>
                     <p className="department">Computer Science Engineering</p>
