@@ -355,7 +355,7 @@ function ImageCompression(props1) {
                                       )}
                                       {compressionMethod === 'custom' && (
                                         <div className="input-container">
-                                          <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Compression Below (in KB):</label>
+                                          <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Compress Below (in KB):</label>
                                           <input type="text" value={target_size} onChange={handleInputChange1} placeholder="e.g. 300" />
                                         </div>
                                       )}
