@@ -9,7 +9,7 @@ const About = () => {
 
                 {/* Member 1 */}
                 <div className="member">
-                    <img src="pavana.jpeg" alt="Pavana Lakshmi Venugopal" />
+                    <img src="/About/pavana.jpeg" alt="Pavana Lakshmi Venugopal" />
                     <h2>Pavana Lakshmi Venugopal</h2>
                     <p className="role">Graduate Student</p>
                     <p className="department">Computer Science Engineering</p>
@@ -18,7 +18,7 @@ const About = () => {
 
                 {/* Member 2 */}
                 <div className="member">
-                    <img src="saad.jpeg" alt="Saad Ahmed" />
+                    <img src="/About/saad.jpeg" alt="Saad Ahmed" />
                     <h2>Saad Ahmed</h2>
                     <p className="role">Graduate Student</p>
                     <p className="department">Computer Science Engineering</p>
@@ -27,7 +27,7 @@ const About = () => {
 
                 {/* Member 3 */}
                 <div className="member">
-                    <img src="Rohit.jpg" alt="Taraka Rohit Adusumilli" />
+                    <img src="/About/Rohit.jpg" alt="Taraka Rohit Adusumilli" />
                     <h2>Taraka Rohit Adusumilli</h2>
                     <p className="role">Graduate Student</p>
                     <p className="department">Computer Science Engineering</p>
@@ -36,7 +36,7 @@ const About = () => {
 
                 {/* Member 4 */}
                 <div className="member">
-                    <img src="ayesha.jpeg" alt="Ayesha Humaera" />
+                    <img src="/About/ayesha.jpeg" alt="Ayesha Humaera" />
                     <h2>Ayesha Humaera</h2>
                     <p className="role">Graduate Student</p>
                     <p className="department">Computer Science Engineering</p>
@@ -49,7 +49,7 @@ const About = () => {
 
                 {/* Mentor 1 */}
                 <div className="mentor">
-                    <img src="jinjun.jpg" alt="Jinjun Xiong" />
+                    <img src="/About/jinjun.jpg" alt="Jinjun Xiong" />
                     <h2>Jinjun Xiong</h2>
                     <p className="role">Professor</p>
                     <p className="email">Email: jinjun@buffalo.edu</p>
@@ -57,7 +57,7 @@ const About = () => {
 
                 {/* Mentor 2 */}
                 <div className="mentor">
-                    <img src="yuting.jpeg" alt="Yuting Hu" />
+                    <img src="/About/yuting.jpeg" alt="Yuting Hu" />
                     <h2>Yuting Hu</h2>
                     <p className="role">Teaching Assistant</p>
                     <p className="email">Email: yhu54@buffalo.edu</p>
