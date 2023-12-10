@@ -49,7 +49,7 @@ const About = () => {
 
                 {/* Mentor 1 */}
                 <div className="mentor">
-                    <img src="/About/jinjun.jpg" alt="Jinjun Xiong" />
+                    <img src="/About/Jinjun.jpg" alt="Jinjun Xiong" />
                     <h2>Jinjun Xiong</h2>
                     <p className="role">Professor</p>
                     <p className="email">Email: jinjun@buffalo.edu</p>
@@ -57,7 +57,7 @@ const About = () => {
 
                 {/* Mentor 2 */}
                 <div className="mentor">
-                    <img src="/About/yuting.jpeg" alt="Yuting Hu" />
+                    <img src="/About/Yuting.jpeg" alt="Yuting Hu" />
                     <h2>Yuting Hu</h2>
                     <p className="role">Teaching Assistant</p>
                     <p className="email">Email: yhu54@buffalo.edu</p>
