@@ -56,6 +56,7 @@ def video_compression(request):
             myfile.name = myfile.name.replace(" ", "")
             video_url = "media/uploads/"+myfile.name
             output_url = "media/output/"+myfile.name
+            target_size = request.data.get("target", None)
             try:
                 f = open(video_url,"wb")
             except OSError:
@@ -66,9 +67,10 @@ def video_compression(request):
                 f.close()
             api_root = reverse_lazy('stats',request = request)
             api_root = api_root[:-7]
-            logger.info(api_root)
+            if target_size == 'null':
+                target_size = (os.path.getsize(video_url) / (1024 * 1024)) / 2
             return_dict['output_url'] = api_root+r"static/"+ myfile.name
-            return_value = compress_video(video_url, output_url)
+            return_value = compress_video(video_url, output_url, target_size)
             if return_value == 0:
                 raise Exception("failed compressing the video file")
             input_file_size = "{:.2f}".format(os.path.getsize(video_url) / (1024 * 1024))

@@ -49,12 +49,11 @@ function VideoCompression(props1) {
   const [videoUrl, setVideoUrl] = useState();
   const [displayUrl, setDisplayUrl] = useState();
   const [collapsed, setCollapsed] = useState(false);
-//   const [selectedFormat, setselectedFormat] = useState(null);
   const [isLoading,setIsLoading]= useState(false);
   const [fileName, setfileName] = useState(null);
   const [inputSize, setInputSize] = useState();
   const [outputSize, setOutputSize] = useState();
-
+  const [target_size, setTarget_size] = useState(null);
     // Event handler for Sider collapse
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
@@ -67,8 +66,15 @@ function VideoCompression(props1) {
     setDisplayUrl(null);
     setInputSize(null);
     setOutputSize(null);
+    setTarget_size(null);
   };
 
+  const handleInputChange1 = (event) => {
+    const inputValue = event.target.value;
+
+    // If the input is empty, set the value to 0; otherwise, update with the input value
+    setTarget_size(inputValue === null ? null : inputValue);
+  };
 
   // Handle video uploads
   const handleUpload = (file) => {
@@ -173,11 +179,17 @@ function VideoCompression(props1) {
   // Handle preview button click
   function handlePreview () {
     setIsLoading(true);
+    // if (target_size === null) {
+    //   setIsLoading(false);
+    //   toast.error("Select Compression Size");
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append('myfile', dataURLtoFile(videoUrl,fileName+"."+ getVideoTypeFromMime(videoUrl)));
     // formData.append('format_change', selectedFormat.toLowerCase());
     formData.append('function', 'video_compression');
+    formData.append('target', target_size);
     // axios.post(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL+'/video_compression/', formData)
     console.log(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL)
     axios.post('http://xlabk8s3.cse.buffalo.edu:30018/video_compression/', formData)
@@ -228,6 +240,37 @@ function VideoCompression(props1) {
     // Component render
     return (
         <Layout style={{ minHeight: "100vh" }}>
+          <Sider
+                collapsible
+                collapsed={collapsed}
+                onCollapse={(value) => setCollapsed(value)} // Assuming you have a setter function for the collapsed state
+                style={{ backgroundColor: '#000524' }}
+            >
+                {/* When sidebar is collapsed, show only the visual cue */}
+                {collapsed ? (
+                    <div className="visual-cue-container">
+                        <Tooltip title="Adjust Compression">
+                            <span className="visual-cue">&#x1F50D;</span> {/* Example using a magnifying glass emoji */}
+                        </Tooltip>
+                    </div>
+                ) : (
+                <>
+
+                            <div className="sidebar-content">
+                            {!collapsed && (
+                                <div className="compression-rate-slider-container">
+                                  {(
+                                        <div className="input-container">
+                                          <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in MB):</label>
+                                          <input type="number" value={target_size} onChange={handleInputChange1} placeholder="e.g. 300" title='Approximate value'/>
+                                        </div>
+                                      )}
+                                </div>
+                            )}
+                            </div>
+                </>
+                )}
+            </Sider>
       <Layout className="site-layout">
         <ContentSection>
           
