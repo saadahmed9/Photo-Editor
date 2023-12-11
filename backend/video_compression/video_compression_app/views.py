@@ -11,7 +11,7 @@ from video_compression_app.contollers.verify_params_controller import verify_upl
 import base64
 import logging
 
-from video_compression_app.contollers.video_compression import compress_video
+from video_compression_app.contollers.video_compression import compress_video, compress_video_by_resolution
 # Create your views here.
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -57,6 +57,10 @@ def video_compression(request):
             video_url = "media/uploads/"+myfile.name
             output_url = "media/output/"+myfile.name
             target_size = request.data.get("target", None)
+            resolution = request.data.get("resolution", None)
+            quality = request.data.get("quality", None)
+            logger.info(request.data)
+            logger.info("target is {0} and compression rate is {1}".format(target_size, resolution))
             try:
                 f = open(video_url,"wb")
             except OSError:
@@ -67,27 +71,31 @@ def video_compression(request):
                 f.close()
             api_root = reverse_lazy('stats',request = request)
             api_root = api_root[:-7]
-            if target_size == 'null':
-                target_size = (os.path.getsize(video_url) / (1024 * 1024)) / 2
             return_dict['output_url'] = api_root+r"static/"+ myfile.name
-            return_value = compress_video(video_url, output_url, target_size)
+            if resolution is None or resolution == 'null':
+                if target_size is None  or target_size == 'null':
+                    target_size = (os.path.getsize(video_url) / (1024 * 1024)) / 2
+                logger.info("Compressing video by target file size of {}".format(target_size))
+                return_value = compress_video(video_url, output_url, target_size)
+            else:
+                logger.info("Compressing video by resolution of {0} and quality percent as {1}".format(resolution, quality))
+                return_value = compress_video_by_resolution(video_url, output_url, resolution, quality)
             if return_value == 0:
                 raise Exception("failed compressing the video file")
             input_file_size = "{:.2f}".format(os.path.getsize(video_url) / (1024 * 1024))
             output_file_size = "{:.2f}".format(os.path.getsize(output_url) / (1024 * 1024))
-        try:
-            with open(output_url, 'rb') as f:
-                output_video_data = f.read()
-        except IOError:
-            logger.error("unable to read output file " + output_url)
-        video_base64 = base64.b64encode(output_video_data).decode('utf-8')
-        return_dict['videoUrl']=f"data:video/mp4;base64,{video_base64}"   
-        return_dict['input_file_size'] = input_file_size + "MB"
-        return_dict['output_file_size'] = output_file_size + "MB"
-        return_dict['error'] = False
-        return_dict['message'] = "Successfully Processed " 
-        return_dict['status'] = 200
-
+            try:
+                with open(output_url, 'rb') as f:
+                    output_video_data = f.read()
+            except IOError:
+                logger.error("unable to read output file " + output_url)
+            video_base64 = base64.b64encode(output_video_data).decode('utf-8')
+            return_dict['videoUrl']=f"data:video/mp4;base64,{video_base64}"   
+            return_dict['input_file_size'] = input_file_size + "MB"
+            return_dict['output_file_size'] = output_file_size + "MB"
+            return_dict['error'] = False
+            return_dict['message'] = "Successfully Processed " 
+            return_dict['status'] = 200
     except Exception as e:
         return_dict["message"] = str(e)
         return_dict['error'] = True

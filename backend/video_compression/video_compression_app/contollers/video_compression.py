@@ -8,6 +8,15 @@ logging.basicConfig(format= '[%(asctime)s] %(message)s')
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+aspect_ratio = {"240p": "426x240",
+                "360p": "640x360",
+                "480p": "854x480",
+                "720p": "1280x720",
+                "1080p": "1920x1080",
+                "1440p": "2560x1440",
+                "2160p": "3840x2160",
+                "4320p": "7680x4320" }
+
 def compress_video(input_video_path, output_video_path, target_size):
     # clean up any existing output video files if exists
     if os.path.exists(output_video_path):
@@ -39,7 +48,7 @@ def compress_video(input_video_path, output_video_path, target_size):
         # logger.info(cmd)
         sp.run(shlex.split( cmd))
 
-
+        # logger.info("output file is {0} and its size is {1:.2f}".format(output_video_path,os.path.getsize(output_video_path) / (1024 * 1024)))
 
         return_value = 1
         logger.info("video compression complete")
@@ -48,3 +57,25 @@ def compress_video(input_video_path, output_video_path, target_size):
         return_value = 0
     return return_value
 
+def compress_video_by_resolution(input_video_path, output_video_path, resolution, quality):
+    if os.path.exists(output_video_path):
+        os.remove(output_video_path)
+    
+    logger.info("video compression in progress")
+    try:   
+        logger.info("starting compression")
+
+        # Accepted crf value is in range of 1- 51
+        # 1 - lossless quality ; 51 - worst possible quality
+        crf = 51 - ((51 - 1) * int(quality) / 100) 
+        logger.info("crf is {}".format(crf))
+        cmd = "ffmpeg -i " + input_video_path + " -vf scale=" + aspect_ratio.get(resolution, "640x360") + ":flags=lanczos -c:v libx264 -preset slow -crf " + str(crf) + " " + output_video_path 
+
+        # logger.info(cmd)
+        sp.run(shlex.split(cmd))
+        # logger.info("output file is {0} and its size is {1:.2f}".format(output_video_path,os.path.getsize(output_video_path) / (1024 * 1024)))
+        return_value = 1
+    except Exception as e:
+        logger.error("Error occured in compressing video " + str(e))
+        return_value = 0
+    return return_value
