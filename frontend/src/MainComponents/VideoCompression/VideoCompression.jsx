@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Imports from Ant Design
 import {
-    Card, Upload, Button, Layout, Spin, Modal, Tooltip
+    Card, Upload, Button, Layout, Spin, Modal, Tooltip, Menu, Slider
 } from 'antd';
 import {
     UploadOutlined, LoadingOutlined, InfoCircleOutlined
@@ -54,10 +54,55 @@ function VideoCompression(props1) {
   const [inputSize, setInputSize] = useState();
   const [outputSize, setOutputSize] = useState();
   const [target_size, setTarget_size] = useState(null);
+  const [selectedAspect, setSelectedAspect] = useState(null);
+  const [method, setMethod] = useState(null);
+  const [quality, setQuality] = useState(null);
+
     // Event handler for Sider collapse
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
     };
+
+  // Define possible video resolution formats 
+  const menuItems = [
+    { key: '1', name: '240p' },
+    { key: '2', name: '360p' },
+    { key: '3', name: '480p' },
+    { key: '4', name: '720p' },
+    { key: '5', name: '1080p' },
+    { key: '6', name: '1440p' },
+    { key: '7', name: '2160p' },
+    { key: '8', name: '4320p' }
+  ];
+
+   // Handler to detect format menu click
+   const handleMenuClick = (event) => {
+    const selectedFormat = menuItems.find((item) => item.key === event.key)?.name;
+    setSelectedAspect(selectedFormat);
+    // console.log(selectedFormat)
+  }; 
+    
+  const handleMethodClick = (event) => {
+    const selectedMethod = event.key;
+    setMethod(selectedMethod);
+    // console.log(selectedMethod)
+
+    if (selectedMethod === 'custom') {
+      // Reset custom compression input value
+      setSelectedAspect(null);
+      setQuality(null);
+    } else if (selectedMethod === 'aspect') {
+      setQuality(50);
+      setTarget_size(null);
+    }
+
+  }; 
+
+  // Handle the compression rate change
+  const handleSliderChange = (value) => {
+    setQuality(value);
+    // console.log(quality)
+  };
 
   // Clear the uploaded Video
   const handleClear = () => {
@@ -179,17 +224,19 @@ function VideoCompression(props1) {
   // Handle preview button click
   function handlePreview () {
     setIsLoading(true);
-    // if (target_size === null) {
-    //   setIsLoading(false);
-    //   toast.error("Select Compression Size");
-    //   return;
-    // }
+    if (method === 'aspect' && selectedAspect === null ) {
+      setIsLoading(false);
+      toast.error("Select Video Resolution");
+      return;
+    }
 
     const formData = new FormData();
     formData.append('myfile', dataURLtoFile(videoUrl,fileName+"."+ getVideoTypeFromMime(videoUrl)));
     // formData.append('format_change', selectedFormat.toLowerCase());
     formData.append('function', 'video_compression');
     formData.append('target', target_size);
+    formData.append('resolution', selectedAspect);
+    formData.append('quality', quality);
     // axios.post(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL+'/video_compression/', formData)
     console.log(process.env.REACT_APP_VIDEO_COMPRESSION_API_URL)
     axios.post('http://xlabk8s3.cse.buffalo.edu:30018/video_compression/', formData)
@@ -259,7 +306,36 @@ function VideoCompression(props1) {
                             <div className="sidebar-content">
                             {!collapsed && (
                                 <div className="compression-rate-slider-container">
-                                  {(
+                                  {method === 'aspect' && (
+                                        <>
+                                          <label className="compression-rate-label">Resolution Quality:</label>
+                                          <Slider value={quality} min={0} max={100} onChange={handleSliderChange} />
+                                          <label className="compression-rate-label">Video Resolution:</label>
+                                          <Menu
+                                            theme="dark"
+                                            mode="inline"
+                                            style={{ backgroundColor: '#000524',overflow: 'hidden' }}
+                                            onClick={handleMenuClick}
+                                          >
+                                            
+                                            {menuItems.map((item) => (
+                                              <Menu.Item
+                                                key={item.key}
+                                                className="format-menu-item"
+                                                style={{
+                                                  textAlign: 'center',
+                                                  backgroundColor: selectedAspect === item.name ? '#3750ed' : '#00093e', // Blue if selected, else default color
+                                                  color: selectedAspect === item.name ? '#FFFFFF' : '#B4C2D3', // Text color for selected and non-selected items
+                                                }}
+                                              >
+                                                {item.name}
+                                              </Menu.Item>
+                                            ))}
+                                            
+                                            </Menu>                                      
+                                        </>
+                                      )}
+                                      {method === 'custom' && (
                                         <div className="input-container">
                                           <label style={{ textAlign: 'center', display: 'block', margin: '0 auto' }}>Custom Compression (in MB):</label>
                                           <input type="number" value={target_size} onChange={handleInputChange1} placeholder="e.g. 300" title='Approximate value'/>
@@ -267,7 +343,25 @@ function VideoCompression(props1) {
                                       )}
                                 </div>
                             )}
+
+                              <Menu
+                                theme="dark"
+                                mode="inline"
+                                style={{ backgroundColor: '#000524', minHeight: '15vh', overflow: 'hidden' }}
+                                onClick={handleMethodClick}
+                                defaultSelectedKeys={['rate']} 
+                                >
+                                <Menu.Item key="custom" className="format-menu-item" style={{ textAlign: 'center', backgroundColor: method === 'custom' ? '#3750ed' : '#00093e', color: '#FFFFFF' }}>
+                                  Custom Compression
+                                </Menu.Item>
+                                <Menu.Item key="aspect" className="format-menu-item" style={{ textAlign: 'center', backgroundColor: method === 'aspect' ? '#3750ed' : '#00093e', color: '#FFFFFF' }}>
+                                  Video Resolution
+                                </Menu.Item>
+                              </Menu>
+
                             </div>
+
+                            
                 </>
                 )}
             </Sider>
