@@ -259,7 +259,7 @@ function NoiseRemoval(props1) {
         :
 
         <div className="passport-photo-container">
-            <div className="center-card-container" style={{width: '65%'}}>
+            <div className="center-card-container" style={{width: '65%',maxWidth:"700px"}}>
               <div style={{flexGrow: '1'}}>
                 <Card className="passport-photo-card"
                      title={

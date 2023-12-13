@@ -259,7 +259,7 @@ function BrightnessContrast(props1) {
           :
           
         <div className="passport-photo-container">
-            <div className="center-card-container">
+            <div className="center-card-container" style={{maxWidth:"400px"}}>
               <div style={{flexGrow: '1',width:'600px'}}>
                 <Card className="passport-photo-card"
                      title={

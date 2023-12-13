@@ -302,7 +302,7 @@ function ResizeImage({ uuid }) {
                         </div>
                         :
                         <div className="passport-photo-container">
-                            <div className="center-card-container">
+                            <div className="center-card-container" style={{maxWidth:"600px"}}>
                                 <div style={{ flexGrow: '1' }}>
                                     <Card className="passport-photo-card"
                                         title={

@@ -294,7 +294,7 @@ function BackgroundRemoval (props1) {
        </div>
         :
         <div className="passport-photo-container">
-            <div className="center-card-container" style={{width: '65%'}}>
+            <div className="center-card-container" style={{width: '65%',maxWidth: '570px'}}>
               <div style={{flexGrow: '1'}}>
               <Card className="passport-photo-card"
                       title={
