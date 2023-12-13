@@ -247,8 +247,8 @@ const Template = ({ rows, initialColumnsPerRow }) => {
                position: 'absolute',
                top: 0,
                left: 0,
-               width: '1000px',
-               //height: '500px',
+               width: '100%',
+               height: '100%',
              }}
            >
              <img
@@ -256,7 +256,7 @@ const Template = ({ rows, initialColumnsPerRow }) => {
                alt=""
                style={{
                  width: '100%',
-                 //height: '100%',
+                 height: '100%',
                  transform: `scale(${imageScales[cellIndex]})`,
                  transformOrigin: 'center',
                }}

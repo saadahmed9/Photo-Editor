@@ -425,7 +425,7 @@ export const Demo = (props1) => {
                       zoom={zoom}
                       onCropChange={setCrop}
                       aspect={1}
-                      objectFit="contain"
+                      objectFit="cover"
                       cropSize={cropSize}
                       cropShape="round"
                       zoomWithPinch={true}
@@ -497,8 +497,8 @@ export const Demo = (props1) => {
                         crop={crop}
                         onCropChange={setCrop}
                         aspect={1}
-                        zoom={zoom}
-                        objectFit="contain"
+                        
+                        objectFit="cover"
                         cropShape="round"
                         cropSize={cropSize}
                         onCropComplete={onCropComplete}
