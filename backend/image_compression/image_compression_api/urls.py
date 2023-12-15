@@ -8,6 +8,6 @@ urlpatterns = [
 
     path('image_compression/', views.image_compression, name='image_compression'),
     
-    path('stats/', views.get_db_stat, name='stats'),
+    path('stats-image/', views.get_db_stat, name='stats'),
     
 ]   

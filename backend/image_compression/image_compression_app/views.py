@@ -81,9 +81,14 @@ def image_compression(request):
             output_format = request.POST.get('output_format')
 
             # Read the image using OpenCV
+            
             image = cv2.imdecode(np.frombuffer(image_file.read(), np.uint8), 1)
-
-            if target_size == 'null':
+            stats_onj = read_stats()
+            val = stats_onj["image_compression"]
+            crop_count = val + 1
+            newData = {"image_compression": crop_count}
+            write_stats(newData)
+            
             # Determine compression parameter based on output format
                 compression_param = None
                 if output_format.lower() == 'jpeg':
