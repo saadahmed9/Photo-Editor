@@ -8,6 +8,6 @@ urlpatterns = [
 
     path('background_change/', views.background_change, name='background_change'),
     
-    path('stats/', views.get_db_stat, name='stats'),
+    path('stats-bg/', views.get_db_stat, name='stats'),
     
 ]   
