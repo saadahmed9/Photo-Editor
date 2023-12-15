@@ -63,7 +63,7 @@ const Stats=()=>  {
         { url: 'http://xlabk8s3.cse.buffalo.edu:30010/stats-passport/', nameTransformation: (entry) => entry },
         { url: 'http://xlabk8s3.cse.buffalo.edu:30015/stats-bg/', nameTransformation: (entry) => entry },
         { url: 'http://xlabk8s3.cse.buffalo.edu:30014/stats-format-change/', nameTransformation: (entry) => entry },
-        { url: 'http://xlabk8s3.cse.buffalo.edu:30016/stats-mosaic', nameTransformation: (entry) => entry },
+        { url: 'http://xlabk8s3.cse.buffalo.edu:30016/stats-mosaic/', nameTransformation: (entry) => entry },
         { url: 'http://xlabk8s3.cse.buffalo.edu:30017/stats-image/', nameTransformation: (entry) => entry },
         { url: 'http://xlabk8s3.cse.buffalo.edu:30018/stats-video/', nameTransformation: (entry) => entry },
         
