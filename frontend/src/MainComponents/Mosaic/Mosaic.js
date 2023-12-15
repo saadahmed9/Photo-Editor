@@ -168,8 +168,8 @@ function Mosaic (props1) {
     }
     formData.append('selectedPixel', parseInt(selectedPixel, 10));
     formData.append('function', 'mosaic_maker');
-    axios.post("http://xlabk8s3.cse.buffalo.edu:30016/mosaic_maker/", formData)
-    //axios.post(process.env.REACT_APP_MOSAIC_API_URL+'/mosaic_maker/', formData)
+    //axios.post("http://xlabk8s3.cse.buffalo.edu:30016/mosaic_maker/", formData)
+    axios.post(process.env.REACT_APP_MOSAIC_API_URL+'/mosaic_maker/', formData) 
         .then(response => {
           downloadImage(response.data.imageUrl);
         })
@@ -379,7 +379,7 @@ const info = () => {
           </button>
           
         </div>
-        <button style={{ width: "100%" }} onClick={handleClear}>Clear</button>
+        <button style={{ width: "100%" }} onClick={handleClear}>Clear All</button>
                           <Menu>
                               {imageCollection.map((image, index) => (
                                   <div key={index} className="image-item">

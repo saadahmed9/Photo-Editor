@@ -37,7 +37,7 @@ function BackgroundRemoval (props1) {
 
   // State for image, color, loading, etc.
   const [imageUrl, setImageUrl] = useState(); 
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState("#FFFFFF");
   const [displayUrl, setDisplayUrl] = useState(); 
   const [fileType, setFileType] =useState(null);
   const [fileName, setfileName] = useState(null);
@@ -226,7 +226,7 @@ function BackgroundRemoval (props1) {
                   </div>
               ) : (
                   <>
-                          <label className="label" style={{ color: color }}>Choose BackgroundColor:</label>
+                          <label className="label" style={{ color: color, fontSize: '17px' }}>Choose Background Color:</label>
                       <ChromePicker color={color} onChange={handleColorChange} />
                   </>
               )}

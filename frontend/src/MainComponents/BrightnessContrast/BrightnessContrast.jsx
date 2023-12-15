@@ -213,7 +213,7 @@ function BrightnessContrast(props1) {
                                         <li>Upload: Drag & drop or click to add your image.</li>
                                         <li>Brightness: Slide to adjust on the left panel.</li>
                                         <li>Contrast: Fine-tune using the slider on the left.</li>
-                                        <li>Finalize: Preview & download your enhanced photo.</li>
+                                        <li>Finalize: Download your enhanced photo.</li>
     </ol>
     </div>  </Fade>
                 <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
