@@ -8,6 +8,6 @@ urlpatterns = [
 
     path('mosaic_maker/', views.mosaic_maker, name='mosaic_maker'),
     
-    path('stats/', views.get_db_stat, name='stats'),
+    path('stats-mosaic/', views.get_db_stat, name='stats'),
     
 ]   
