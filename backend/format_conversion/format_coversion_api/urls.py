@@ -8,6 +8,6 @@ urlpatterns = [
     
     path('format_change/', views.format_change, name='format_change'),
     
-    path('stats/', views.get_db_stat, name='stats'),
+    path('stats-format-change/', views.get_db_stat, name='stats'),
     
 ]   
