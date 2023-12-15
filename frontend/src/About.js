@@ -1,6 +1,6 @@
 import React from 'react';
 import './about.css'
-
+import Stats from './Components/Stats';
 const About = () => {
     return (
         <div className="about-section">
@@ -64,7 +64,10 @@ const About = () => {
                 </div>
 
             </div>
+            <br></br>
+            <Stats/>
         </div>
+        
     );
 };
 

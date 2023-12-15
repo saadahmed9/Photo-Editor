@@ -50,7 +50,10 @@
   .class2{
     background-color: rgb(195, 200, 222);
   }
-  
+  .class-stats{
+    background-color:#e9e4e2;
+    
+  }
   .footer {
     background-color: #222;
     color: #fff;
