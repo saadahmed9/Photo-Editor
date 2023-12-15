@@ -21,7 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('passport_photo_size/', views.passport_photo_size, name='passport_photo_size'),
-    
-    path('stats/', views.get_db_stat, name='stats'),
+    path('stats-passport/', views.get_db_stat, name='stats'),
     
 ]   
