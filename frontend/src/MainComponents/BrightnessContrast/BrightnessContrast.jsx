@@ -86,8 +86,8 @@ function BrightnessContrast(props1) {
     if (!imageUrl) return;
     const formData = new FormData();
     formData.append('function', 'brightness_contrast');
-      // axios.post(process.env.REACT_APP_PDF_NOISE_BRIGHT_API_URL +'/brightness_contrast/', formData)
-    axios.post("http://xlabk8s3.cse.buffalo.edu:30013/brightness_contrast/", formData)
+    axios.post(process.env.REACT_APP_PDF_NOISE_BRIGHT_API_URL +'/brightness_contrast/', formData)
+    //axios.post("http://xlabk8s3.cse.buffalo.edu:30013/brightness_contrast/", formData)
       .then(response => {
       }
       )
@@ -213,7 +213,7 @@ function BrightnessContrast(props1) {
                                         <li>Upload: Drag & drop or click to add your image.</li>
                                         <li>Brightness: Slide to adjust on the left panel.</li>
                                         <li>Contrast: Fine-tune using the slider on the left.</li>
-                                        <li>Finalize: Preview & download your enhanced photo.</li>
+                                        <li>Finalize: Download your enhanced photo.</li>
     </ol>
     </div>  </Fade>
                 <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>

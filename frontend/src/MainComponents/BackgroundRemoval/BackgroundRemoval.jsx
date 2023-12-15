@@ -37,7 +37,7 @@ function BackgroundRemoval (props1) {
 
   // State for image, color, loading, etc.
   const [imageUrl, setImageUrl] = useState(); 
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState("#FFFFFF");
   const [displayUrl, setDisplayUrl] = useState(); 
   const [fileType, setFileType] =useState(null);
   const [fileName, setfileName] = useState(null);
@@ -162,8 +162,8 @@ function BackgroundRemoval (props1) {
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+fileType));
     formData.append('background_change', color);
     formData.append('function', 'background_change');
-    //axios.post(process.env.REACT_APP_BACKGROUND_CHANGE_API_URL+'/background_change/', formData)
-    axios.post("http://xlabk8s3.cse.buffalo.edu:30015/background_change/", formData)
+    axios.post(process.env.REACT_APP_BACKGROUND_CHANGE_API_URL+'/background_change/', formData)
+    //axios.post("http://xlabk8s3.cse.buffalo.edu:30015/background_change/", formData)
     
       .then(response => {
         downloadImage(response.data.imageUrl)
@@ -226,7 +226,7 @@ function BackgroundRemoval (props1) {
                   </div>
               ) : (
                   <>
-                          <label className="label" style={{ color: color }}>Choose BackgroundColor:</label>
+                          <label className="label" style={{ color: color, fontSize: '17px' }}>Choose Background Color:</label>
                       <ChromePicker color={color} onChange={handleColorChange} />
                   </>
               )}
