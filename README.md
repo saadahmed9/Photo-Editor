@@ -30,8 +30,13 @@ git clone https://github.com/xlab-classes/cse611-fall-2023-team-photoedting.git
 
 ### 1. Copy Model Files
 Move model files to `backend/photo_editing_api/media/models/`.
-- In Windows : Copy the ffmpeg.exe from cse611-fall-2023-team-photoedting\backend\photo_editing_api\media to cse611-fall-2023-team-photoedting\backend\photo_editing_api\venv\Scripts
-- In linux : sudo apt install ffmpeg (To be confimed)
+For FFMPEG, perform the following steps as mentioned
+- In Windows : 
+    - Download the release version of ffmpeg via the link - https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.7z 
+    - Extract, copy to any location of your choice and copy the path to the bin folder (Eg - C:\ffmpeg\bin)
+    - In Start menu, search for Environment Variables (User / System) and Edit PATH variable to include the above ffmpeg bin path
+    - Restart the Terminal and verify ffmpeg command runs successfully.
+- In linux : sudo apt install ffmpeg 
 
 ### 2. Navigate to Project Directory
 Open your terminal or PowerShell and navigate using:
@@ -54,11 +59,7 @@ Install dependencies from requirements.txt. For dlib errors, ensure Visual Studi
 ```bash
 pip install -r requirements.txt
 ```
-
-### 5. Modify Code (if Necessary)
-Edit deeplab.py as instructed (e.g., update import statements).
-
-### 6. Run Development Server
+### 5. Run Development Server
 Start the Django server using:
 ```bash
 python manage.py runserver

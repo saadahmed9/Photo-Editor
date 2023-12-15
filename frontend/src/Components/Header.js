@@ -19,10 +19,14 @@ class Header extends Component {
             <hr />
             
           </div>
+          <div className="banner-text">
           <Fade>
-          <p>Your Privacy Matters</p>
-          <p>We do not retain any user information on our servers. We do not retain any of your images on our servers, and failing to download your edited image may result in the loss of your work.</p>
+            <br></br>
+            <br></br>
+          <h4 className="text-danger">Your Privacy Matters</h4>
+          <h4>We do not retain any user information on our servers. We do not retain any of your images on our servers, and failing to download your edited image may result in the loss of your work.</h4>
           </Fade>
+          </div>
         </div>
 
       </header>

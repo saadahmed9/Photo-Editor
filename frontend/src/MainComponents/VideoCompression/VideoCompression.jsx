@@ -349,7 +349,7 @@ function VideoCompression(props1) {
                                 mode="inline"
                                 style={{ backgroundColor: '#000524', minHeight: '15vh', overflow: 'hidden' }}
                                 onClick={handleMethodClick}
-                                defaultSelectedKeys={['rate']} 
+                                defaultSelectedKeys={['custom']} 
                                 >
                                 <Menu.Item key="custom" className="format-menu-item" style={{ textAlign: 'center', backgroundColor: method === 'custom' ? '#3750ed' : '#00093e', color: '#FFFFFF' }}>
                                   Custom Compression

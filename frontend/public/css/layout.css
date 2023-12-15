@@ -40,6 +40,12 @@ header .banner-text h3 {
    margin: 0 auto;
    width: 70%;
 }
+header .banner-text h4 {
+   font: 13px/1.9em 'librebaskerville-regular', serif;
+   color: #ddddddce;
+   margin: 0 auto;
+   width: 70%;
+}
 header .banner-text h3 span,
 header .banner-text h3 a {
    color: #fff;
