@@ -162,8 +162,8 @@ function BackgroundRemoval (props1) {
     formData.append('myfile', dataURLtoFile(imageUrl,fileName+"."+fileType));
     formData.append('background_change', color);
     formData.append('function', 'background_change');
-    //axios.post(process.env.REACT_APP_BACKGROUND_CHANGE_API_URL+'/background_change/', formData)
-    axios.post("http://xlabk8s3.cse.buffalo.edu:30015/background_change/", formData)
+    axios.post(process.env.REACT_APP_BACKGROUND_CHANGE_API_URL+'/background_change/', formData)
+    //axios.post("http://xlabk8s3.cse.buffalo.edu:30015/background_change/", formData)
     
       .then(response => {
         downloadImage(response.data.imageUrl)
