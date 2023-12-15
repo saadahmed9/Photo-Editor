@@ -8,6 +8,6 @@ urlpatterns = [
 
     path('video_compression/', views.video_compression, name='video_compression'),
     
-    path('stats/', views.get_db_stat, name='stats'),
+    path('stats-video/', views.get_db_stat, name='stats'),
     
 ]   

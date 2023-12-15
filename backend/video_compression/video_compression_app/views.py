@@ -59,6 +59,13 @@ def video_compression(request):
             target_size = request.data.get("target", None)
             resolution = request.data.get("resolution", None)
             quality = request.data.get("quality", None)
+            
+            stats_onj = read_stats()
+            val = stats_onj["video_compression"]
+            crop_count = val + 1
+            newData = {"video_compression": crop_count}
+            write_stats(newData)
+
             logger.info(request.data)
             logger.info("target is {0} and compression rate is {1}".format(target_size, resolution))
             try:
