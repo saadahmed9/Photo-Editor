@@ -90,6 +90,7 @@ def image_compression(request):
             write_stats(newData)
             
             # Determine compression parameter based on output format
+            if target_size == 'null':
                 compression_param = None
                 if output_format.lower() == 'jpeg':
                     compression_param = [cv2.IMWRITE_JPEG_QUALITY, compression_rate]
