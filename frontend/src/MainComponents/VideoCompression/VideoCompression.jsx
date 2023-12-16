@@ -282,12 +282,26 @@ function VideoCompression(props1) {
       title: 'Video Compression',
       content: (
         <div>
-              Effortlessly compress video while maintaining great resolution.
-<ol>
-                  <li>Upload: Drag & drop or select the video you're aiming to compress.</li>
+          Effortlessly compress video while maintaining great resolution.
+          <ol>
+            <li>Upload: Drag & drop or click to select the video you want to compress.</li>
 
-                  <li>Finish: Download your video, compressed and ready.</li>
-</ol>
+            <li>Choose between 2 methods.
+              <ul>
+                <li style={{listStyle: 'disc'}}>Custom Compression - Compress Image to an approximate Target file size.</li>
+                <li style={{listStyle: 'disc'}}>Video Resolution - Scale Video by selecting the resolution and adjusting the slider for video Quality (0 - worse quality; 100 - Lossless).</li>
+              </ul>
+            </li>
+            <li>Select Compress Video to start compression process. Once Process is complete, the processed video is avaialble to be played in the page.</li>
+
+            <li>Finish: Select Download Video to download the processed video file.</li>
+          </ol>
+          Note:
+          <ol>
+            <li style={{listStyle: 'disc'}}>Update any attributes and select Compress Video to restart the process with the Original Video.</li>
+            <li style={{listStyle: 'disc'}}>Select Clear Output Video to clear the processed video.</li>
+          </ol>
+
         </div>
       ),
       onOk() {},
@@ -382,15 +396,26 @@ function VideoCompression(props1) {
         { !videoUrl ? 
         <div className="passport-photo-container" style={{display:'block'}}>
        <Fade>
-          {/* Users can compress their images into the desired format, such as JPEG, PNG, and more.
-          Please select the format and upload the image in box below. */}
           <div style={{position:'relative', left:'160px',top:'5rem'}}>
-                                    <b>Video Compression</b> Compress videos without compromising on their quality:
-<ol>
-                                        <li>Upload: Drag & drop or click to select the video you want to compress.</li>
+          <b>Video Compression</b> Compress videos without compromising on their quality:
+          <ol>
+            <li>Upload: Drag & drop or click to select the video you want to compress.</li>
 
-                                        <li>Finish: Download your video, compressed and ready.</li>
-</ol>
+            <li>Choose between 2 methods.
+              <ul>
+                <li style={{listStyle: 'disc'}}>Custom Compression - Compress Image to an approximate Target file size.</li>
+                <li style={{listStyle: 'disc'}}>Video Resolution - Scale Video by selecting the resolution and adjusting the slider for video Quality (0 - worse quality; 100 - Lossless).</li>
+              </ul>
+            </li>
+            <li>Select Compress Video to start compression process. Once Process is complete, the processed video is avaialble to be played in the page.</li>
+
+            <li>Finish: Select Download Video to download the processed video file.</li>
+          </ol>
+          Note:
+          <ol>
+            <li style={{listStyle: 'disc'}}>Update any attributes and select Compress Video to restart the process with the Original Video.</li>
+            <li style={{listStyle: 'disc'}}>Select Clear Output Video to clear the processed video.</li>
+          </ol>
 </div>  </Fade>
             <div className="center-card-container" style={{position:'relative', top:'50px', left:'180px'}}>
               <div style={{flexGrow: '1'}}>
