@@ -207,23 +207,34 @@ function VideoCompression(props1) {
         reader.onload = () => {
           const VideoDataUrl = reader.result;
           setIsLoading(false);
-          const link = document.createElement('a');
-        link.href = VideoDataUrl;
-        link.setAttribute('download', fileName);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-          //setDisplayUrl(imageDataUrl);
+          setDisplayUrl(VideoDataUrl);
         };
         reader.readAsDataURL(blob);
       })
       .catch(error => {console.log(error); toast.error("Error encountered."); setIsLoading(false)});     
   }
 
+  function handleOutput() {
+    setDisplayUrl(null);
+    setOutputSize(null);
+  };
+
+    // Download the video 
+  function handleDownload () {
+    const link = document.createElement('a');
+    link.href = displayUrl;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+};
+
 
   // Handle preview button click
   function handlePreview () {
     setIsLoading(true);
+    setDisplayUrl(null);
+    setOutputSize(null);
     if (method === 'aspect' && selectedAspect === null ) {
       setIsLoading(false);
       toast.error("Select Video Resolution");
@@ -390,8 +401,8 @@ function VideoCompression(props1) {
                       cover=
                       {
                         <div style={{ display: 'flex' }}>
-                          {videoUrl && <video className='uploaded-video' src={videoUrl} controls={true} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                          {/* {displayUrl && <img className='uploaded-video' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />} */}
+                          {videoUrl && !displayUrl && <video className='uploaded-video' src={videoUrl} controls={true} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                          {displayUrl && <video className='uploaded-video' src={displayUrl} controls={true} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                         </div>  
                       }
                       extra={
@@ -417,14 +428,19 @@ function VideoCompression(props1) {
                     )}
                     {videoUrl && (
                      <Button type="primary" onClick={handlePreview} style={{ margin: '10px' }}>
-                        Compress & Download Video
+                        Compress Video
                       </Button>
                     )}
-                    {/* {displayUrl && (
-                     <Button type="success" onClick={handleDownload} style={{ margin: '10px' }}>
-                        Download Photo
+                    {displayUrl && (
+                     <Button type="primary" onClick={handleOutput} style={{ margin: '10px' }}>
+                        Clear Output Video
                       </Button>
-                    )} */}
+                    )}
+                    { displayUrl && (
+                     <Button type="success" onClick={handleDownload} style={{ margin: '10px' }}>
+                        Download Video
+                      </Button>
+                    )}
                 </Card>
               </div>
             </div>
@@ -435,12 +451,12 @@ function VideoCompression(props1) {
                   <Card className="passport-photo-card"
                       title={
                         displayUrl ? "Uploaded Video and Result":"Drag and Drop Video"
-                      }
+                                              }
                       cover=
                       {
                         <div style={{ display: 'flex' }}>
-                          {videoUrl && <video className='uploaded-video' src={videoUrl} controls={true} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
-                          {/* {displayUrl && <img className='uploaded-image' src={displayUrl} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />} */}
+                          {videoUrl && !displayUrl && <video className='uploaded-video' src={videoUrl} controls={true} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
+                          {displayUrl && <video className='uploaded-video' src={displayUrl} controls={true} onDragOver={(e) => e.preventDefault()} onDrop={(e) => handleDrop(e)} />}
                         </div>  
                       }
                       extra={
@@ -466,14 +482,19 @@ function VideoCompression(props1) {
                     )}
                     {videoUrl && (
                      <Button type="primary" onClick={handlePreview} style={{ margin: '10px' }}>
-                        Compress & Download Video
+                        Compress Video
                       </Button>
                     )}
-                    {/* {displayUrl && (
-                     <Button type="success" onClick={handleDownload} style={{ margin: '10px' }}>
-                        Download Photo
+                    {displayUrl && (
+                     <Button type="primary" onClick={handleOutput} style={{ margin: '10px' }}>
+                        Clear Output Video
                       </Button>
-                    )} */}
+                    )}
+                    {displayUrl && (
+                     <Button type="success" onClick={handleDownload} style={{ margin: '10px' }}>
+                        Download Video
+                      </Button>
+                    )}
                 </Card>
               </div>
             </div>
